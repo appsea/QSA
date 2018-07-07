@@ -3,9 +3,9 @@ import {topmost} from "ui/frame";
 import {GridLayout} from "ui/layouts/grid-layout";
 import {MyDrawerViewModel} from "./MyDrawer-view-model";
 import * as SocialShare from 'nativescript-social-share';
+import * as utils from "utils/utils";
 import {exit} from 'nativescript-exit';
 import {SettingsService} from "../../services/settings.service";
-import * as utils from "utils/utils";
 
 /* ***********************************************************
 * Use the "loaded" event handler of the wrapping layout element to bind the view model to your view.
@@ -34,12 +34,12 @@ export function onNavigationItemTap(args: EventData): void {
 }
 
 export function share(args: EventData): void {
-    SocialShare.shareText("https://goo.gl/KgZQhA\n" +
-        "Hi there, Take a look at the Base Sas Quiz which I am using for preparing For Base SAS Certification!!!");
+    SocialShare.shareText("https://goo.gl/8aN3rG\n" +
+        "Hi there, Take a look at the Advance Sas Quiz which I am using for preparing For Advance SAS Certification!!!");
 }
 
-export function goToAdvanceSas(args: EventData): void {
-    utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.advanced.sas");
+export function goToBaseSas(args: EventData): void {
+    utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.quiz.sas");
 }
 
 export function logout(args: EventData): void {

@@ -1,5 +1,5 @@
 var admobModule = require("nativescript-admob");
-let testing = false;
+var testing = false;
 
 exports.showFullBanner = function() {
     this.createBanner(admobModule.AD_SIZE.FULL_BANNER);
@@ -25,14 +25,14 @@ exports.createBanner = function(size) {
     admobModule.createBanner({
         testing: testing,
         size: size,
-        iosBannerId: "ca-app-pub-9082814869788754/7345143371",
-        androidBannerId: "ca-app-pub-9082814869788754/7345143371",
+        iosBannerId: "ca-app-pub-9082814869788754/3753693786",
+        androidBannerId: "ca-app-pub-9082814869788754/3753693786",
         iosTestDeviceIds: ["yourTestDeviceUDIDs"],
         margins: {
             bottom: 0
         }
     }).then(function() {
-        console.log("admob createBanner done");
+        console.log("admob createBanner done.");
     }, function(error) {
         console.log("admob createBanner error: " + error);
     });
@@ -49,8 +49,8 @@ exports.hideBanner = function() {
 exports.showInterstitial = function() {
     admobModule.createInterstitial({
         testing: testing,
-        iosInterstitialId: "ca-app-pub-9082814869788754/5195869671",
-        androidInterstitialId: "ca-app-pub-9082814869788754/5195869671",
+        iosInterstitialId: "ca-app-pub-9082814869788754/2619741367",
+        androidInterstitialId: "ca-app-pub-9082814869788754/2619741367",
         iosTestDeviceIds: ["yourTestDeviceUDIDs"]
     }).then(function() {
         console.log("admob createInterstitial done");

@@ -5,7 +5,7 @@ Feel free to customize layouts and components to change how your app drawer look
 <GridLayout rows="auto, *" class="sidedrawer sidedrawer-left" loaded="onLoaded">
     <StackLayout class="sidedrawer-header">
         <Image class="sidedrawer-header-image" src="~/images/icon.png" />
-        <Label class="sidedrawer-header-brand" text="Base SAS Quiz" />
+        <Label class="sidedrawer-header-brand" text="Advance Sas" />
     </StackLayout>
 
     <ScrollView row="1">
@@ -25,7 +25,7 @@ Feel free to customize layouts and components to change how your app drawer look
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'main' ? ' selected': '') }}"
                         route="question/main" params="main"  tap="onNavigationItemTap">
-                <Label row="0" col="0" text="&#xf19d;" class="fa" style="font-size: 14dpi;" />
+                <Label row="0" col="0" text="&#xf19d;" class="fa" style="font-size: 13dpi;" />
                 <Label row="0" col="1" text="Main Exam" class="p-r-10" />
             </GridLayout>
 
@@ -37,7 +37,7 @@ Feel free to customize layouts and components to change how your app drawer look
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'stats' ? ' selected': '') }}"
                         route="stats/progress" params="main"  tap="onNavigationItemTap">
-                <Label row="0" col="0" text="&#xf201;" class="fa" style="font-size: 16dpi;" />
+                <Label row="0" col="0" text="&#xf201;" class="fa" style="font-size: 13dpi;" />
                 <Label row="0" col="1" text="Progress" class="p-r-10" />
             </GridLayout>
 
@@ -54,9 +54,9 @@ Feel free to customize layouts and components to change how your app drawer look
                 <Label row="0" col="1" text="Share" class="p-r-10" />
             </GridLayout>
 
-            <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="goToAdvanceSas">
-                <Image class="fa" src="~/images/advanceSas.png" />
-                <Label row="0" col="1" text="Advance Sas" class="p-r-10" />
+            <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="goToBaseSas">
+                <Image class="fa" src="~/images/basesas.png" />
+                <Label row="0" col="1" text="Base SAS App" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="logout">

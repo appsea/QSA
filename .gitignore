@@ -29,6 +29,7 @@ obj/**/*
 # IntelliJ Idea Files
 .idea/**/*
 *.apk
+*.iml
 
 # Javascript Files
 app/**/*.js

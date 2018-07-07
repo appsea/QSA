@@ -17,7 +17,7 @@
         <ActionItem tap="onDrawerButtonTap">
             <ActionItem.actionView>
                 <StackLayout orientation="horizontal">
-                    <Label class="action-bar-title fa" style="font-size: 25dpi" text="&#xf044;"
+                    <Label class="action-bar-title fa" style="font-size: 25" text="&#xf044;"
                            tap="goToEditPage"></Label>
                 </StackLayout>
             </ActionItem.actionView>

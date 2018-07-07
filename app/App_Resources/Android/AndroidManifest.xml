@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    xmlns:android="http://schemas.android.com/apk/res/android" package="__PACKAGE__" android:versionCode="10028" android:versionName="1.4">
-    <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" />
-    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="__APILEVEL__" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        xmlns:android="http://schemas.android.com/apk/res/android" package="__PACKAGE__" android:versionCode="10001" android:versionName="1.1">
+    <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true"/>
+    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="__APILEVEL__"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application android:name="com.tns.NativeScriptApplication" android:allowBackup="true" android:icon="@drawable/icon" android:label="Base SAS Quiz" android:theme="@style/AppTheme">
-        <activity android:name="com.tns.NativeScriptActivity" android:label="Base SAS Quiz" android:configChanges="keyboardHidden|orientation|screenSize" android:theme="@style/LaunchScreenTheme" android:windowSoftInputMode="adjustPan">
-            <meta-data android:name="SET_THEME_ON_LAUNCH" android:resource="@style/AppTheme" />
+        <activity android:name="com.tns.NativeScriptActivity" android:label="Advance Sas" android:configChanges="keyboardHidden|orientation|screenSize" android:theme="@style/LaunchScreenTheme" android:windowSoftInputMode="adjustPan">
+            <meta-data android:name="SET_THEME_ON_LAUNCH" android:resource="@style/AppTheme"/>
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.tns.ErrorReportActivity" />
+        <activity android:name="com.tns.ErrorReportActivity"/>
     </application>
 </manifest>

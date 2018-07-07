@@ -10,7 +10,7 @@ export class SettingsService {
     static VERSION_NUMBER: number = 10;
     static CLEAR: boolean = false;
     static VERSION: string = "VERSION";
-    static FB_VERSION: string = "FB_VERSION";
+    static QUESTION_VERSION: string = "QUESTION_VERSION";
     static MAIN: string = "main";
     static TICK: string = "tick";
     static QUICK: string = "quick";
@@ -109,14 +109,13 @@ export class SettingsService {
         appSettings.setNumber(SettingsService.QUESTIONS_SIZE, questions.length);
     }
 
-    saveVersion(fbVersion: number): void {
-        appSettings.setNumber(SettingsService.FB_VERSION, fbVersion);
+    saveQuestionVersion(questionVersion: number): void {
+        appSettings.setNumber(SettingsService.QUESTION_VERSION, questionVersion);
     }
 
-    readVersion(): number {
-        return appSettings.hasKey(SettingsService.FB_VERSION) ? appSettings.getNumber(SettingsService.FB_VERSION) : 0;
+    readQuestionVersion(): number {
+        return appSettings.hasKey(SettingsService.QUESTION_VERSION) ? appSettings.getNumber(SettingsService.QUESTION_VERSION) : 0;
     }
-
 
     readQuestions(): Array<IQuestion> {
         let questions: Array<IQuestion>;

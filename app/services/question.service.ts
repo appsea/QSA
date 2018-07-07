@@ -6,9 +6,10 @@ import {SettingsService} from "./settings.service";
 import {Observable} from "rxjs/Observable";
 import * as dialogs from "ui/dialogs";
 import {ConnectionService} from "../shared/connection.service";
+import {HttpService} from "./http.service";
 import * as constantsModule from '../shared/constants';
-
-const httpModule = require("http");
+import * as appVersion from "nativescript-appversion";
+import * as utils from "utils/utils";
 
 export class QuestionService {
 
@@ -31,13 +32,23 @@ export class QuestionService {
         return this.getFirebaseQuestion();
     }
 
+    public update(question: IQuestion) {
+        let url = constantsModule.FIREBASE_URL + "suggestions.json"
+        HttpService.getInstance().httpPost(url, question);
+    }
+
+    public error(error: any) {
+        let url = constantsModule.FIREBASE_URL + "error.json"
+        HttpService.getInstance().httpPost(url, error);
+    }
+
     private getRandomNumber(max: number): number {
         const randomNumber = Math.floor(Math.random() * (max));
         return randomNumber;
     }
 
     getFirebaseQuestion(): Promise<IQuestion> {
-        this.checkVersionUpdate();
+        this.checkQuestionUpdate();
         if (this.questions.length != 0) {
             return this.readFromQuestions();
         } else {
@@ -56,21 +67,22 @@ export class QuestionService {
     }
 
     private readAllQuestions(): void {
-        this.getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
+        HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
             this.questions = questions;
             this._settingsService.saveQuestions(questions);
         });
     }
 
-    private checkVersionUpdate(): void {
+    private checkQuestionUpdate(): void {
         if (!this._checked) {
-            this.checkVersion().then((firebaseVersion: number) => {
-                if (this._settingsService.readVersion() < firebaseVersion) {
+            HttpService.getInstance().findLatestQuestionVersion().then((latestQuestionVersion: string) => {
+                if (this._settingsService.readQuestionVersion() < Number(latestQuestionVersion)) {
                     this.readAllQuestions();
-                    this._settingsService.saveVersion(firebaseVersion);
-                    this._checked = true;
+                    this._settingsService.saveQuestionVersion(Number(latestQuestionVersion));
                 }
             });
+            this.checkUpdates();
+            this._checked = true;
         }
     }
 
@@ -87,47 +99,26 @@ export class QuestionService {
         });
     }
 
-    private getQuestions<T>(): Promise<T> {
-        let url = constantsModule.FIREBASE_URL + "questions.json"
-        return httpModule.getJSON(url);
-    }
+    private checkUpdates() {
+        if (!this._checked) {
+            HttpService.getInstance().checkPlayStoreVersion().then((playStoreVersion: string) => {
+                appVersion.getVersionCode().then((appVersion: string) => {
+                    if (Number(playStoreVersion) > Number(appVersion)) {
+                        dialogs.confirm({
+                            title: "Notification",
+                            message: "A latest version of Base Sas Quiz is now available on play store.",
+                            okButtonText: "Upgrade",
+                            cancelButtonText: "Remind me Later"
+                        }).then(proceed => {
+                            if (proceed) {
+                                utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.quiz.sas");
+                            }
+                        });
+                    }
+                });
+            });
+        }
 
-
-    private checkVersion(): Promise<number> {
-        let url = constantsModule.FIREBASE_URL + "version.json"
-        return httpModule.getString(url);
-    }
-
-    private handleErrors(error: Response): Promise<any> {
-        return null;
-    }
-
-    private toQuestions(data: any): Array<IQuestion> {
-        var questions = [];
-        data.forEach((raw) => {
-            questions.push(raw);
-        });
-        return questions;
-    }
-
-    public update(question:IQuestion){
-        let url = constantsModule.FIREBASE_URL + "suggestions.json"
-        httpModule.request({
-            url: url,
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            content: JSON.stringify(question)
-        });
-    }
-
-    public error(error:any){
-        let url = constantsModule.FIREBASE_URL + "error.json"
-        httpModule.request({
-            url: url,
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            content: JSON.stringify(error)
-        });
     }
 }
 

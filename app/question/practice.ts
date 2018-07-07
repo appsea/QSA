@@ -47,7 +47,6 @@ export function onNavigatingTo(args: NavigatedData) {
     if (args.isBackNavigation) {
         return;
     }
-
     const page = <Page>args.object;
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     banner = page.getViewById("banner");

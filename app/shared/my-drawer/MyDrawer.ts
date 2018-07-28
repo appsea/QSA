@@ -37,7 +37,9 @@ export function onNavigationItemTap(args: EventData): void {
 
 export function navigate(args: EventData): void {
     const component = <GridLayout>args.object;
-    const componentRoute = component.get("route");
+    const componentRoute = "question/category";
+    //const componentRoute = component.get("route");
+    console.log("Navigating " + componentRoute);
     topmost().navigate({
         moduleName: componentRoute,
         transition: {

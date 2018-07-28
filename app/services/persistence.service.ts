@@ -1,7 +1,7 @@
 /**
  * Created by rakesh on 15-Nov-2017.
  */
-import {IQuestion} from "../shared/questions.model";
+import {Category, IQuestion} from "../shared/questions.model";
 import * as constantsModule from '../shared/constants';
 import * as appSettings from 'application-settings';
 import {Observable} from "rxjs/Observable";
@@ -38,6 +38,21 @@ export class PersistenceService {
 
     addQuestions(key:string, questions: Array<IQuestion>) {
         appSettings.setString(key, JSON.stringify(questions));
+    }
+
+    readCategories(): Array<Category> {
+        let categories: Array<Category>;
+        try {
+            var key = constantsModule.CATEGORIES;
+            categories = appSettings.hasKey(key) ? JSON.parse(appSettings.getString(key)) : [];
+        } catch (error) {
+            categories = [];
+        }
+        return categories;
+    }
+
+    saveCategories(categories: Array<Category>){
+        appSettings.setString(constantsModule.CATEGORIES, JSON.stringify(categories));
     }
 
 }

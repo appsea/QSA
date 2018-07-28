@@ -1,13 +1,14 @@
 /**
  * Created by rakesh on 15-Nov-2017.
  */
-import {IQuestion} from "../shared/questions.model";
+import {Category, IQuestion} from "../shared/questions.model";
 import {SettingsService} from "./settings.service";
 import {Observable} from "rxjs/Observable";
 import {ConnectionService} from "../shared/connection.service";
 import {HttpService} from "./http.service";
-import {QuizUtil} from "../shared/quiz.util";
+import {CategoryService} from "./category.service";
 import {PersistenceService} from "./persistence.service";
+import {QuizUtil} from "../shared/quiz.util";
 import {QuestionUtil} from "./question.util";
 import * as dialogs from "ui/dialogs";
 import * as constantsModule from '../shared/constants';

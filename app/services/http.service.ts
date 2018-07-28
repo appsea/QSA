@@ -32,6 +32,11 @@ export class HttpService {
         return httpModule.getJSON(url);
     }
 
+    public getCategories<T>(): Promise<T> {
+        let url = constantsModule.FIREBASE_URL + "categories.json"
+        return httpModule.getJSON(url);
+    }
+
     public findLatestQuestionVersion(): Promise<string> {
         let url = constantsModule.FIREBASE_URL + "questionVersion.json"
         return httpModule.getString(url);

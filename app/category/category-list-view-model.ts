@@ -4,6 +4,8 @@ import {CategoryService} from "../services/category.service";
 import {AdService} from "../services/ad.service";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {topmost} from "ui/frame";
+import * as dialogs from "ui/dialogs";
+import * as navigationModule from '../shared/navigation';
 
 export class CategoryListViewModel extends Observable {
     private _categories: Array<Category>;
@@ -13,6 +15,11 @@ export class CategoryListViewModel extends Observable {
         this._categories = CategoryService.getInstance().getCategories();
         console.log("Constructor " + this._categories);
         this.publish();
+    }
+
+    public isSelected(name: string): boolean {
+        console.log("Selected "+ name);
+        return true;
     }
 
     private publish() {
@@ -37,5 +44,24 @@ export class CategoryListViewModel extends Observable {
         const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
         sideDrawer.showDrawer();
         AdService.getInstance().hideAd();
+    }
+
+    popup() {
+        dialogs.action({
+            message: "Please select for practice",
+            cancelButtonText: "Cancel",
+            actions: ["All Questions", "Unanswered", "Incorrectly Answered", "Incorrect and unanswered"]
+        }).then((result) => {
+            if (result == "All Questions") {
+                console.log("The user selected All Questions.");
+                navigationModule.gotoCategoryPractice(this._categories[0].questionNumbers);
+            } else if (result == "Unanswered") {
+                console.log("The user selected Unanswered.");
+            } else if (result == "Incorrectly Answered") {
+                console.log("The user selected Incorrectly Answered.");
+            } else if (result == "Incorrect and unanswered") {
+                console.log("The user Incorrect and unanswered.");
+            }
+        });
     }
 }

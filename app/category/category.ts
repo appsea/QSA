@@ -10,6 +10,7 @@ import {isAndroid, screen} from "platform";
 import {Repeater} from 'ui/repeater';
 import {Label} from 'ui/label';
 import {CategoryListViewModel} from "./category-list-view-model";
+import * as dialogs from "ui/dialogs";
 
 let vm: CategoryListViewModel;
 let _page: any;
@@ -68,6 +69,16 @@ export function goToEditPage(): void {
 
 export function selectCategory(args): void {
     vm.selectCategory(args);
+}
+
+export function isSelected(name: string): boolean {
+    console.log("Selected "+ name);
+    return true;
+}
+
+
+export function popup() {
+    vm.popup();
 }
 
 export function creatingView(args: CreateViewEventData) {

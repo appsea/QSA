@@ -23,6 +23,17 @@ export function	gotoEditPage(state: State) {
     });
 }
 
+export function	gotoCategoryPractice(numbers: Array<number>) {
+    console.log("numbers: " + numbers);
+    frameModule.topmost().navigate({
+        moduleName: 'category/category-practice',
+        context: numbers,
+        transition: {
+            name: "fade"
+        }
+    });
+}
+
 export function	gotoQuestionMap(state: State) {
     frameModule.topmost().navigate({
         moduleName: 'question/map',

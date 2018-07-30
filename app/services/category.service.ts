@@ -61,6 +61,14 @@ export class CategoryService {
     public readCategoriesFromFirebase(): void {
         HttpService.getInstance().getCategories<Array<Category>>().then((categories: Array<Category>) => {
             console.log("Got Categories...." + categories);
+            for (let category of categories) {
+                if (!category.wronglyAnswered) {
+                    category.wronglyAnswered = [];
+                }
+                if (!category.attempted) {
+                    category.attempted = [];
+                }
+            }
             this._categories = categories;
             PersistenceService.getInstance().saveCategories(categories);
         });

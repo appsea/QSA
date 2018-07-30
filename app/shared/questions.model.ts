@@ -34,9 +34,9 @@ export interface State {
 
 export interface Category {
     name: string;
-    questionNumbers: Array<Number>;
-    wronglyAnswered?: Array<Number>;
-    attempted?: Array<Number>;
+    questionNumbers: Array<number>;
+    wronglyAnswered?: Array<number>;
+    attempted?: Array<number>;
 }
 
 export interface Map {

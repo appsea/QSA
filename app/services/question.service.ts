@@ -107,12 +107,12 @@ export class QuestionService {
         return this.getNextQuestionFromCache();
     }
 
-    private getRandomNumber(max: number): number {
+    public getRandomNumber(max: number): number {
         const randomNumber = Math.floor(Math.random() * (max));
         return randomNumber;
     }
 
-    private readAllQuestions(): void {
+    public readAllQuestions(): void {
         HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
             this.questions = questions;
             this._settingsService.saveQuestions(questions);
@@ -144,6 +144,13 @@ export class QuestionService {
     private getNextQuestionFromCache(): Promise<IQuestion> {
         return new Promise<IQuestion>((resolve, reject) => {
             resolve(QUESTIONS[this.getRandomNumber(QUESTIONS.length)]);
+        });
+    }
+
+    public getQuestion(number:number): Promise<IQuestion> {
+        return new Promise<IQuestion>((resolve, reject) => {
+            console.log("Reading Question " + number);
+            resolve(this.questions[number]);
         });
     }
 

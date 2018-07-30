@@ -7,9 +7,9 @@ import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {topmost} from "ui/frame";
 import * as dialogs from "ui/dialogs";
 import * as navigationModule from '../shared/navigation';
-import {CategoryService} from "../services/category.service";
+import {QuizUtil} from "../shared/quiz.util";
 
-export class QuestionViewModel extends Observable {
+export class CategoryPracticeViewModel extends Observable {
     private _questionService: QuestionService;
     private _settingsService: SettingsService;
 
@@ -18,56 +18,32 @@ export class QuestionViewModel extends Observable {
     private _questionNumber: number;
 
     private _mode: string;
-    private static attempt: boolean;
+    private _numbers: Array<number>;
 
-    constructor(mode: string) {
+    constructor(numbers: Array<number>) {
         super();
         this._questionService = QuestionService.getInstance();
-        this._settingsService = SettingsService.getInstance();
-        this._state = this._settingsService.readCache(mode);
-        this._mode = mode;
-        this.showFromState();
+        this._questionService.readAllQuestions();
+        this._numbers = numbers;
+        console.log("Got " + this._numbers.length + " numbers");
+        this.next();
     }
 
-    public showDrawer(){
-        const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
-        sideDrawer.showDrawer();
-        AdService.getInstance().hideAd();
-    }
-
-    private showFromState(): void {
-        if (this._state.questionNumber != 0 && (this._state.questions.length >= this._state.questionNumber || this._state.questionNumber === this._state.totalQuestions)) {
-            this._question = this._state.questions[this._state.questionNumber - 1];
-        } else {
-            this.next();
-        }
+    public next(): void {
+        let randomNumber:number = QuizUtil.getRandomNumber(this._numbers.length);
+        QuestionService.getInstance().getQuestion(this._numbers[randomNumber]).then((que: IQuestion) => {
+            this._question = que;
+            console.log("Publishing...." + this._question.description);
+            this.publish();
+        });
     }
 
     public previous(): void {
-        AdService.getInstance().showInterstitial();
         this.goPrevious();
     }
 
     public goPrevious(){
-        if (this._state.questionNumber > 1) {
-            this._state.questionNumber = this._state.questionNumber - 1;
-            this._question = this._state.questions[this._state.questionNumber - 1];
-            this.saveAndPublish(this._mode, this._state);
-        }
-    }
 
-    next(): void {
-        CategoryService.getInstance().readCategoriesFromFirebase();
-        if ((this._state.questionNumber < this._state.totalQuestions) || this.isPractice()) {
-            if (this._state.questions.length > 0 && this._state.questions.length > this._state.questionNumber) {
-                this._state.questionNumber = this._state.questionNumber + 1;
-                this._question = this._state.questions[this._state.questionNumber - 1];
-                this.saveAndPublish(this._mode, this._state);
-            } else {
-                QuestionViewModel.attempt = true;
-                this.fetchUniqueQuestion();
-            }
-        }
     }
 
     flag(): void{
@@ -75,27 +51,10 @@ export class QuestionViewModel extends Observable {
         this.publish();
     }
 
-    private fetchUniqueQuestion() {
-        this._questionService.getNextQuestion().then((que: IQuestion) => {
-            if (!this.alreadyAsked(que)) {
-                this._state.questionNumber = this._state.questionNumber + 1;
-                this._question = que;
-                this._state.questions.push(this._question);
-                this.saveAndPublish(this._mode, this._state);
-                QuestionViewModel.attempt = false;
-            } else {
-                if (this._settingsService.allQuestionsAsked(this.state.questions.length)) {
-                    this.fetchUniqueQuestion();
-                } else {
-                    dialogs.confirm("Hurray!! You are done practicing all the questions. Click Ok to restart.").then((proceed) => {
-                        if (proceed) {
-                            SettingsService.getInstance().clearCache(this._mode);
-                            navigationModule.toPage("question/practice")
-                        }
-                    });
-                }
-            }
-        });
+    public showDrawer(){
+        const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
+        sideDrawer.showDrawer();
+        AdService.getInstance().hideAd();
     }
 
     alreadyAsked(newQuestion: IQuestion): boolean {
@@ -151,6 +110,7 @@ export class QuestionViewModel extends Observable {
     }
 
     public publish() {
+        console.log("publish...");
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,

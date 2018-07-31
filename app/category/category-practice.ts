@@ -48,6 +48,7 @@ export function onNavigatingTo(args: NavigatedData): void {
     this._page = <Page>args.object;
     numbers = <Array<number>> this._page.navigationContext;
     vm = new CategoryPracticeViewModel(numbers);
+    this._page.bindingContext = vm;
     console.log("Loaded Context...");
 }
 
@@ -115,14 +116,6 @@ export function next(): void {
             scrollView.scrollToVerticalOffset(0, false);
         }
     }
-}
-
-export function submit(): void {
-    vm.submit();
-}
-
-export function quit(): void {
-    vm.quit();
 }
 
 export function showAnswer(): void {

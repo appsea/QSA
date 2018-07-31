@@ -6,6 +6,7 @@ import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {topmost} from "ui/frame";
 import * as dialogs from "ui/dialogs";
 import * as navigationModule from '../shared/navigation';
+import {QuestionService} from "../services/question.service";
 
 export class CategoryListViewModel extends Observable {
     private _categories: Array<Category>;

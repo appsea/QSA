@@ -72,10 +72,10 @@
                         <Button class="btn btn-primary btn-rounded-lg" text="<<" tap="previous" margin="10dpi" width="30%"/>
                         <Button class="btn btn-primary btn-rounded-lg" text=">>" tap="next" margin="10dpi" width="30%"/>
                         <Button class="btn btn-primary btn-rounded-lg"
-                                visibility="{{ question.show ? 'collapsed' : 'visible' }}" text="Answer" tap="showAnswer"
+                                visibility="{{ question && question.show ? 'collapsed' : 'visible' }}" text="Answer" tap="showAnswer"
                                 margin="10dpi" width="30%"/>
                         <Button class="btn btn-primary btn-rounded-lg"
-                                visibility="{{ question.show ? 'visible' : 'collapsed' }}" text="Explain" tap="moveToLast"
+                                visibility="{{ question && question.show ? 'visible' : 'collapsed' }}" text="Explain" tap="moveToLast"
                                 margin="10dpi" width="30%"/>
                     </StackLayout>
                     <StackLayout id="banner">
@@ -99,12 +99,12 @@
                         <Label id="explanationHeader" text="Explanation: " marginTop="20dpi"
                                visibility="{{ question.show ? 'visible' : 'collapsed' }}" style="font-weight: bold"
                                textWrap="true" onswipe="handleSwipe"/>
-                        <Label id="explanation" text="{{ question && question.explanation}}" marginBottom="5dpi" textWrap="true"
+                        <Label id="explanation" text="{{ question && question.description}}" marginBottom="5dpi" textWrap="true"
                                onswipe="handleSwipe" visibility="{{ question.show ? 'visible' : 'collapsed' }}"/>
                         <Label id="defaultExplanation"
                                text="Explanation Coming Soon. Feel free to update it yourself by clicking on following button:)"
                                marginBottom="5dpi" textWrap="true" onswipe="handleSwipe"
-                               visibility="{{ question.show && !question.explanation ? 'visible' : 'collapsed' }}"/>
+                               visibility="{{ question.show && !question.description ? 'visible' : 'collapsed' }}"/>
                         <Button id="suggestionButton" text="Improve Question" class="btn btn-primary" tap="goToEditPage"
                                 visibility="{{ question.show ? 'visible' : 'collapsed' }}"/>
                     </StackLayout>

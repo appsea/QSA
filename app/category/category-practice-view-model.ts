@@ -5,80 +5,79 @@ import {SettingsService} from "../services/settings.service";
 import {AdService} from "../services/ad.service";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {topmost} from "ui/frame";
-import * as dialogs from "ui/dialogs";
 import * as navigationModule from '../shared/navigation';
 import {QuizUtil} from "../shared/quiz.util";
 
 export class CategoryPracticeViewModel extends Observable {
     private _questionService: QuestionService;
-    private _settingsService: SettingsService;
 
     private _question: IQuestion;
-    private _state: State;
-    private _questionNumber: number;
+    private _questionNumber: number = 0;
+    private _cache: Array<IQuestion> = [];
 
     private _mode: string;
     private _numbers: Array<number>;
 
     constructor(numbers: Array<number>) {
         super();
+        console.log("Got 1");
         this._questionService = QuestionService.getInstance();
-        this._questionService.readAllQuestions();
+        console.log("Got 2");
+        this._questionService.getFirebaseQuestion().then(que => {
+        });
+        console.log("Got 3");
         this._numbers = numbers;
+        console.log("Got 4");
         console.log("Got " + this._numbers.length + " numbers");
         this.next();
     }
 
     public next(): void {
-        let randomNumber:number = QuizUtil.getRandomNumber(this._numbers.length);
-        QuestionService.getInstance().getQuestion(this._numbers[randomNumber]).then((que: IQuestion) => {
-            this._question = que;
-            console.log("Publishing...." + this._question.description);
+        if (this._cache.length == 0 || this._questionNumber < this._cache.length) {
+            let randomNumber: number = QuizUtil.getRandomNumber(this._numbers.length);
+            console.log("Reading... " + randomNumber);
+            QuestionService.getInstance().getQuestion(this._numbers[randomNumber]).then((que: IQuestion) => {
+                this._questionNumber = this._questionNumber + 1;
+                this._question = que;
+                this._cache.push(this._question);
+                console.log("Publishing...." + this._questionNumber);
+                console.log("this._questionNumber: " + this._questionNumber + " length: " + this._cache.length);
+                this.publish();
+            });
+        } else {
+            this._question = this._cache[this._questionNumber];
+            this._questionNumber = this._questionNumber + 1;
             this.publish();
-        });
+            console.log("this._questionNumber: " + this._questionNumber + " length: " + this._cache.length);
+        }
     }
 
     public previous(): void {
         this.goPrevious();
     }
 
-    public goPrevious(){
-
+    public goPrevious() {
+        if (this._questionNumber > 1) {
+            this._questionNumber = this._questionNumber - 1;
+            console.log("this._questionNumber: " + this._questionNumber + " this._cache " + this._cache.length);
+            this._question = this._cache[this._questionNumber - 1];
+            this.publish();
+        }
     }
 
-    flag(): void{
+    flag(): void {
         this._questionService.handleFlagQuestion(this._question);
         this.publish();
     }
 
-    public showDrawer(){
+    public showDrawer() {
         const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
         sideDrawer.showDrawer();
         AdService.getInstance().hideAd();
     }
 
     alreadyAsked(newQuestion: IQuestion): boolean {
-        let result = this.state.questions.find(question => question.number === newQuestion.number);
-        let alreadyAsked = result != null;
-        return alreadyAsked;
-    }
-
-    quit(): void {
-        dialogs.confirm("Are you sure you want to quit?").then((proceed) => {
-            if (proceed) {
-                AdService.getInstance().showInterstitial();
-                this.showResult();
-            }
-        });
-    }
-
-    submit(): void {
-        dialogs.confirm("Are you sure you want to submit?").then((proceed) => {
-            if (proceed) {
-                AdService.getInstance().showInterstitial();
-                this.showResult();
-            }
-        });
+        return false;
     }
 
     get question() {
@@ -88,12 +87,8 @@ export class CategoryPracticeViewModel extends Observable {
         return this._question;
     }
 
-    get state() {
-        return this._state;
-    }
-
     get allQuestionsAsked() {
-        return this._state.questions.length == this._state.totalQuestions;
+        return false;
     }
 
     isPractice(): boolean {
@@ -105,7 +100,7 @@ export class CategoryPracticeViewModel extends Observable {
     }
 
     get questionNumber() {
-        this._questionNumber = this._state.questionNumber;
+        console.log("this._questionNumber " + this._questionNumber);
         return this._questionNumber;
     }
 
@@ -120,27 +115,16 @@ export class CategoryPracticeViewModel extends Observable {
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
+            propertyName: 'questionNumber',
+            value: this._questionNumber
+        });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
             propertyName: 'options',
             value: this._question.options
         });
-        this.notify({
-            object: this,
-            eventName: Observable.propertyChangeEvent,
-            propertyName: 'state',
-            value: this._state
-        });
-        this.notify({
-            object: this,
-            eventName: Observable.propertyChangeEvent,
-            propertyName: 'questionNumber',
-            value: this._state.questionNumber
-        });
-    }
-
-    public showResult() {
-        this._settingsService.clearCache(this._mode);
-        this._state.mode = this._mode;
-        navigationModule.gotoResultPage(this._state);
+        console.log("publish done...");
     }
 
     showAnswer(): void {
@@ -164,22 +148,11 @@ export class CategoryPracticeViewModel extends Observable {
             });
             this.question.skipped = false;
         }
-        this.saveAndPublish(this._mode, this._state);
         QuestionService.getInstance().handleWrongQuestions(this.question);
     }
 
-    public saveAndPublish(_mode: string, _state: State) {
-        this._settingsService.saveCache(this._mode, this._state);
-        this.publish();
-    }
-
-    public showMap() {
-        this._state.mode = this._mode;
-        navigationModule.gotoQuestionMap(this._state);
-    }
-
     public goToEditPage() {
-        this._state.mode = this._mode;
-        navigationModule.gotoEditPage(this._state)
+        //this._state.mode = this._mode;
+        //navigationModule.gotoEditPage(this._state)
     }
 }

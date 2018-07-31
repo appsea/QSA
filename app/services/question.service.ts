@@ -149,7 +149,7 @@ export class QuestionService {
 
     public getQuestion(number:number): Promise<IQuestion> {
         return new Promise<IQuestion>((resolve, reject) => {
-            console.log("Reading Question " + number);
+            console.log("Reading Question " + number + " " +this.questions.length);
             resolve(this.questions[number]);
         });
     }

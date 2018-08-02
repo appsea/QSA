@@ -49,7 +49,7 @@ export function onNavigatingTo(args: NavigatedData): void {
     numbers = <Array<number>> this._page.navigationContext;
     vm = new CategoryPracticeViewModel(numbers);
     this._page.bindingContext = vm;
-    console.log("Loaded Context...");
+    console.log("Loaded Context....");
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {

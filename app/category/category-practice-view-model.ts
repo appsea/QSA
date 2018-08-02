@@ -5,8 +5,8 @@ import {SettingsService} from "../services/settings.service";
 import {AdService} from "../services/ad.service";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {topmost} from "ui/frame";
-import * as navigationModule from '../shared/navigation';
 import {QuizUtil} from "../shared/quiz.util";
+import * as navigationModule from '../shared/navigation';
 
 export class CategoryPracticeViewModel extends Observable {
     private _questionService: QuestionService;
@@ -20,35 +20,25 @@ export class CategoryPracticeViewModel extends Observable {
 
     constructor(numbers: Array<number>) {
         super();
-        console.log("Got 1");
         this._questionService = QuestionService.getInstance();
-        console.log("Got 2");
-        this._questionService.getFirebaseQuestion().then(que => {
-        });
-        console.log("Got 3");
+        this._questionService.getFirebaseQuestion().then(que => {});
         this._numbers = numbers;
-        console.log("Got 4");
-        console.log("Got " + this._numbers.length + " numbers");
         this.next();
     }
 
     public next(): void {
-        if (this._cache.length == 0 || this._questionNumber < this._cache.length) {
+        if (this._cache.length == 0 || this._questionNumber >= this._cache.length) {
             let randomNumber: number = QuizUtil.getRandomNumber(this._numbers.length);
-            console.log("Reading... " + randomNumber);
             QuestionService.getInstance().getQuestion(this._numbers[randomNumber]).then((que: IQuestion) => {
                 this._questionNumber = this._questionNumber + 1;
                 this._question = que;
                 this._cache.push(this._question);
-                console.log("Publishing...." + this._questionNumber);
-                console.log("this._questionNumber: " + this._questionNumber + " length: " + this._cache.length);
                 this.publish();
             });
         } else {
-            this._question = this._cache[this._questionNumber];
             this._questionNumber = this._questionNumber + 1;
+            this._question = this._cache[this._questionNumber-1];
             this.publish();
-            console.log("this._questionNumber: " + this._questionNumber + " length: " + this._cache.length);
         }
     }
 
@@ -105,7 +95,6 @@ export class CategoryPracticeViewModel extends Observable {
     }
 
     public publish() {
-        console.log("publish...");
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
@@ -124,7 +113,6 @@ export class CategoryPracticeViewModel extends Observable {
             propertyName: 'options',
             value: this._question.options
         });
-        console.log("publish done...");
     }
 
     showAnswer(): void {
@@ -152,7 +140,7 @@ export class CategoryPracticeViewModel extends Observable {
     }
 
     public goToEditPage() {
-        //this._state.mode = this._mode;
-        //navigationModule.gotoEditPage(this._state)
+        let state: State = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
+        navigationModule.gotoEditPage(state);
     }
 }

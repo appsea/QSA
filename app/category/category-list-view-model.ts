@@ -10,6 +10,7 @@ import {QuestionService} from "../services/question.service";
 
 export class CategoryListViewModel extends Observable {
     private _categories: Array<Category>;
+    private _selectedCategory: Category;
 
     constructor() {
         super();
@@ -37,8 +38,9 @@ export class CategoryListViewModel extends Observable {
     }
 
     selectCategory(args: any) {
-        let selectedCategory: Category = args.view.bindingContext;
-        console.log("SelectedCategory : " + selectedCategory.name);
+        args.view.color = "red";
+        this._selectedCategory = args.view.bindingContext;
+        console.log("SelectedCategory : " + this._selectedCategory.name);
     }
 
     public showDrawer(){
@@ -48,20 +50,24 @@ export class CategoryListViewModel extends Observable {
     }
 
     popup() {
+        let actions = ["All Questions", "Unanswered", "Incorrect and unanswered"];
+        if(true){
+            actions.push("true");
+        }
         dialogs.action({
             message: "Please select for practice",
             cancelButtonText: "Cancel",
-            actions: ["All Questions", "Unanswered", "Incorrectly Answered", "Incorrect and unanswered"]
+            actions: actions
         }).then((result) => {
             if (result == "All Questions") {
                 console.log("The user selected All Questions.");
-                navigationModule.gotoCategoryPractice(this._categories[0].questionNumbers);
+                navigationModule.gotoCategoryPractice(this._selectedCategory.questionNumbers);
             } else if (result == "Unanswered") {
-                console.log("The user selected Unanswered.");
+                navigationModule.gotoCategoryPractice(this._selectedCategory.questionNumbers);
             } else if (result == "Incorrectly Answered") {
-                console.log("The user selected Incorrectly Answered.");
+                navigationModule.gotoCategoryPractice(this._selectedCategory.wronglyAnswered);
             } else if (result == "Incorrect and unanswered") {
-                console.log("The user Incorrect and unanswered.");
+                navigationModule.gotoCategoryPractice(this._selectedCategory.wronglyAnswered);
             }
         });
     }

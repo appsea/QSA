@@ -15,6 +15,7 @@ import * as dialogs from "ui/dialogs";
 let vm: CategoryListViewModel;
 let _page: any;
 let banner: any;
+let categoryList: Repeater;
 
 export function onPageLoaded(args: EventData): void {
     if (!isAndroid) {
@@ -45,6 +46,7 @@ export function onNavigatingTo(args: NavigatedData) {
     const page = <Page>args.object;
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     _page = page;
+    categoryList = _page.getViewById("categoryList");
     vm = new CategoryListViewModel();
     page.bindingContext = vm;
 }
@@ -63,19 +65,15 @@ export function onDrawerButtonTap(args: EventData) {
     vm.showDrawer();
 }
 
-export function goToEditPage(): void {
-    //vm.goToEditPage();
-}
-
 export function selectCategory(args): void {
     vm.selectCategory(args);
+    //categoryList.refresh();
 }
 
 export function isSelected(name: string): boolean {
     console.log("Selected "+ name);
     return true;
 }
-
 
 export function popup() {
     vm.popup();

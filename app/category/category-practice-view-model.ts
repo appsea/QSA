@@ -49,7 +49,6 @@ export class CategoryPracticeViewModel extends Observable {
     public goPrevious() {
         if (this._questionNumber > 1) {
             this._questionNumber = this._questionNumber - 1;
-            console.log("this._questionNumber: " + this._questionNumber + " this._cache " + this._cache.length);
             this._question = this._cache[this._questionNumber - 1];
             this.publish();
         }
@@ -90,7 +89,6 @@ export class CategoryPracticeViewModel extends Observable {
     }
 
     get questionNumber() {
-        console.log("this._questionNumber " + this._questionNumber);
         return this._questionNumber;
     }
 

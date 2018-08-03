@@ -60,7 +60,7 @@
                     <StackLayout class="margin" onswipe="handleSwipe">
                         <Repeater items="{{ categories }}" row="1" id="categoryList" onswipe="handleSwipe" class="category-background">
                             <Repeater.itemTemplate>
-                                <StackLayout tap="selectCategory" onswipe="handleSwipe" class="category-background">
+                                <StackLayout tap="selectCategory" onswipe="handleSwipe" class="{{ selected? 'category-background-selected': 'category-background'}}">
                                     <Label text="{{name}}" class="{{ attempted.length===0? 'category-todo-heading': 'category-completed-heading' }}"
                                            textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
                                            onswipe="handleSwipe"/>

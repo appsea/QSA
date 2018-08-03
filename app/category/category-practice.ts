@@ -32,7 +32,7 @@ export function onPageLoaded(args: EventData): void {
     resetBanner();
 }
 
-export function resetBanner(){
+export function resetBanner() {
     if (banner) {
         banner.height = "0";
     }
@@ -42,14 +42,13 @@ export function resetBanner(){
 * Use the "onNavigatingTo" handler to initialize the page binding context.
 *************************************************************/
 export function onNavigatingTo(args: NavigatedData): void {
-    if(args.isBackNavigation){
+    if (args.isBackNavigation) {
         return;
     }
     this._page = <Page>args.object;
     numbers = <Array<number>> this._page.navigationContext;
     vm = new CategoryPracticeViewModel(numbers);
     this._page.bindingContext = vm;
-    console.log("Loaded Context....");
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
@@ -127,6 +126,7 @@ export function showAnswer(): void {
 export function selectOption(args): void {
     vm.showAnswer();
     vm.selectOption(args);
+    console.log("Refreshing..");
     optionList.refresh();
     moveToLast();
 }

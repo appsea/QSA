@@ -37,6 +37,7 @@ export interface Category {
     questionNumbers: Array<number>;
     wronglyAnswered?: Array<number>;
     attempted?: Array<number>;
+    selected?: boolean;
 }
 
 export interface Map {

@@ -24,10 +24,10 @@ export function	gotoEditPage(state: State) {
 }
 
 export function	gotoCategoryPractice(numbers: Array<number>) {
-    console.log("numbers: " + numbers);
+    let set = new Set(numbers);
     frameModule.topmost().navigate({
         moduleName: 'category/category-practice',
-        context: numbers,
+        context: set,
         transition: {
             name: "fade"
         }

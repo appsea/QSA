@@ -126,7 +126,7 @@ export function showAnswer(): void {
 export function selectOption(args): void {
     vm.showAnswer();
     vm.selectOption(args);
-    console.log("Refreshing..");
+    console.log("Refreshing...");
     optionList.refresh();
     moveToLast();
 }

@@ -31,17 +31,11 @@ export class CategoryListViewModel extends Observable {
     }
 
     selectCategory(args: any) {
-        args.view.color = "red";
         let selectedCategory = args.view.bindingContext;
         if (selectedCategory.selected) {
             selectedCategory.selected = false;
         } else {
             selectedCategory.selected = true;
-        }
-        if (this._selectedCategories.indexOf(selectedCategory) > -1) {
-            this._selectedCategories = this._selectedCategories.filter(c => c !== selectedCategory);
-        } else {
-            this._selectedCategories.push(selectedCategory);
         }
     }
 

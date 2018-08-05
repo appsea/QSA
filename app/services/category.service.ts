@@ -5,7 +5,7 @@ import {HttpService} from "./http.service";
 
 export class CategoryService {
 
-    private _categories: Array<Category>;
+    private _categories: Array<Category> = [];
 
     private static _instance: CategoryService = new CategoryService();
 
@@ -28,6 +28,8 @@ export class CategoryService {
     }
 
     attemptQuestion(question: IQuestion) {
+        console.log("Attempting..." + this._categories.length);
+        this.readCategoriesFromFirebase();
         for (let category of this._categories) {
             if (!category.wronglyAnswered) {
                 category.wronglyAnswered = [];
@@ -36,7 +38,9 @@ export class CategoryService {
                 category.attempted = [];
             }
             if (category.questionNumbers.indexOf(+question.number) > -1) {
-                category.attempted.push(+question.number);
+                if (category.attempted.indexOf(+question.number) === -1) {
+                    category.attempted.push(+question.number);
+                }
                 if (QuestionUtil.isWrong(question)) {
                     if (category.wronglyAnswered.indexOf(+question.number) < 0) {
                         category.wronglyAnswered.push(+question.number);
@@ -45,8 +49,8 @@ export class CategoryService {
                     category.wronglyAnswered = category.wronglyAnswered.filter(number => number !== +question.number);
                 }
             }
+            PersistenceService.getInstance().saveCategories(this._categories);
         }
-        PersistenceService.getInstance().saveCategories(this._categories);
     }
 
     public getCategories(): Array<Category> {
@@ -64,10 +68,29 @@ export class CategoryService {
                     category.attempted = [];
                 }
             }
-            this._categories = categories;
-            PersistenceService.getInstance().saveCategories(categories);
+            this.mergeWithSaved(categories);
         });
+
     }
 
+    public mergeWithSaved(firebaseCategories: Array<Category>) { // Our mergeWithSaved function
+        let savedCategories: Array<Category> = PersistenceService.getInstance().readCategories();
+        let merged: Array<Category> = [];
+        for (let category of firebaseCategories) {      // for every property in obj1
+            if (this.contains(category, savedCategories)) {
+                let savedCategory = this.getCategory(category.name);
+                savedCategory.questionNumbers = category.questionNumbers;
+                merged.push(savedCategory);
+            } else {
+                merged.push(category);
+            }
+        }
+        this._categories = merged;
+        console.log("Saving..." + firebaseCategories.length);
+        PersistenceService.getInstance().saveCategories(merged);
+    }
 
+    public contains(search: Category, categories: Array<Category>): boolean {
+        return categories.filter(c => c.name === search.name).length > 0;
+    }
 }

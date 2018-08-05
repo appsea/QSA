@@ -67,12 +67,7 @@ export function onDrawerButtonTap(args: EventData) {
 
 export function selectCategory(args): void {
     vm.selectCategory(args);
-    console.log("Refreshing..");
     categoryList.refresh();
-}
-
-export function isSelected(name: string): boolean {
-    return vm.isSelected(name);
 }
 
 export function popup() {

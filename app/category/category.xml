@@ -61,7 +61,7 @@
                         <Repeater items="{{ categories }}" row="1" id="categoryList" onswipe="handleSwipe" class="category-background">
                             <Repeater.itemTemplate>
                                 <StackLayout tap="selectCategory" onswipe="handleSwipe" class="{{ selected? 'category-background-selected': 'category-background'}}">
-                                    <Label text="{{name}}" class="{{ attempted.length===0? 'category-todo-heading': 'category-completed-heading' }}"
+                                    <Label text="{{name}}" class="{{ attempted.length===0? 'category-todo-heading': 'category-complete-heading' }}"
                                            textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
                                            onswipe="handleSwipe"/>
                                     <Label visibility="{{ attempted.length>0 ? 'visible' : 'collapsed' }}" class="category-stats">

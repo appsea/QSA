@@ -24,10 +24,9 @@ export function	gotoEditPage(state: State) {
 }
 
 export function	gotoCategoryPractice(numbers: Array<number>) {
-    let set = new Set(numbers);
     frameModule.topmost().navigate({
         moduleName: 'category/category-practice',
-        context: set,
+        context: numbers,
         transition: {
             name: "fade"
         }

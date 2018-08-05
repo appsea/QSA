@@ -19,6 +19,7 @@ import * as Toast from 'nativescript-toast';
 export class QuestionService {
 
     static getInstance(): QuestionService {
+        CategoryService.getInstance().readCategoriesFromFirebase();
         return QuestionService._instance;
     }
 
@@ -44,6 +45,7 @@ export class QuestionService {
         } else {
             this.remove(constantsModule.WRONG_QUESTION, question, wrongQuestions);
         }
+        CategoryService.getInstance().attemptQuestion(question);
     }
 
     handleFlagQuestion(question: IQuestion) {

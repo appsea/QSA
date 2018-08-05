@@ -7,6 +7,7 @@ import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {topmost} from "ui/frame";
 import {QuizUtil} from "../shared/quiz.util";
 import * as navigationModule from '../shared/navigation';
+import {CategoryService} from "../services/category.service";
 
 export class CategoryPracticeViewModel extends Observable {
     private _questionService: QuestionService;
@@ -116,6 +117,7 @@ export class CategoryPracticeViewModel extends Observable {
     showAnswer(): void {
         this.question.options.forEach(option => option.show = true);
         this.question.show = true;
+        CategoryService.getInstance().attemptQuestion(this.question);
         this.publish();
     }
 

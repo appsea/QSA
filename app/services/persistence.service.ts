@@ -22,7 +22,7 @@ export class PersistenceService {
         return this.readQuestions(constantsModule.FLAG_QUESTION);
     }
 
-    private readQuestions(key:string): Array<IQuestion> {
+    private readQuestions(key: string): Array<IQuestion> {
         let questions: Array<IQuestion>;
         try {
             questions = this.hasBookmarkedQuestions(key) ? JSON.parse(appSettings.getString(key)) : [];
@@ -32,11 +32,11 @@ export class PersistenceService {
         return questions;
     }
 
-    private hasBookmarkedQuestions(key:string): boolean {
+    private hasBookmarkedQuestions(key: string): boolean {
         return appSettings.hasKey(key);
     }
 
-    addQuestions(key:string, questions: Array<IQuestion>) {
+    addQuestions(key: string, questions: Array<IQuestion>) {
         appSettings.setString(key, JSON.stringify(questions));
     }
 
@@ -51,7 +51,11 @@ export class PersistenceService {
         return categories;
     }
 
-    saveCategories(categories: Array<Category>){
+    hasCategories(): boolean {
+        return appSettings.hasKey(constantsModule.CATEGORIES);
+    }
+
+    saveCategories(categories: Array<Category>) {
         appSettings.setString(constantsModule.CATEGORIES, JSON.stringify(categories));
     }
 

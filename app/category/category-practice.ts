@@ -45,10 +45,13 @@ export function onNavigatingTo(args: NavigatedData): void {
     if (args.isBackNavigation) {
         return;
     }
-    this._page = <Page>args.object;
-    numbers = <Array<number>> this._page.navigationContext;
+    console.log("Inside....");
+    _page = <Page>args.object;
+    numbers = <Array<number>> _page.navigationContext;
+    optionList = _page.getViewById("optionList");
+    scrollView = _page.getViewById("scrollView");
     vm = new CategoryPracticeViewModel(numbers);
-    this._page.bindingContext = vm;
+    _page.bindingContext = vm;
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {

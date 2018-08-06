@@ -38,6 +38,7 @@ export interface Category {
     wronglyAnswered?: Array<number>;
     attempted?: Array<number>;
     selected?: boolean;
+    percentage?: string;
 }
 
 export interface Map {

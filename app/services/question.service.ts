@@ -119,6 +119,7 @@ export class QuestionService {
             this.questions = questions;
             this._settingsService.saveQuestions(questions);
         });
+        CategoryService.getInstance().readCategoriesFromFirebase();
     }
 
     private checkQuestionUpdate(): void {

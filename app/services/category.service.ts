@@ -48,6 +48,7 @@ export class CategoryService {
                 } else {
                     category.wronglyAnswered = category.wronglyAnswered.filter(number => number !== +question.number);
                 }
+                category.percentage = ((1 - category.wronglyAnswered.length / category.attempted.length) * 100).toFixed(2);
             }
             PersistenceService.getInstance().saveCategories(this._categories);
         }
@@ -70,7 +71,6 @@ export class CategoryService {
             }
             this.mergeWithSaved(categories);
         });
-
     }
 
     public mergeWithSaved(firebaseCategories: Array<Category>) { // Our mergeWithSaved function

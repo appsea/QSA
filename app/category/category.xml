@@ -71,9 +71,9 @@
                                                     <span text=" {{attempted.length}} "/>
                                                     <span text=" of "/>
                                                     <span text="{{ questionNumbers.length }}"/>
-                                                    <span text=" Answered,"/>
-                                                    <span text=" {{(1-wronglyAnswered.length/ attempted.length)*100}} "/>
-                                                    <span text=" % Accuracy"/>
+                                                    <span text=" Answered, "/>
+                                                    <span text=" {{ percentage }} "/>
+                                                    <span text="% Accuracy"/>
                                                 </formattedString.spans>
                                             </formattedString>
                                         </label.formattedText>

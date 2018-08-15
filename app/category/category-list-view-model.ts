@@ -13,6 +13,7 @@ export class CategoryListViewModel extends Observable {
 
     constructor() {
         super();
+        console.log("Loading....");
         this._categories = CategoryService.getInstance().getCategories();
         this.publish();
     }

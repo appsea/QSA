@@ -150,9 +150,11 @@ export class QuestionService {
         });
     }
 
-    public getQuestion(number:number): Promise<IQuestion> {
+    public getQuestion(number: number): Promise<IQuestion> {
         return new Promise<IQuestion>((resolve, reject) => {
-            resolve(this.questions[number]);
+            console.log("Got Number: " + number);
+            console.log("Found " + this.questions.filter(q => (+q.number === number))[0].number);
+            resolve((this.questions.filter(q => (+q.number === number))[0]));
         });
     }
 

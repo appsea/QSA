@@ -29,7 +29,6 @@ export class CategoryService {
 
     attemptQuestion(question: IQuestion) {
         console.log("Attempting..." + this._categories.length);
-        this.readCategoriesFromFirebase();
         for (let category of this._categories) {
             if (!category.wronglyAnswered) {
                 category.wronglyAnswered = [];
@@ -38,6 +37,7 @@ export class CategoryService {
                 category.attempted = [];
             }
             if (category.questionNumbers.indexOf(+question.number) > -1) {
+                console.log("Updating " + category.name);
                 if (category.attempted.indexOf(+question.number) === -1) {
                     category.attempted.push(+question.number);
                 }
@@ -86,7 +86,6 @@ export class CategoryService {
             }
         }
         this._categories = merged;
-        console.log("Saving..." + firebaseCategories.length);
         PersistenceService.getInstance().saveCategories(merged);
     }
 

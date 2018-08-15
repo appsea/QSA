@@ -30,7 +30,7 @@ export class CategoryPracticeViewModel extends Observable {
     public next(): void {
         if (this._cache.length == 0 || this._questionNumber >= this._cache.length) {
             let randomNumber: number = QuizUtil.getRandomNumber(this._numbers.length);
-            QuestionService.getInstance().getQuestion(this._numbers[randomNumber]).then((que: IQuestion) => {
+            QuestionService.getInstance().getQuestion(this._numbers[randomNumber-1]).then((que: IQuestion) => {
                 this._questionNumber = this._questionNumber + 1;
                 this._question = que;
                 this._cache.push(this._question);
@@ -117,7 +117,6 @@ export class CategoryPracticeViewModel extends Observable {
     showAnswer(): void {
         this.question.options.forEach(option => option.show = true);
         this.question.show = true;
-        CategoryService.getInstance().attemptQuestion(this.question);
         this.publish();
     }
 

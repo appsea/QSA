@@ -51,20 +51,25 @@
                 </StackLayout>
                 <StackLayout dock="bottom" class="category-full-background">
                     <StackLayout class="margin" orientation="horizontal" horizontalAlignment="center">
-                        <Button class="btn btn-primary btn-rounded-lg" text="LaunchIt" tap="popup" margin="10dpi" width="80%"/>
+                        <Button class="btn btn-primary btn-rounded-lg" text="Start" tap="start" margin="10dpi"
+                                width="80%"/>
                     </StackLayout>
                     <StackLayout id="banner">
                     </StackLayout>
                 </StackLayout>
                 <ScrollView id="scrollView" onswipe="handleSwipe" class="category-full-background">
                     <StackLayout class="margin" onswipe="handleSwipe">
-                        <Repeater items="{{ categories }}" row="1" id="categoryList" onswipe="handleSwipe" class="category-background">
+                        <Repeater items="{{ categories }}" row="1" id="categoryList" onswipe="handleSwipe"
+                                  class="category-background">
                             <Repeater.itemTemplate>
-                                <StackLayout tap="selectCategory" onswipe="handleSwipe" class="{{ selected? 'category-background-selected': 'category-background'}}">
-                                    <Label text="{{name}}" class="{{ attempted.length===0? 'category-todo-heading': 'category-complete-heading' }}"
+                                <StackLayout tap="selectCategory" onswipe="handleSwipe"
+                                             class="{{ selected? 'category-background-selected': 'category-background'}}">
+                                    <Label text="{{name}}"
+                                           class="{{ attempted.length === questionNumbers.length && percentage > 40  ? 'category-complete-heading':'category-todo-heading' }}"
                                            textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
                                            onswipe="handleSwipe"/>
-                                    <Label visibility="{{ attempted.length>0 ? 'visible' : 'collapsed' }}" class="category-stats">
+                                    <Label visibility="{{ attempted.length>0 ? 'visible' : 'collapsed' }}"
+                                           class="category-stats">
                                         <label.formattedText>
                                             <formattedString>
                                                 <formattedString.spans>
@@ -78,7 +83,8 @@
                                             </formattedString>
                                         </label.formattedText>
                                     </Label>
-                                    <Label visibility="{{ attempted.length===0 ? 'visible' : 'collapsed' }}" class="category-stats">
+                                    <Label visibility="{{ attempted.length===0 ? 'visible' : 'collapsed' }}"
+                                           class="category-stats">
                                         <label.formattedText>
                                             <formattedString>
                                                 <formattedString.spans>

@@ -70,8 +70,8 @@ export function selectCategory(args): void {
     categoryList.refresh();
 }
 
-export function popup() {
-    vm.popup();
+export function start() {
+    vm.start();
 }
 
 export function creatingView(args: CreateViewEventData) {

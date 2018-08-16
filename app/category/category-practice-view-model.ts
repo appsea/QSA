@@ -8,6 +8,7 @@ import {topmost} from "ui/frame";
 import {QuizUtil} from "../shared/quiz.util";
 import * as navigationModule from '../shared/navigation';
 import {CategoryService} from "../services/category.service";
+import * as dialogs from "ui/dialogs";
 
 export class CategoryPracticeViewModel extends Observable {
     private _questionService: QuestionService;
@@ -22,23 +23,30 @@ export class CategoryPracticeViewModel extends Observable {
     constructor(numbers: Array<number>) {
         super();
         this._questionService = QuestionService.getInstance();
-        this._questionService.getFirebaseQuestion().then(que => {});
         this._numbers = numbers;
         this.next();
     }
 
     public next(): void {
         if (this._cache.length == 0 || this._questionNumber >= this._cache.length) {
-            let randomNumber: number = QuizUtil.getRandomNumber(this._numbers.length);
-            QuestionService.getInstance().getQuestion(this._numbers[randomNumber-1]).then((que: IQuestion) => {
-                this._questionNumber = this._questionNumber + 1;
-                this._question = que;
-                this._cache.push(this._question);
-                this.publish();
-            });
+            if(this._cache.length < this._numbers.length){
+                let randomNumber: number = QuizUtil.getRandomNumber(this._numbers.length);
+                QuestionService.getInstance().getQuestion(this._numbers[randomNumber - 1]).then((que: IQuestion) => {
+                    this._questionNumber = this._questionNumber + 1;
+                    this._question = que;
+                    this._cache.push(this._question);
+                    this.publish();
+                });
+            }else{
+                dialogs.confirm("Hurray!! You are done practicing all the questions for category. Click Ok to go back to categories home page?").then((proceed) => {
+                    if (proceed) {
+                        navigationModule.toPage("category/category")
+                    }
+                });
+            }
         } else {
             this._questionNumber = this._questionNumber + 1;
-            this._question = this._cache[this._questionNumber-1];
+            this._question = this._cache[this._questionNumber - 1];
             this.publish();
         }
     }

@@ -10,7 +10,6 @@ export class CategoryService {
     private static _instance: CategoryService = new CategoryService();
 
     private constructor() {
-        this.readCategoriesFromFirebase();
     }
 
     static getInstance(): CategoryService {
@@ -73,11 +72,11 @@ export class CategoryService {
         });
     }
 
-    public mergeWithSaved(firebaseCategories: Array<Category>) { // Our mergeWithSaved function
-        let savedCategories: Array<Category> = PersistenceService.getInstance().readCategories();
+    public mergeWithSaved(newCategories: Array<Category>) { // Our mergeWithSaved function
+        let existingCategories: Array<Category> = PersistenceService.getInstance().readCategories();
         let merged: Array<Category> = [];
-        for (let category of firebaseCategories) {      // for every property in obj1
-            if (this.contains(category, savedCategories)) {
+        for (let category of newCategories) {      // for every property in obj1
+            if (this.contains(category, existingCategories)) {
                 let savedCategory = this.getCategory(category.name);
                 savedCategory.questionNumbers = category.questionNumbers;
                 merged.push(savedCategory);

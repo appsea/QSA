@@ -154,7 +154,8 @@ export class QuestionService {
         return new Promise<IQuestion>((resolve, reject) => {
             console.log("Got Number: " + number);
             console.log("Found " + this.questions.filter(q => (+q.number === number))[0].number);
-            resolve((this.questions.filter(q => (+q.number === number))[0]));
+            console.log("Index " + this.questions[number-1].number);
+            resolve(this.questions[number-1]);
         });
     }
 

@@ -46,7 +46,15 @@ export class CategoryListViewModel extends Observable {
         AdService.getInstance().hideAd();
     }
 
-    popup() {
+    start() {
+        if (this.categories.filter(c => c.selected).length > 0) {
+            this.showOptions();
+        } else {
+            dialogs.alert("Please select at least one category!!!");
+        }
+    }
+
+    private showOptions() {
         let actions = ["All Questions", "Unanswered"];
         if (this.categories.filter(ca => ca.selected && ca.wronglyAnswered.length > 0).length > 0) {
             actions.push("Incorrect Answered");

@@ -45,11 +45,11 @@ export function onNavigatingTo(args: NavigatedData): void {
     if (args.isBackNavigation) {
         return;
     }
-    console.log("Inside....");
     _page = <Page>args.object;
     numbers = <Array<number>> _page.navigationContext;
     optionList = _page.getViewById("optionList");
     scrollView = _page.getViewById("scrollView");
+    banner = _page.getViewById("banner");
     vm = new CategoryPracticeViewModel(numbers);
     _page.bindingContext = vm;
 }
@@ -129,7 +129,6 @@ export function showAnswer(): void {
 export function selectOption(args): void {
     vm.showAnswer();
     vm.selectOption(args);
-    console.log("Refreshing...");
     optionList.refresh();
     moveToLast();
 }

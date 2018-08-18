@@ -13,7 +13,6 @@ export class CategoryListViewModel extends Observable {
 
     constructor() {
         super();
-        console.log("Loading....");
         this._categories = CategoryService.getInstance().getCategories();
         this.publish();
     }
@@ -57,7 +56,7 @@ export class CategoryListViewModel extends Observable {
     private showOptions() {
         let actions = ["All Questions", "Unanswered"];
         if (this.categories.filter(ca => ca.selected && ca.wronglyAnswered.length > 0).length > 0) {
-            actions.push("Incorrect Answered");
+            actions.push("Incorrectly Answered");
         }
         if (this.categories.filter(ca => ca.selected && (ca.wronglyAnswered.length > 0 || ca.questionNumbers.length > ca.attempted.length)).length > 0) {
             actions.push("Incorrect and unanswered");

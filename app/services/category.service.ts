@@ -27,7 +27,6 @@ export class CategoryService {
     }
 
     attemptQuestion(question: IQuestion) {
-        console.log("Attempting..." + this._categories.length);
         for (let category of this._categories) {
             if (!category.wronglyAnswered) {
                 category.wronglyAnswered = [];
@@ -36,7 +35,6 @@ export class CategoryService {
                 category.attempted = [];
             }
             if (category.questionNumbers.indexOf(+question.number) > -1) {
-                console.log("Updating " + category.name);
                 if (category.attempted.indexOf(+question.number) === -1) {
                     category.attempted.push(+question.number);
                 }
@@ -79,8 +77,10 @@ export class CategoryService {
             if (this.contains(category, existingCategories)) {
                 let savedCategory = this.getCategory(category.name);
                 savedCategory.questionNumbers = category.questionNumbers;
+                savedCategory.percentage = this.calculatePercentage(savedCategory);
                 merged.push(savedCategory);
             } else {
+                category.percentage = this.calculatePercentage(category);
                 merged.push(category);
             }
         }
@@ -90,5 +90,9 @@ export class CategoryService {
 
     public contains(search: Category, categories: Array<Category>): boolean {
         return categories.filter(c => c.name === search.name).length > 0;
+    }
+
+    private calculatePercentage(category: Category):string {
+        return category.wronglyAnswered.length === 0 ? "0" : (category.wronglyAnswered.length * 100 / category.attempted.length).toFixed(2)
     }
 }

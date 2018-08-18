@@ -7,7 +7,6 @@ import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {topmost} from "ui/frame";
 import {QuizUtil} from "../shared/quiz.util";
 import * as navigationModule from '../shared/navigation';
-import {CategoryService} from "../services/category.service";
 import * as dialogs from "ui/dialogs";
 
 export class CategoryPracticeViewModel extends Observable {
@@ -29,21 +28,7 @@ export class CategoryPracticeViewModel extends Observable {
 
     public next(): void {
         if (this._cache.length == 0 || this._questionNumber >= this._cache.length) {
-            if(this._cache.length < this._numbers.length){
-                let randomNumber: number = QuizUtil.getRandomNumber(this._numbers.length);
-                QuestionService.getInstance().getQuestion(this._numbers[randomNumber - 1]).then((que: IQuestion) => {
-                    this._questionNumber = this._questionNumber + 1;
-                    this._question = que;
-                    this._cache.push(this._question);
-                    this.publish();
-                });
-            }else{
-                dialogs.confirm("Hurray!! You are done practicing all the questions for category. Click Ok to go back to categories home page?").then((proceed) => {
-                    if (proceed) {
-                        navigationModule.toPage("category/category")
-                    }
-                });
-            }
+            this.fetchUniqueQuestion();
         } else {
             this._questionNumber = this._questionNumber + 1;
             this._question = this._cache[this._questionNumber - 1];
@@ -74,10 +59,6 @@ export class CategoryPracticeViewModel extends Observable {
         AdService.getInstance().hideAd();
     }
 
-    alreadyAsked(newQuestion: IQuestion): boolean {
-        return false;
-    }
-
     get question() {
         if (!this._question) {
             this._question = {description: '', options: [], explanation: '', show: false}
@@ -85,8 +66,8 @@ export class CategoryPracticeViewModel extends Observable {
         return this._question;
     }
 
-    get allQuestionsAsked() {
-        return false;
+    allQuestionsAsked(): boolean {
+        return this._numbers.length <= this._cache.length;
     }
 
     isPractice(): boolean {
@@ -149,5 +130,32 @@ export class CategoryPracticeViewModel extends Observable {
     public goToEditPage() {
         let state: State = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
         navigationModule.gotoEditPage(state);
+    }
+
+    private fetchUniqueQuestion() {
+        if (!this.allQuestionsAsked()) {
+            let randomIndex: number = QuizUtil.getRandomNumber(this._numbers.length);
+            let questionNumber = this._numbers[randomIndex];
+            while (this.isAlreadyAsked(questionNumber)) {
+                randomIndex = QuizUtil.getRandomNumber(this._numbers.length);
+                questionNumber = this._numbers[randomIndex];
+            }
+            QuestionService.getInstance().getQuestion(questionNumber).then((que: IQuestion) => {
+                this._questionNumber = this._questionNumber + 1;
+                this._question = que;
+                this._cache.push(this._question);
+                this.publish();
+            });
+        } else {
+            dialogs.confirm("Hurray!! All questions are attempted. Click Ok to go to categories.").then((proceed) => {
+                if (proceed) {
+                    navigationModule.toPage("category/category")
+                }
+            });
+        }
+    }
+
+    private isAlreadyAsked(questionNumber: number): boolean {
+        return this._cache.filter(que => +que.number === questionNumber).length > 0;
     }
 }

@@ -5,7 +5,7 @@ Feel free to customize layouts and components to change how your app drawer look
 <GridLayout rows="auto, *" class="sidedrawer sidedrawer-left" loaded="onLoaded">
     <StackLayout class="sidedrawer-header">
         <Image class="sidedrawer-header-image" src="~/images/icon.png" />
-        <Label class="sidedrawer-header-brand" text="Advance Sas" />
+        <Label class="sidedrawer-header-brand" text="Base Sas Quiz" />
     </StackLayout>
 
     <ScrollView row="1">
@@ -81,7 +81,7 @@ Feel free to customize layouts and components to change how your app drawer look
 
             <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="goToBaseSas">
                 <Image class="fa" src="~/images/basesas.png" />
-                <Label row="0" col="1" text="Base SAS" class="p-r-10" />
+                <Label row="0" col="1" text="Base Sas" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="logout">

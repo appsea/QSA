@@ -164,12 +164,12 @@ export class QuestionService {
                     if (Number(playStoreVersion) > Number(appVersion)) {
                         dialogs.confirm({
                             title: "Notification",
-                            message: "A latest version of Advance Sas is now available on play store.",
+                            message: "A latest version of Base Sas is now available on play store.",
                             okButtonText: "Upgrade",
                             cancelButtonText: "Remind me Later"
                         }).then(proceed => {
                             if (proceed) {
-                                utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.quiz.sas");
+                                utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.advanced.sas");
                             }
                         });
                     }

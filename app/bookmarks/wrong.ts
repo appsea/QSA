@@ -98,6 +98,10 @@ export function goToEditPage(): void {
     vm.goToEditPage();
 }
 
+export function flag(): void {
+    vm.flag();
+}
+
 export function previous(): void {
     if (!vm) {
         vm = new WrongQuestionModel();

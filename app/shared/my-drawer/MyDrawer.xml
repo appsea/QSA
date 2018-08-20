@@ -73,9 +73,9 @@ Feel free to customize layouts and components to change how your app drawer look
                 <Label row="0" col="1" text="Premium" class="p-r-10" />
             </GridLayout>
 
-            <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="goToAdvanceSas">
-                <Image class="fa" src="~/images/advanceSas.png" />
-                <Label row="0" col="1" text="Advance SAS" class="p-r-10" />
+            <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="goToBaseSas">
+                <Image class="fa" src="~/images/basesas.png" />
+                <Label row="0" col="1" text="Base Sas" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="logout">

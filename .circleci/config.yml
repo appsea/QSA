@@ -36,9 +36,9 @@ jobs:
       - run: npm --version
       - run: sudo npm install nativescript -g --unsafe-perm
       #- run: sudo apt-get install lib32z1 lib32ncurses5 libbz2-1.0:i386 libstdc++6:i386
-      - run: sudo apt-get install g++
-      - run: sudo apt-get install python-software-properties
-      - run: tns doctor
+      - run: echo $KEYSTORE_DOWNLOAD_URL
+      - run: echo $KEYSTORE_DOWNLOAD_URL
+      - run: tns build android
 
 
       # run tests!

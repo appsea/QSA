@@ -6,6 +6,10 @@
   font-family: "fa-solid-900";
 }
 
+.divider {
+  background-color: lightgray;
+  height: 10;
+}
 // Common page class
 .page-content {
 
@@ -128,9 +132,58 @@ Label {
   color: white;
 }
 
+.category-full-background{
+  background-color: #2d7bc1;
+}
+
+.category-background{
+  background-color: #ffffff;
+  border-radius: 5;
+  border-color: #2d7bc1;
+}
+
+.category-background-selected{
+  background-color: #44ffff;
+  border-radius: 5;
+  border-color: #2d7bc1;
+}
+
+
+.category-todo-heading{
+  color: red;
+  font-size: 20;
+  font-weight:bold;
+  margin-left: 5;
+}
+
+.category-stats{
+  color: black;
+  font-size: 16;
+  margin-left: 5;
+}
+
+.category-complete-heading{
+  color: #2cb316;
+  font-size: 20;
+  font-weight:bold;
+  margin-left: 5;
+}
+
 .drawer-header {
   color: #fff;
   font-size: 20dpi;
   horizontal-align: left;
   vertical-align: bottom;
+}
+
+.show-button {
+  animation-name: slideUp;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.hide-button {
+  animation-name: slideDown;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
 }

@@ -6,6 +6,7 @@ import {QuestionService} from "../services/question.service";
 import {AdService} from "../services/ad.service";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {topmost} from "ui/frame";
+import {CategoryService} from "../services/category.service";
 
 export class BookmarkQuestionModel extends Observable {
     private _questions: Array<IQuestion> = [];
@@ -103,6 +104,7 @@ export class BookmarkQuestionModel extends Observable {
     showAnswer(): void {
         this.question.options.forEach(option => option.show = true);
         this.question.show = true;
+        CategoryService.getInstance().attemptQuestion(this.question);
         this.publish();
     }
 

@@ -1,0 +1,107 @@
+<Page
+        class="page"
+        navigatingTo="onNavigatingTo"
+        loaded="onPageLoaded"
+        xmlns:nsDrawer="nativescript-ui-sidedrawer"
+        xmlns:myDrawer="shared/my-drawer"
+        xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Categories"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="category"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" height="20dpi" class="category-full-background">
+                </StackLayout>
+                <StackLayout dock="bottom" class="category-full-background">
+                    <StackLayout class="margin" orientation="horizontal" horizontalAlignment="center">
+                        <Button class="btn btn-primary btn-rounded-lg" text="Start" tap="start" margin="10dpi"
+                                width="80%"/>
+                    </StackLayout>
+                    <StackLayout id="banner">
+                    </StackLayout>
+                </StackLayout>
+                <ScrollView id="scrollView" onswipe="handleSwipe" class="category-full-background">
+                    <StackLayout class="margin" onswipe="handleSwipe">
+                        <Repeater items="{{ categories }}" row="1" id="categoryList" onswipe="handleSwipe"
+                                  class="category-background">
+                            <Repeater.itemTemplate>
+                                <StackLayout tap="selectCategory" onswipe="handleSwipe"
+                                             class="{{ selected? 'category-background-selected': 'category-background'}}">
+                                    <Label text="{{name}}"
+                                           class="{{ attempted.length === questionNumbers.length && percentage > 40  ? 'category-complete-heading':'category-todo-heading' }}"
+                                           textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
+                                           onswipe="handleSwipe"/>
+                                    <Label visibility="{{ attempted.length>0 ? 'visible' : 'collapsed' }}"
+                                           class="category-stats">
+                                        <label.formattedText>
+                                            <formattedString>
+                                                <formattedString.spans>
+                                                    <span text=" {{attempted.length}} "/>
+                                                    <span text=" of "/>
+                                                    <span text="{{ questionNumbers.length }}"/>
+                                                    <span text=" Answered, "/>
+                                                    <span text=" {{ percentage }} "/>
+                                                    <span text="% Accuracy"/>
+                                                </formattedString.spans>
+                                            </formattedString>
+                                        </label.formattedText>
+                                    </Label>
+                                    <Label visibility="{{ attempted.length===0 ? 'visible' : 'collapsed' }}"
+                                           class="category-stats">
+                                        <label.formattedText>
+                                            <formattedString>
+                                                <formattedString.spans>
+                                                    <span text=" Total "/>
+                                                    <span text="{{ questionNumbers.length }}"/>
+                                                    <span text=" Questions"/>
+                                                </formattedString.spans>
+                                            </formattedString>
+                                        </label.formattedText>
+                                    </Label>
+                                    <StackLayout class="hr-light"></StackLayout>
+                                </StackLayout>
+                            </Repeater.itemTemplate>
+                        </Repeater>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

@@ -1,13 +1,14 @@
 /**
  * Created by rakesh on 15-Nov-2017.
  */
-import {IQuestion} from "../shared/questions.model";
+import {Category, IQuestion} from "../shared/questions.model";
 import {SettingsService} from "./settings.service";
 import {Observable} from "rxjs/Observable";
 import {ConnectionService} from "../shared/connection.service";
 import {HttpService} from "./http.service";
-import {QuizUtil} from "../shared/quiz.util";
+import {CategoryService} from "./category.service";
 import {PersistenceService} from "./persistence.service";
+import {QuizUtil} from "../shared/quiz.util";
 import {QuestionUtil} from "./question.util";
 import * as dialogs from "ui/dialogs";
 import * as constantsModule from '../shared/constants';
@@ -18,6 +19,7 @@ import * as Toast from 'nativescript-toast';
 export class QuestionService {
 
     static getInstance(): QuestionService {
+        CategoryService.getInstance().readCategoriesFromFirebase();
         return QuestionService._instance;
     }
 
@@ -30,6 +32,7 @@ export class QuestionService {
     constructor() {
         this._settingsService = SettingsService.getInstance();
         this._checked = false;
+        this.getFirebaseQuestion().then(que=> que);
     }
 
     getNextQuestion(): Promise<IQuestion> {
@@ -43,6 +46,7 @@ export class QuestionService {
         } else {
             this.remove(constantsModule.WRONG_QUESTION, question, wrongQuestions);
         }
+        CategoryService.getInstance().attemptQuestion(question);
     }
 
     handleFlagQuestion(question: IQuestion) {
@@ -106,16 +110,17 @@ export class QuestionService {
         return this.getNextQuestionFromCache();
     }
 
-    private getRandomNumber(max: number): number {
+    public getRandomNumber(max: number): number {
         const randomNumber = Math.floor(Math.random() * (max));
         return randomNumber;
     }
 
-    private readAllQuestions(): void {
+    public readAllQuestions(): void {
         HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
             this.questions = questions;
             this._settingsService.saveQuestions(questions);
         });
+        CategoryService.getInstance().readCategoriesFromFirebase();
     }
 
     private checkQuestionUpdate(): void {
@@ -143,6 +148,12 @@ export class QuestionService {
     private getNextQuestionFromCache(): Promise<IQuestion> {
         return new Promise<IQuestion>((resolve, reject) => {
             resolve(QUESTIONS[this.getRandomNumber(QUESTIONS.length)]);
+        });
+    }
+
+    public getQuestion(number: number): Promise<IQuestion> {
+        return new Promise<IQuestion>((resolve, reject) => {
+            resolve(this.questions[number - 1]);
         });
     }
 

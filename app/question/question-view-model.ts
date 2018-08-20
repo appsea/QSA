@@ -7,6 +7,7 @@ import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {topmost} from "ui/frame";
 import * as dialogs from "ui/dialogs";
 import * as navigationModule from '../shared/navigation';
+import {CategoryService} from "../services/category.service";
 
 export class QuestionViewModel extends Observable {
     private _questionService: QuestionService;

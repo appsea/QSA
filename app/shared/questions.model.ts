@@ -32,6 +32,14 @@ export interface State {
     time?:number;
 }
 
+export interface Category {
+    name: string;
+    questionNumbers: Array<number>;
+    wronglyAnswered?: Array<number>;
+    attempted?: Array<number>;
+    selected?: boolean;
+    percentage?: string;
+}
 
 export interface Map {
     value: number;

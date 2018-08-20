@@ -32,7 +32,7 @@ export function onPageLoaded(args: EventData): void {
     resetBanner();
 }
 
-export function resetBanner(){
+export function resetBanner() {
     if (banner) {
         banner.height = "0";
     }
@@ -95,9 +95,9 @@ export function handleSwipe(args) {
 
 export function moveToLast() {
     suggestionButton = _page.getViewById("suggestionButton");
-    if (suggestionButton) {
+    if (suggestionButton && scrollView) {
         let locationRelativeTo = suggestionButton.getLocationRelativeTo(scrollView);
-        if (scrollView && locationRelativeTo) {
+        if (locationRelativeTo) {
             scrollView.scrollToVerticalOffset(locationRelativeTo.y, false);
         }
     }
@@ -151,10 +151,12 @@ export function showAnswer(): void {
 }
 
 export function selectOption(args): void {
-    vm.showAnswer();
-    vm.selectOption(args);
-    optionList.refresh();
-    moveToLast();
+    if (!vm.enableSelection()) {
+        vm.showAnswer();
+        vm.selectOption(args);
+        optionList.refresh();
+        moveToLast();
+    }
 }
 
 export function creatingView(args: CreateViewEventData) {

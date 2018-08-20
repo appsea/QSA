@@ -28,7 +28,7 @@ export class QuestionViewModel extends Observable {
         this.showFromState();
     }
 
-    public showDrawer(){
+    public showDrawer() {
         const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
         sideDrawer.showDrawer();
         AdService.getInstance().hideAd();
@@ -47,7 +47,7 @@ export class QuestionViewModel extends Observable {
         this.goPrevious();
     }
 
-    public goPrevious(){
+    public goPrevious() {
         if (this._state.questionNumber > 1) {
             this._state.questionNumber = this._state.questionNumber - 1;
             this._question = this._state.questions[this._state.questionNumber - 1];
@@ -68,7 +68,7 @@ export class QuestionViewModel extends Observable {
         }
     }
 
-    flag(): void{
+    flag(): void {
         this._questionService.handleFlagQuestion(this._question);
         this.publish();
     }
@@ -219,5 +219,9 @@ export class QuestionViewModel extends Observable {
     public goToEditPage() {
         this._state.mode = this._mode;
         navigationModule.gotoEditPage(this._state)
+    }
+
+    public enableSelection(): boolean {
+        return this._question.options.filter(option => option.selected).length > 0 || this._question.show;
     }
 }

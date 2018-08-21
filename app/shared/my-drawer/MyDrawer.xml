@@ -79,7 +79,7 @@ Feel free to customize layouts and components to change how your app drawer look
             </GridLayout>
 
             <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="logout">
-                <Label row="0" col="0" text="&#xf052;" class="fa" />
+                <Label row="60" col="0" text="&#xf052;" class="fa" />
                 <Label row="0" col="1" text="Exit" class="p-r-10" />
             </GridLayout>
         </StackLayout>

@@ -66,10 +66,10 @@
                 <StackLayout dock="top">
                 </StackLayout>
                 <StackLayout dock="bottom" class="layout-class" horizontalAlignment="center" orientation="horizontal">
-                    <Button class="all" text="All" tap="all" width="20%" margin="2dpi" />
-                    <Button class="correct" text="Correct" tap="correct" width="25%" margin="2dpi" />
-                    <Button class="incorrect" text="Wrong" tap="incorrect" width="25%" margin="2dpi" />
-                    <Button class="skipped" text="Skipped" tap="skipped" width="30%" margin="2dpi" />
+                    <Button class="all t-12" text="All" tap="all" width="20%" margin="2dpi" />
+                    <Button class="correct t-12" text="Correct" tap="correct" width="25%" margin="2dpi" />
+                    <Button class="incorrect t-12" text="Wrong" tap="incorrect" width="25%" margin="2dpi" />
+                    <Button class="skipped t-12" text="Skipped" tap="skipped" width="30%" margin="2dpi" />
                 </StackLayout>
                 <StackLayout visibility="{{ questions.length === 0 ? 'visible' : 'collapsed' }}" class="margin" horizontalAlignment="center">
                     <Label textWrap="true" textAlignment="center" marginTop="20dpi">

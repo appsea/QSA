@@ -23,22 +23,10 @@ Feel free to customize layouts and components to change how your app drawer look
                 <Label row="0" col="1" text="Quick Exam" class="p-r-10" />
             </GridLayout>
 
-            <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'main' ? ' selected': '') }}"
-                        route="question/main" params="main"  tap="onNavigationItemTap">
-                <Label row="0" col="0" text="&#xf19d;" class="fa" style="font-size: 13dpi;" />
-                <Label row="0" col="1" text="Main Exam" class="p-r-10" />
-            </GridLayout>
-
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'tick' ? ' selected': '') }}"
                         route="question/tick" params="tick" tap="onNavigationItemTap">
-                <Label row="0" col="0" text="&#xf017;" class="fa" style="font-size: 16dpi;" />
-                <Label row="0" col="1" text="Timer" class="p-r-10" />
-            </GridLayout>
-
-            <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'stats' ? ' selected': '') }}"
-                        route="stats/progress" params="main"  tap="onNavigationItemTap">
-                <Label row="0" col="0" text="&#xf201;" class="fa" style="font-size: 13dpi;" />
-                <Label row="0" col="1" text="Progress" class="p-r-10" />
+                <Label row="0" col="0" text="&#xf19d;" class="fa" style="font-size: 13dpi;" />
+                <Label row="0" col="1" text="Mock Exam" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'wrong' ? ' selected': '') }}"
@@ -51,6 +39,12 @@ Feel free to customize layouts and components to change how your app drawer look
                         route="bookmarks/flag" params="flag"  tap="navigate">
                 <Label row="0" col="0" text="&#xf024;" class="fa" style="font-size: 13dpi;" />
                 <Label row="0" col="1" text="Flagged Questions" class="p-r-10" />
+            </GridLayout>
+
+            <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'stats' ? ' selected': '') }}"
+                        route="stats/progress" params="main"  tap="onNavigationItemTap">
+                <Label row="0" col="0" text="&#xf201;" class="fa" style="font-size: 13dpi;" />
+                <Label row="0" col="1" text="Progress" class="p-r-10" />
             </GridLayout>
 
             <StackLayout class="hr-light"></StackLayout>

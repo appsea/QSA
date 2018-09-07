@@ -81,7 +81,7 @@
                         </label.formattedText>
                     </Label>
                 </StackLayout>
-                <StackLayout dock="bottom">
+                <StackLayout dock="bottom" visibility="{{ question? 'visible': 'collapsed' }}">
                     <StackLayout class="margin" orientation="horizontal" horizontalAlignment="center">
                         <Image src="~/images/map-marker-icon.png" height="45dpi" tap="showMap" margin="2dpi" width="10%" />
                         <Button class="btn btn-primary btn-rounded-lg" text="Quit" tap="quit" visibility="{{ !allQuestionsAsked ? 'visible' : 'collapsed' }}" margin="2dpi" width="25%"/>

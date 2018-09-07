@@ -1,6 +1,7 @@
 import {EventData, Observable} from "data/observable";
 import {ISetting} from "../shared/questions.model";
 import {SettingsService} from "../services/settings.service";
+import {PersistenceService} from "../services/persistence.service";
 
 export class SettingsViewModel extends Observable {
     private _settings: ISetting;

@@ -32,8 +32,18 @@ export interface State {
     time?:number;
 }
 
-
 export interface Map {
     value: number;
     status: string;
+}
+
+export interface Result {
+    itemType?: string;
+    date?: string;
+    correct: number;
+    wrong?: number;
+    skipped?: number;
+    total: number;
+    percentage: string;
+    pass: boolean;
 }

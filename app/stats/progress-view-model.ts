@@ -1,5 +1,7 @@
 import {EventData, Observable} from "data/observable";
-import {SettingsService} from "../services/settings.service";
+import {QuizUtil} from "../shared/quiz.util";
+import {PersistenceService} from "../services/persistence.service";
+import {Result} from "../shared/questions.model";
 
 export class ProgressViewModel extends Observable {
 
@@ -7,45 +9,125 @@ export class ProgressViewModel extends Observable {
         super();
     }
 
-    get categoricalSource() {
-        return [
-            { Country: "Germany", Amount: 15, SecondVal: 14, ThirdVal: 24 },
-            { Country: "France", Amount: 13, SecondVal: 23, ThirdVal: 25 },
-            { Country: "Bulgaria", Amount: 24, SecondVal: 17, ThirdVal: 23 },
-            { Country: "Spain", Amount: 11, SecondVal: 19, ThirdVal: 24 },
-            { Country: "USA", Amount: 18, SecondVal: 8, ThirdVal: 21 }
-        ]
+    get results() {
+        let results: Array<Result> = PersistenceService.getInstance().getResult();
+        //this.hardResults().forEach(r => results.push(r));
+        return results.reverse();
     }
 
-    get getLastFiveTimer(){
-        return this.getLastFive(SettingsService.TICK);
-    }
-
-    get getLastFiveMain() {
-        return this.getLastFive(SettingsService.MAIN);
-    }
-
-
-    get getLastFiveQuick() {
-        return this.getLastFive(SettingsService.QUICK);
-    }
-
-
-    getLastFive(mode:string) {
-        let scores:Array<number> = SettingsService.getInstance().getScore(mode);
-        let result = [
-            { Attempt: "Latest", Percentage: 0},
-            { Attempt: "Second", Percentage: 0},
-            { Attempt: "Third", Percentage: 0},
-            { Attempt: "Fourth", Percentage: 0},
-            { Attempt: "Oldest", Percentage: 0}
-        ];
-        var j = 0;
-        for (var i = scores.length; i-- > 0;){
-            let record = result[j++];
-            record.Percentage = scores[i].valueOf();
-        }
+    get overall() {
+        let results: Array<Result> = PersistenceService.getInstance().getResult();
+        let correct: number = 0;
+        let total: number = 0;
+        let totalExams: number = results.length;
+        results.forEach(re => {
+            correct += re.correct;
+            total += re.total;
+        });
+        let overall: Array<Result> = [];
+        let percentage = total == 0 ? 0 : (correct * 100 / total);
+        let percentageString: string = percentage.toFixed(2) + '%';
+        let result: Result = {
+            date: QuizUtil.getDateString(new Date()),
+            correct: correct,
+            wrong: totalExams,
+            total: total,
+            percentage: percentageString,
+            pass: percentage > 70
+        };
+        overall.push(result);
         return result;
     }
 
+    /*public hardResults(): Array<Result> {
+        let date: Date = new Date();
+        let results: Array<Result> = [
+            {
+                date: QuizUtil.getDateString(date),
+                correct: 15,
+                wrong: 5,
+                skipped: 9,
+                total: 25,
+                percentage: "14.15%",
+                pass: true
+            },
+            {
+                date: QuizUtil.getDateString(date),
+                correct: 116,
+                wrong: 5,
+                skipped: 9,
+                total: 125,
+                percentage: "18.15%",
+                pass: false
+            },
+            {
+                date: QuizUtil.getDateString(date),
+                correct: 17,
+                wrong: 5,
+                skipped: 9,
+                total: 25,
+                percentage: "12.16%",
+                pass: true
+            },
+            {
+                date: QuizUtil.getDateString(date),
+                correct: 18,
+                wrong: 5,
+                skipped: 9,
+                total: 25,
+                percentage: "12.15%",
+                pass: true
+            },
+            {
+                date: QuizUtil.getDateString(date),
+                correct: 19,
+                wrong: 5,
+                skipped: 9,
+                total: 25,
+                percentage: "14.15%",
+                pass: true
+            },
+            {
+                date: QuizUtil.getDateString(date),
+                correct: 19,
+                wrong: 5,
+                skipped: 9,
+                total: 25,
+                percentage: "14.15%",
+                pass: true
+            },
+            {
+                date: QuizUtil.getDateString(date),
+                correct: 19,
+                wrong: 5,
+                skipped: 9,
+                total: 25,
+                percentage: "14.15%",
+                pass: true
+            },
+            {
+                date: QuizUtil.getDateString(date),
+                correct: 19,
+                wrong: 5,
+                skipped: 9,
+                total: 25,
+                percentage: "14.15%",
+                pass: true
+            },
+            {
+                date: QuizUtil.getDateString(date),
+                correct: 19,
+                wrong: 5,
+                skipped: 9,
+                total: 25,
+                percentage: "14.15%",
+                pass: true
+            }
+        ];
+        return results;
+    }*/
+
+    resetExamStats() {
+        PersistenceService.getInstance().resetExamStats();
+    }
 }

@@ -3,6 +3,7 @@ import {State} from "../questions.model";
 import * as navigationModule from '../navigation';
 import {QuestionUtil} from "../../services/question.util";
 import {SettingsService} from "../../services/settings.service";
+import {PersistenceService} from "../../services/persistence.service";
 
 export class ResultViewModel extends Observable {
     _correct: number = 0;
@@ -52,6 +53,12 @@ export class ResultViewModel extends Observable {
             propertyName: 'correct',
             value: this._correct
         });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: 'mode',
+            value: this._state.mode
+        });
     }
 
     private showDetailedResult() {
@@ -73,6 +80,7 @@ export class ResultViewModel extends Observable {
         }
         this._percentage = (this._correct * 100 / this._state.questions.length).toFixed(2);
         SettingsService.getInstance().saveScore(this._state.mode, Number(this._percentage));
+        PersistenceService.getInstance().saveResult(this._state);
         this.publish();
     }
 
@@ -94,6 +102,10 @@ export class ResultViewModel extends Observable {
 
     get state() {
         return this._state;
+    }
+
+    get mode() {
+        return this._state.mode;
     }
 
     detailedResult() {

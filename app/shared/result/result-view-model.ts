@@ -1,99 +1,65 @@
 import {EventData, Observable} from "data/observable";
-import {State} from "../questions.model";
+import {Result, State} from "../questions.model";
 import * as navigationModule from '../navigation';
+import * as constantsModule from '../constants';
 import {QuestionUtil} from "../../services/question.util";
-import {SettingsService} from "../../services/settings.service";
 import {PersistenceService} from "../../services/persistence.service";
+import {QuizUtil} from "../quiz.util";
 
 export class ResultViewModel extends Observable {
-    _correct: number = 0;
-    _percentage: string = "0";
     private _state: State;
-    private _wrong: number = 0;
-    private _skipped: number = 0;
+    private _result: Result;
 
     constructor(state: State) {
         super();
         this._state = state;
-        this.calculateResult();
+        this.process();
         this.initData();
     }
 
     private initData() {
         this.set("result",
             [
-                { Brand: "Correct", Count: this._correct},
-                { Brand: "Wrong", Count: this._wrong },
-                { Brand: "Skipped", Count: this._skipped }
+                {Brand: "Correct", Count: this._result.correct},
+                {Brand: "Wrong", Count: this._result.wrong},
+                {Brand: "Skipped", Count: this._result.skipped}
             ]);
     }
 
-    public publish() {
-        this.notify({
-            object: this,
-            eventName: Observable.propertyChangeEvent,
-            propertyName: 'state',
-            value: this._state
-        });
-        this.notify({
-            object: this,
-            eventName: Observable.propertyChangeEvent,
-            propertyName: 'wrong',
-            value: this._wrong
-        });
-        this.notify({
-            object: this,
-            eventName: Observable.propertyChangeEvent,
-            propertyName: 'percentage',
-            value: this._percentage
-        });
-        this.notify({
-            object: this,
-            eventName: Observable.propertyChangeEvent,
-            propertyName: 'correct',
-            value: this._correct
-        });
-        this.notify({
-            object: this,
-            eventName: Observable.propertyChangeEvent,
-            propertyName: 'mode',
-            value: this._state.mode
-        });
+    public process(): void {
+        this.calculateResult();
+        PersistenceService.getInstance().saveResult(this._result);
     }
 
-    private showDetailedResult() {
-        navigationModule.gotoResultPage(this._state);
-    }
-
-    showAnswer(): void {
-    }
-
-    public calculateResult(): void {
+    calculateResult() {
+        let correct: number = 0;
+        let wrong: number = 0;
+        let skipped: number = 0;
+        let total: number = this._state.questions.length;
         for (const question of this._state.questions) {
             if (QuestionUtil.isCorrect(question)) {
-                this._correct = this._correct + 1;
-            } else if(QuestionUtil.isSkipped(question)){
-                this._skipped = this._skipped + 1;
+                correct = correct + 1;
+            } else if (QuestionUtil.isSkipped(question)) {
+                skipped = skipped + 1;
             } else {
-                this._wrong = this._wrong + 1;
+                wrong = wrong + 1;
             }
         }
-        this._percentage = (this._correct * 100 / this._state.questions.length).toFixed(2);
-        SettingsService.getInstance().saveScore(this._state.mode, Number(this._percentage));
-        PersistenceService.getInstance().saveResult(this._state);
-        this.publish();
-    }
-
-    get wrong() {
-        return this._wrong;
-    }
-
-    get correct() {
-        return this._correct;
+        let percentage = (correct * 100 / this._state.questions.length);
+        let percentageString: string = percentage.toFixed(2);
+        this._result = {
+            date: QuizUtil.getDateString(new Date()),
+            correct: correct,
+            wrong: wrong,
+            skipped: skipped,
+            total: total,
+            percentage: percentageString + '%',
+            pass: percentage > constantsModule.PASSING_PERCENTAGE
+        };
     }
 
     get percentage() {
-        return this._percentage;
+        return this._result.percentage;
     }
 
     get totalQuestions() {
@@ -106,6 +72,10 @@ export class ResultViewModel extends Observable {
 
     get mode() {
         return this._state.mode;
+    }
+
+    get pass() {
+        return this._result.pass;
     }
 
     detailedResult() {

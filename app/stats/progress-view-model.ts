@@ -11,7 +11,6 @@ export class ProgressViewModel extends Observable {
 
     get results() {
         let results: Array<Result> = PersistenceService.getInstance().getResult();
-        //this.hardResults().forEach(r => results.push(r));
         return results.reverse();
     }
 
@@ -38,94 +37,6 @@ export class ProgressViewModel extends Observable {
         overall.push(result);
         return result;
     }
-
-    /*public hardResults(): Array<Result> {
-        let date: Date = new Date();
-        let results: Array<Result> = [
-            {
-                date: QuizUtil.getDateString(date),
-                correct: 15,
-                wrong: 5,
-                skipped: 9,
-                total: 25,
-                percentage: "14.15%",
-                pass: true
-            },
-            {
-                date: QuizUtil.getDateString(date),
-                correct: 116,
-                wrong: 5,
-                skipped: 9,
-                total: 125,
-                percentage: "18.15%",
-                pass: false
-            },
-            {
-                date: QuizUtil.getDateString(date),
-                correct: 17,
-                wrong: 5,
-                skipped: 9,
-                total: 25,
-                percentage: "12.16%",
-                pass: true
-            },
-            {
-                date: QuizUtil.getDateString(date),
-                correct: 18,
-                wrong: 5,
-                skipped: 9,
-                total: 25,
-                percentage: "12.15%",
-                pass: true
-            },
-            {
-                date: QuizUtil.getDateString(date),
-                correct: 19,
-                wrong: 5,
-                skipped: 9,
-                total: 25,
-                percentage: "14.15%",
-                pass: true
-            },
-            {
-                date: QuizUtil.getDateString(date),
-                correct: 19,
-                wrong: 5,
-                skipped: 9,
-                total: 25,
-                percentage: "14.15%",
-                pass: true
-            },
-            {
-                date: QuizUtil.getDateString(date),
-                correct: 19,
-                wrong: 5,
-                skipped: 9,
-                total: 25,
-                percentage: "14.15%",
-                pass: true
-            },
-            {
-                date: QuizUtil.getDateString(date),
-                correct: 19,
-                wrong: 5,
-                skipped: 9,
-                total: 25,
-                percentage: "14.15%",
-                pass: true
-            },
-            {
-                date: QuizUtil.getDateString(date),
-                correct: 19,
-                wrong: 5,
-                skipped: 9,
-                total: 25,
-                percentage: "14.15%",
-                pass: true
-            }
-        ];
-        return results;
-    }*/
 
     resetExamStats() {
         PersistenceService.getInstance().resetExamStats();

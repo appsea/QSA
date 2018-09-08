@@ -67,7 +67,7 @@
                 <Label text="Total Questions" horizontalAlignment="center"/>
                 <Label text="{{ totalQuestions }}" class="result-passed" horizontalAlignment="center"/>
                 <Label text="Percentage" horizontalAlignment="center"/>
-                <Label text="{{ percentage + '%'}}" class="{{ percentage>70? 'result-passed': 'result-failed'}}" horizontalAlignment="center"/>
+                <Label text="{{ percentage }}" class="{{ pass? 'result-passed': 'result-failed'}}" horizontalAlignment="center"/>
                 <Button class="btn btn-primary btn-rounded-lg" text="Detailed Result" tap="detailedResult" margin="30px"/>
             </StackLayout>
         </nsDrawer:RadSideDrawer.mainContent>

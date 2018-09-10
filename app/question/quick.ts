@@ -6,12 +6,12 @@ import {QuestionViewModel} from "./question-view-model";
 import * as ListView from "ui/list-view";
 import {isAndroid} from "platform";
 import {android, AndroidActivityBackPressedEventData, AndroidApplication} from "application";
-import {SettingsService} from "../services/settings.service";
 import {SwipeGestureEventData} from "ui/gestures";
 import {ScrollView} from "tns-core-modules/ui/scroll-view";
 import {AdService} from "../services/ad.service";
 import {ConnectionService} from "../shared/connection.service";
 import * as dialogs from "ui/dialogs";
+import * as constantsModule from '../shared/constants';
 
 let vm: QuestionViewModel;
 let optionList: ListView.ListView;
@@ -62,7 +62,7 @@ export function onNavigatingTo(args: NavigatedData) {
     optionList = page.getViewById("optionList");
     scrollView = page.getViewById("scrollView");
     banner = page.getViewById("banner");
-    vm = new QuestionViewModel(SettingsService.QUICK);
+    vm = new QuestionViewModel(constantsModule.QUICK);
     page.bindingContext = vm;
 }
 

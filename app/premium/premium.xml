@@ -55,7 +55,7 @@
                 <GridLayout>
                     <StackLayout class="flexbox-item company-name-container">
                         <Label text="&#xf43f;" row="0" col="0" class="fa icon"/>
-                        <Label class="t-17 white-color" text="Go Premium"></Label>
+                        <Label class="t-17 white-color" text="Go Ad-Free!"></Label>
                         <Button class="btn btn-login btn-rounded-sm font-weight-bold t-18" backgroundColor="#ffffff" tap="pay" text="{{ item.priceFormatted }}"></Button>
                         <StackLayout class="hr-light hr-bottom"></StackLayout>
                         <Label class="t-17 white-color" text="Already Paid?"></Label>

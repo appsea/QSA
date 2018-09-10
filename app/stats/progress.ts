@@ -38,7 +38,7 @@ export function onDrawerButtonTap(args: EventData) {
 }
 
 export function startTest(args: EventData) {
-    navigationModule.toPage("question/tick");
+    navigationModule.toPage("question/mock");
 }
 
 export function showChart(args: EventData) {

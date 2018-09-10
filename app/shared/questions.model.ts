@@ -18,8 +18,7 @@ export interface IOption {
 
 export interface ISetting {
     totalQuestionsQuick: number;
-    totalQuestionsMain: number;
-    totalQuestionsTick: number;
+    totalQuestionsMock: number;
     totalTime: number;
 }
 

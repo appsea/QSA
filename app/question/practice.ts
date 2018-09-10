@@ -15,6 +15,7 @@ import {Label} from 'ui/label';
 import * as dialogs from "ui/dialogs";
 import {AdService} from "../services/ad.service";
 import {ConnectionService} from "../shared/connection.service";
+import * as constantsModule from '../shared/constants';
 
 let vm: QuestionViewModel;
 let optionList: Repeater;
@@ -59,7 +60,7 @@ export function onNavigatingTo(args: NavigatedData) {
         _page = page;
         optionList = page.getViewById("optionList");
         scrollView = page.getViewById("scrollView");
-        vm = new QuestionViewModel(SettingsService.PRACTICE);
+        vm = new QuestionViewModel(constantsModule.PRACTICE);
         page.bindingContext = vm;
     } else {
         explanationHeader = page.getViewById("explanationHeader");
@@ -109,7 +110,7 @@ export function goToEditPage(): void {
 
 export function previous(): void {
     if (!vm) {
-        vm = new QuestionViewModel(SettingsService.PRACTICE);
+        vm = new QuestionViewModel(constantsModule.PRACTICE);
     }
     vm.previous();
     if (scrollView) {

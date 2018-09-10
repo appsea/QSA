@@ -57,7 +57,7 @@
                 <TextField class="input" text="{{ settings.totalQuestionsQuick }}" keyboardType="number" maxLength="2"></TextField>
 
                 <Label text="Mock Exam Total Questions" class="label font-weight-bold m-b-5"/>
-                <TextField class="input" text="{{ settings.totalQuestionsTick }}" keyboardType="number" maxLength="2"></TextField>
+                <TextField class="input" text="{{ settings.totalQuestionsMock }}" keyboardType="number" maxLength="2"></TextField>
 
                 <Label text="Exam Time In Minutes" class="label font-weight-bold m-b-5"/>
                 <TextField class="input" text="{{ settings.totalTime }}" keyboardType="number" maxLength="3"/>

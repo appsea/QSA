@@ -58,7 +58,7 @@
                 Learn more about custom components and how they can be used in this documentation article:
                 http://docs.nativescript.org/ui/basics#custom-components
                 -->
-                <myDrawer:MyDrawer selectedPage="tick"/>
+                <myDrawer:MyDrawer selectedPage="mock"/>
             </StackLayout>
         </nsDrawer:RadSideDrawer.drawerContent>
 

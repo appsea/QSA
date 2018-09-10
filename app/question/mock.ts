@@ -4,13 +4,13 @@ import {topmost} from "ui/frame";
 import {NavigatedData, Page} from "ui/page";
 import {android, AndroidActivityBackPressedEventData, AndroidApplication} from "application";
 import {isAndroid} from "platform";
-import {SettingsService} from "../services/settings.service";
 import {TimerViewModel} from "./timer-view-model";
 import {ScrollView} from "tns-core-modules/ui/scroll-view";
 import {AdService} from "../services/ad.service";
 import {ConnectionService} from "../shared/connection.service";
 import * as ListView from "ui/list-view";
 import * as dialogs from "ui/dialogs";
+import * as constantsModule from '../shared/constants';
 
 let vm: TimerViewModel;
 let optionList: ListView.ListView;
@@ -57,7 +57,7 @@ export function onNavigatingTo(args: NavigatedData) {
     optionList = page.getViewById("optionList");
     scrollView = page.getViewById("scrollView");
     banner = page.getViewById("banner");
-    vm = new TimerViewModel(SettingsService.TICK);
+    vm = new TimerViewModel(constantsModule.MOCK);
     page.bindingContext = vm;
 }
 

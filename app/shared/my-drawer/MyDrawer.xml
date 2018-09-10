@@ -23,8 +23,8 @@ Feel free to customize layouts and components to change how your app drawer look
                 <Label row="0" col="1" text="Quick Exam" class="p-r-10" />
             </GridLayout>
 
-            <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'tick' ? ' selected': '') }}"
-                        route="question/tick" params="tick" tap="onNavigationItemTap">
+            <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'mock' ? ' selected': '') }}"
+                        route="question/mock" params="mock" tap="onNavigationItemTap">
                 <Label row="0" col="0" text="&#xf19d;" class="fa" style="font-size: 13dpi;" />
                 <Label row="0" col="1" text="Mock Exam" class="p-r-10" />
             </GridLayout>

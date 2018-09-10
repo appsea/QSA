@@ -6,6 +6,7 @@ import {NavigatedData, Page} from "ui/page";
 
 import {QuestionViewModel} from "./question-view-model";
 import * as ListView from "ui/list-view";
+import * as constantsModule from '../shared/constants';
 import {isAndroid} from "platform";
 import {android, AndroidActivityBackPressedEventData, AndroidApplication} from "application";
 import {SettingsService} from "../services/settings.service";
@@ -54,7 +55,7 @@ export function onNavigatingTo(args: NavigatedData) {
     optionList = page.getViewById("optionList");
     scrollView = page.getViewById("scrollView");
     banner = page.getViewById("banner");
-    vm = new QuestionViewModel(SettingsService.MAIN);
+    vm = new QuestionViewModel(constantsModule.MAIN);
     page.bindingContext = vm;
 }
 

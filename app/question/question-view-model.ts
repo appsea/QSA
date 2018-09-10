@@ -7,6 +7,7 @@ import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {topmost} from "ui/frame";
 import * as dialogs from "ui/dialogs";
 import * as navigationModule from '../shared/navigation';
+import * as constantsModule from '../shared/constants';
 
 export class QuestionViewModel extends Observable {
     private _questionService: QuestionService;
@@ -136,7 +137,7 @@ export class QuestionViewModel extends Observable {
     }
 
     isPractice(): boolean {
-        return this._mode === SettingsService.PRACTICE;
+        return this._mode === constantsModule.PRACTICE;
     }
 
     get options() {

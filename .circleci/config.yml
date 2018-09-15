@@ -8,6 +8,7 @@ jobs:
     branches:
           only:
             - master
+            - base
             - categories
     docker:
       # specify the version you desire here

@@ -60,22 +60,17 @@ Feel free to customize layouts and components to change how your app drawer look
                 <Label row="0" col="1" text="Share" class="p-r-10" />
             </GridLayout>
 
-
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'Premium' ? ' selected': '') }}"
                         route="premium/premium" tap="goPremium">
                 <Label row="0" col="0" text="&#xf43f;" class="fa" />
                 <Label row="0" col="1" text="Premium" class="p-r-10" />
             </GridLayout>
 
-            <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="goToAdvanceSas">
-                <Image class="fa" src="~/images/advanceSas.png" />
-                <Label row="0" col="1" text="Advance Sas" class="p-r-10" />
-            </GridLayout>
-
             <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="logout">
                 <Label row="60" col="0" text="&#xf052;" class="fa" />
                 <Label row="0" col="1" text="Exit" class="p-r-10" />
             </GridLayout>
+            <Label row="0" col="1" text="{{ version }}" class="m-l-15" style="font-size:10; color: blue"></Label>
         </StackLayout>
     </ScrollView>
 </GridLayout>

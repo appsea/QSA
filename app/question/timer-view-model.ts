@@ -7,7 +7,7 @@ import {SettingsService} from "../services/settings.service";
 export class TimerViewModel extends QuestionViewModel {
     private _seconds: number = 0;
     private _minutes: number = 5;
-    private _time: string;
+    private _time: string = "";
     private clock: any;
 
     constructor(mode: string) {

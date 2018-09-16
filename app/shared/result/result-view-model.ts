@@ -48,6 +48,7 @@ export class ResultViewModel extends Observable {
         let percentage = (correct * 100 / this._state.questions.length);
         let percentageString: string = percentage.toFixed(2);
         this._result = {
+            itemType: this._state.mode,
             date: QuizUtil.getDateString(new Date()),
             correct: correct,
             wrong: wrong,

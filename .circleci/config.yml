@@ -14,8 +14,7 @@ jobs:
       - image: circleci/node:8.11.3
       #- image: circleci/openjdk:8u171-jdk-node-browsers
       - image: circleci/openjdk:8u171-jdk-node-browsers
-      - image: circleci/android:api-27-alpha
-
+      
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -35,9 +34,9 @@ jobs:
 
       - run: whoami
       - run: npm --version
-      - run: npm i npm@latest -g
+      - run: npm i npm@latest
       - run: npm install nativescript-cloud
-      - run: sudo npm install nativescript -g --unsafe-perm
+      - run: sudo npm install nativescript
       #- run: sudo apt-get install lib32z1 lib32ncurses5 libbz2-1.0:i386 libstdc++6:i386
       - run: echo $KEYSTORE_DOWNLOAD_URL
       - run: echo $KEYSTORE_DOWNLOAD_URL

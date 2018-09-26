@@ -32,6 +32,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - bash ./.circleci/download_keystore.sh
       - run: whoami
       - run: npm --version
       - run: npm i npm@latest
@@ -41,7 +42,8 @@ jobs:
       #- run: sudo apt-get install lib32z1 lib32ncurses5 libbz2-1.0:i386 libstdc++6:i386
       - run: echo $KEYSTORE_DOWNLOAD_URL
       - run: echo $KEYSTORE_DOWNLOAD_URL
-      - run: tns build android
+      - run: tns build android --env.snapshot --env.uglify --release --key-store-path $KEYSTORE --key-store-password $KEYSTORE_PASSWORD --key-store-alias sasquiz --key-store-alias-password $KEYSTORE_PASSWORD --copy-to base.apk
+
 
 
       # run tests!

@@ -38,7 +38,6 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: pip install six
       - run: bash ./.circleci/download.sh
       - run: ls -lrt /home/circleci/repo/
       - run: whoami

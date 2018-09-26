@@ -27,12 +27,6 @@ jobs:
     steps:
       - checkout
       
-      - run:
-          name: Setup  tools
-            # sudo ruby -e "$(curl -fsSL https://www.nativescript.org/setup/mac)" -- --silentMode
-          command: |
-            pip install six
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -46,6 +40,7 @@ jobs:
       - run: npm --version
       - run: npm i npm@latest
       - run: npm --version
+      - run: node -v
       - run: npm install nativescript-cloud
       - run: sudo npm install nativescript -g --unsafe-perm
       #- run: sudo apt-get install lib32z1 lib32ncurses5 libbz2-1.0:i386 libstdc++6:i386

@@ -24,6 +24,12 @@ jobs:
 
     steps:
       - checkout
+      
+      - run:
+          name: Setup  tools
+            # sudo ruby -e "$(curl -fsSL https://www.nativescript.org/setup/mac)" -- --silentMode
+          command: |
+            pip install six
 
       # Download and cache dependencies
       - restore_cache:

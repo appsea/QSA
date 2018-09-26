@@ -34,6 +34,7 @@ jobs:
 
       - run: pwd
       - run: bash ./.circleci/download.sh
+      - run: ls -lrt /home/circleci/repo/
       - run: whoami
       - run: npm --version
       - run: npm i npm@latest

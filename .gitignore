@@ -48,7 +48,7 @@ platforms/**/*
 node_modules/**/*
 typings/**/*
 hooks/**/*
-
+.history/**/*
 #NativeScript cloud files
 .cloud/**/*
 .tmp_backup/**/*

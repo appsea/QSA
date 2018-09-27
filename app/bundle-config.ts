@@ -7,7 +7,7 @@ if ((<any>global).TNS_WEBPACK) {
     // This will register each `page` postfixed xml, css, js, ts, scss etc. in the app/ folder
     const context = (<any>require).context("~/", true, /(page|fragment)\.(xml|css|js|ts|scss|less|sass)$/);
     global.registerWebpackModules(context);
-    global.registerModule("nativescript-ui-sidedrawer", () => require("nativescript-ui-sidedrawer"));
     // Register custom modules
+    global.registerModule("nativescript-ui-sidedrawer", () => require("nativescript-ui-sidedrawer"));
     global.registerModule("nativescript-ui-chart", () => require("nativescript-ui-chart"));
 }

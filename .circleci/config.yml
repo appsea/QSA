@@ -38,6 +38,7 @@ jobs:
       - run: ls -lrt /home/circleci/repo/
       - run: whoami
       - run: npm --version
+      - run: npm install six
       - run: npm i npm@latest
       - run: npm --version
       - run: node -v

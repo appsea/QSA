@@ -43,9 +43,7 @@ jobs:
       - run: npm --version
       - run: node -v
       - run: npm install nativescript-cloud
-      - run: sudo npm install nativescript -g --unsafe-perm
-      #- run: sudo apt-get install lib32z1 lib32ncurses5 libbz2-1.0:i386 libstdc++6:i386
-      - run: tns cloud setup
+      - run: sudo npm install nativescript -g --unsafe-perm            
       - run: tns build android --env.snapshot --env.uglify --release --key-store-path $KEYSTORE --key-store-password $KEYSTORE_PASSWORD --key-store-alias sasquiz --key-store-alias-password $KEYSTORE_PASSWORD --copy-to base.apk
 
 

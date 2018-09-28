@@ -13,37 +13,37 @@ Feel free to customize layouts and components to change how your app drawer look
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'practice' ? ' selected': '') }}"
                         route="question/practice" params="practice" tap="onNavigationItemTap">
-                <Label row="0" col="0" text="&#xf005;" class="fa" style="font-size: 15dpi;"/>
+                <Label row="0" col="0" text="&#xf005;" class="fa t-14"/>
                 <Label row="0" col="1" text="Practice" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'quick' ? ' selected': '') }}"
                 route="question/quick" params="short" tap="onNavigationItemTap">
-                <Label row="0" col="0" text="&#xf135;" class="fa"  style="font-size: 16dpi;"/>
+                <Label row="0" col="0" text="&#xf135;" class="fa t-14"/>
                 <Label row="0" col="1" text="Quick Exam" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'mock' ? ' selected': '') }}"
                         route="question/mock" params="mock" tap="onNavigationItemTap">
-                <Label row="0" col="0" text="&#xf19d;" class="fa" style="font-size: 13dpi;" />
+                <Label row="0" col="0" text="&#xf19d;" class="fa t-14"/>
                 <Label row="0" col="1" text="Mock Exam" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'wrong' ? ' selected': '') }}"
                         route="bookmarks/wrong" params="wrong"  tap="navigate">
-                <Label row="0" col="0" text="&#xf057;" class="fa" style="font-size: 13dpi;" />
+                <Label row="0" col="0" text="&#xf057;" class="fa t-14"/>
                 <Label row="0" col="1" text="Wrongly Answered" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'flag' ? ' selected': '') }}"
                         route="bookmarks/flag" params="flag"  tap="navigate">
-                <Label row="0" col="0" text="&#xf024;" class="fa" style="font-size: 13dpi;" />
+                <Label row="0" col="0" text="&#xf024;" class="fa t-14"/>
                 <Label row="0" col="1" text="Flagged Questions" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'stats' ? ' selected': '') }}"
                         route="stats/progress" params="main"  tap="onNavigationItemTap">
-                <Label row="0" col="0" text="&#xf201;" class="fa" style="font-size: 13dpi;" />
+                <Label row="0" col="0" text="&#xf201;" class="fa t-14"/>
                 <Label row="0" col="1" text="Progress" class="p-r-10" />
             </GridLayout>
 
@@ -51,23 +51,23 @@ Feel free to customize layouts and components to change how your app drawer look
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'Settings' ? ' selected': '') }}"
                 route="settings/settings-page" tap="onNavigationItemTap">
-                <Label row="0" col="0" text="&#xf013;" class="fa" style="font-size: 16;" />
+                <Label row="0" col="0" text="&#xf013;" class="fa t-14"/>
                 <Label row="0" col="1" text="Settings" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="share">
-                <Label row="0" col="0" text="&#xf1e0;" class="fa" />
+                <Label row="0" col="0" text="&#xf1e0;" class="fa t-14"/>
                 <Label row="0" col="1" text="Share" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'Premium' ? ' selected': '') }}"
                         route="premium/premium" tap="goPremium">
-                <Label row="0" col="0" text="&#xf43f;" class="fa" />
+                <Label row="0" col="0" text="&#xf43f;" class="fa t-14"/>
                 <Label row="0" col="1" text="Premium" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="sidedrawer-list-item" tap="logout">
-                <Label row="60" col="0" text="&#xf052;" class="fa" />
+                <Label row="60" col="0" text="&#xf052;" class="fa t-14"/>
                 <Label row="0" col="1" text="Exit" class="p-r-10" />
             </GridLayout>
             <Label row="0" col="1" text="{{ version }}" class="m-l-15" style="font-size:10; color: blue"></Label>

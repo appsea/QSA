@@ -154,11 +154,11 @@ export class QuestionService {
                         dialogs.confirm({
                             title: "Notification",
                             message: "A latest version of Base Sas is now available on play store.",
-                            okButtonText: "Upgrade",
+                            okButtonText: "Update",
                             cancelButtonText: "Remind me Later"
                         }).then(proceed => {
                             if (proceed) {
-                                utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.advanced.sas");
+                                utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.quiz.sas");
                             }
                         });
                     }

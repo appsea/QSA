@@ -51,10 +51,6 @@ export function share(args: EventData): void {
         "Hi there, Take a look at the Base Sas Quiz which I am using for preparing For Base SAS Certification!!!");
 }
 
-export function goToAdvanceSas(args: EventData): void {
-    utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.advanced.sas");
-}
-
 export function goPremium(args: EventData): void {
     if (ConnectionService.getInstance().isConnected()) {
         navigate(args);

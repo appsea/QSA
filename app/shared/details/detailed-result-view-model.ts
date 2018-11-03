@@ -83,8 +83,4 @@ export class DetailedResultViewModel extends Observable {
     get questions() {
         return this._questions;
     }
-
-    get getColor() {
-        return 'skipped';
-    }
 }

@@ -20,7 +20,7 @@ export function onPageLoaded(args: EventData): void {
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
-    navigationModule.goBack();
+    navigationModule.toPage("question/practice");
     args.cancel = true;
 }
 

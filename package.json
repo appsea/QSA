@@ -37,7 +37,7 @@
     "lazy": "1.0.11",
     "nativescript-dev-sass": "1.3.5",
     "nativescript-dev-typescript": "0.5.1",
-    "nativescript-dev-webpack": "^0.15.1",
+    "nativescript-dev-webpack": "^0.16.2",
     "nativescript-worker-loader": "~0.8.1",
     "raw-loader": "~0.5.1",
     "resolve-url-loader": "~2.2.1",

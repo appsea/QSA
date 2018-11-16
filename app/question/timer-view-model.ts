@@ -1,4 +1,4 @@
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import {clearInterval, setInterval, setTimeout} from "timer";
 import {QuestionViewModel} from "./question-view-model";
 import {State} from "../shared/questions.model";

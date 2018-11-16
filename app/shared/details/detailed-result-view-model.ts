@@ -1,4 +1,4 @@
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import {IQuestion, State} from "../questions.model";
 import {QuestionUtil} from "../../services/question.util";
 

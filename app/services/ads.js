@@ -1,24 +1,24 @@
-var admobModule = require("nativescript-admob");
+//var admobModule = require("nativescript-admob");
 var testing = false;
 
 exports.showFullBanner = function() {
-    this.createBanner(admobModule.AD_SIZE.FULL_BANNER);
+    //this.createBanner(admobModule.AD_SIZE.FULL_BANNER);
 }
 
 exports.showLargeBanner = function() {
-    this.createBanner(admobModule.AD_SIZE.LARGE_BANNER);
+    //this.createBanner(admobModule.AD_SIZE.LARGE_BANNER);
 }
 
 exports.showLeaderboard = function() {
-    this.createBanner(admobModule.AD_SIZE.LEADERBOARD);
+    //this.createBanner(admobModule.AD_SIZE.LEADERBOARD);
 }
 
 exports.showMediumRectangle = function() {
-    this.createBanner(admobModule.AD_SIZE.MEDIUM_RECTANGLE);
+    //this.createBanner(admobModule.AD_SIZE.MEDIUM_RECTANGLE);
 }
 
 exports.showSmartBanner = function() {
-    this.createBanner(admobModule.AD_SIZE.SMART_BANNER);
+    //this.createBanner(admobModule.AD_SIZE.SMART_BANNER);
 }
 
 exports.createBanner = function(size) {
@@ -47,7 +47,7 @@ exports.hideBanner = function() {
 }
 
 exports.showInterstitial = function() {
-    admobModule.createInterstitial({
+    /*admobModule.createInterstitial({
         testing: testing,
         iosInterstitialId: "ca-app-pub-9082814869788754/5195869671",
         androidInterstitialId: "ca-app-pub-9082814869788754/5195869671",
@@ -56,5 +56,5 @@ exports.showInterstitial = function() {
         console.log("admob createInterstitial done");
     }, function(error) {
         console.log("admob createInterstitial error: " + error);
-    });
+    });*/
 }

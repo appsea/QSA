@@ -1,5 +1,5 @@
 import {CreateViewEventData} from "ui/placeholder";
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {topmost} from "ui/frame";
 import {NavigatedData, Page} from "ui/page";

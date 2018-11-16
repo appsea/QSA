@@ -1,4 +1,4 @@
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import * as purchase from "nativescript-purchase";
 import {GeneralService} from "../services/general.service";
 import {AdService} from "../services/ad.service";

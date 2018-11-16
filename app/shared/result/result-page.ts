@@ -1,4 +1,4 @@
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import {State} from "../questions.model";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
 import {StackLayout} from "ui/layouts/stack-layout";

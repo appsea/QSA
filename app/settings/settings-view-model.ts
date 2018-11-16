@@ -1,4 +1,4 @@
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import {ISetting} from "../shared/questions.model";
 import {SettingsService} from "../services/settings.service";
 import {PersistenceService} from "../services/persistence.service";

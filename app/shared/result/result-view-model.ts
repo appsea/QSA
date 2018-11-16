@@ -1,4 +1,4 @@
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import {Result, State} from "../questions.model";
 import * as navigationModule from '../navigation';
 import * as constantsModule from '../constants';

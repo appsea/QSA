@@ -1,4 +1,4 @@
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import {QuizUtil} from "../shared/quiz.util";
 import {PersistenceService} from "../services/persistence.service";
 import {Result} from "../shared/questions.model";

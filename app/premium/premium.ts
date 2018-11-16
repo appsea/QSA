@@ -1,6 +1,6 @@
 import {AdService} from "../services/ad.service";
 import {CreateViewEventData} from "ui/placeholder";
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import {ItemEventData} from "ui/list-view";
 import {NavigatedData, Page} from "ui/page";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";

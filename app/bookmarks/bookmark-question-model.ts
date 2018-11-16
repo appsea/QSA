@@ -1,5 +1,5 @@
 import * as dialogs from "ui/dialogs";
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import {IOption, IQuestion, State} from "../shared/questions.model";
 import * as navigationModule from '../shared/navigation';
 import {QuestionService} from "../services/question.service";

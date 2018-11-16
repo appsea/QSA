@@ -1,4 +1,4 @@
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import {isAndroid} from "platform";
 import {android, AndroidActivityBackPressedEventData, AndroidApplication} from "application";
 import * as navigationModule from '../shared/navigation';

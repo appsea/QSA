@@ -33,7 +33,7 @@ application.on(application.uncaughtErrorEvent, function (args) {
     }
 });
 
-app.start({moduleName: 'question/practice'});
+app.run({moduleName: 'question/practice'});
 
 /*
 Do not place any code after the application has been started as it will not

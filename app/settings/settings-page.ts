@@ -1,5 +1,5 @@
 import {CreateViewEventData} from "ui/placeholder";
-import {EventData, Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import * as Toast from 'nativescript-toast';
 import {NavigatedData, Page} from "ui/page";
 import {SettingsViewModel} from "./settings-view-model";

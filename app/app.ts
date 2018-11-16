@@ -6,7 +6,7 @@ purpose of the file is to pass control to the app’s first module.
 
 import * as app from 'application';
 import {isAndroid} from 'platform';
-import * as frame from 'ui/frame';
+import * as frame from 'tns-core-modules/ui/frame';
 import * as purchase from "nativescript-purchase";
 import {GeneralService} from "./services/general.service";
 

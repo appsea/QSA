@@ -1,10 +1,10 @@
-import {CreateViewEventData} from "ui/placeholder";
+import {CreateViewEventData} from "tns-core-modules/ui/placeholder";
 import {EventData, Observable} from "tns-core-modules/data/observable";
 import * as Toast from 'nativescript-toast';
-import {NavigatedData, Page} from "ui/page";
+import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import {SettingsViewModel} from "./settings-view-model";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
+import {topmost} from "tns-core-modules/ui/frame";
 import * as navigationModule from '../shared/navigation';
 import {AndroidActivityBackPressedEventData, AndroidApplication} from "application";
 import {isAndroid} from "platform";

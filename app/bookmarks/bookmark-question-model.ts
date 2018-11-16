@@ -1,11 +1,11 @@
-import * as dialogs from "ui/dialogs";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 import {EventData, Observable} from "tns-core-modules/data/observable";
 import {IOption, IQuestion, State} from "../shared/questions.model";
 import * as navigationModule from '../shared/navigation';
 import {QuestionService} from "../services/question.service";
 import {AdService} from "../services/ad.service";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
+import {topmost} from "tns-core-modules/ui/frame";
 
 export class BookmarkQuestionModel extends Observable {
     private _questions: Array<IQuestion> = [];

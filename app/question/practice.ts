@@ -1,18 +1,18 @@
-import {CreateViewEventData} from "ui/placeholder";
+import {CreateViewEventData} from "tns-core-modules/ui/placeholder";
 import {EventData, Observable} from "tns-core-modules/data/observable";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
-import {NavigatedData, Page} from "ui/page";
+import {topmost} from "tns-core-modules/ui/frame";
+import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import {ScrollView} from "tns-core-modules/ui/scroll-view";
 import * as ButtonModule from "tns-core-modules/ui/button";
-import {TextView} from "ui/text-view";
+import {TextView} from "tns-core-modules/ui/text-view";
 import {QuestionViewModel} from "./question-view-model";
 import {AndroidActivityBackPressedEventData, AndroidApplication} from "application";
 import {isAndroid, screen} from "platform";
 import {SettingsService} from "../services/settings.service";
-import {Repeater} from 'ui/repeater';
-import {Label} from 'ui/label';
-import * as dialogs from "ui/dialogs";
+import {Repeater} from 'tns-core-modules/ui/repeater';
+import {Label} from 'tns-core-modules/ui/label';
+import * as dialogs from "tns-core-modules/ui/dialogs";
 import {AdService} from "../services/ad.service";
 import {ConnectionService} from "../shared/connection.service";
 import * as constantsModule from '../shared/constants';
@@ -42,13 +42,13 @@ export function resetBanner() {
 /* ***********************************************************
 * Use the "onNavigatingTo" handler to initialize the page binding context.
 *************************************************************/
-export function onNavigatingTo(args: NavigatedData) {
+export function onNavigatingTo(args) {
     /* ***********************************************************
     * The "onNavigatingTo" event handler lets you detect if the user navigated with a back button.
     * Skipping the re-initialization on back navigation means the user will see the
     * page in the same data state that he left it in before navigating.
     *************************************************************/
-
+    console.log("Loading nav pra...");
     if (args.isBackNavigation) {
         return;
     }
@@ -56,6 +56,7 @@ export function onNavigatingTo(args: NavigatedData) {
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     banner = page.getViewById("banner");
     suggestionButton = page.getViewById("suggestionButton");
+    console.log("Loading nav pra...");
     if (!SettingsService.route()) {
         _page = page;
         optionList = page.getViewById("optionList");

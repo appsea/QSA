@@ -1,13 +1,13 @@
 import {EventData, Observable} from "tns-core-modules/data/observable";
 import {State} from "../questions.model";
-import {NavigatedData, Page} from 'ui/page';
+import {NavigatedData, Page} from 'tns-core-modules/ui/page';
 import {DetailedResultViewModel} from "./detailed-result-view-model";
 import {AndroidActivityBackPressedEventData, AndroidApplication} from "application";
 import {isAndroid} from "platform";
 import * as navigationModule from '../navigation';
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
-import * as ListView from "ui/list-view";
+import {topmost} from "tns-core-modules/ui/frame";
+import * as ListView from "tns-core-modules/ui/list-view";
 
 var page: Page;
 let vm: DetailedResultViewModel;

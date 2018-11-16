@@ -1,9 +1,9 @@
 import {EventData, Observable} from "tns-core-modules/data/observable";
 import {State} from "../shared/questions.model";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
+import {topmost} from "tns-core-modules/ui/frame";
 import * as navigationModule from '../shared/navigation';
-import {NavigatedData, Page} from 'ui/page';
+import {NavigatedData, Page} from 'tns-core-modules/ui/page';
 import {AndroidActivityBackPressedEventData, AndroidApplication} from "application";
 import {isAndroid} from "platform";
 import {MapViewModel} from "./map-view-model";

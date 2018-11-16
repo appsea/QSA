@@ -1,14 +1,14 @@
 import {EventData, Observable} from "tns-core-modules/data/observable";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
-import {NavigatedData, Page} from 'ui/page';
+import {topmost} from "tns-core-modules/ui/frame";
+import {NavigatedData, Page} from 'tns-core-modules/ui/page';
 import * as navigationModule from '../shared/navigation';
 import {AndroidActivityBackPressedEventData, AndroidApplication} from "application";
 import {isAndroid} from "platform";
 import {ProgressViewModel} from "./progress-view-model";
-import {StackLayout} from "ui/layouts/stack-layout";
+import {StackLayout} from "tns-core-modules/ui/layouts/stack-layout";
 import * as Toast from 'nativescript-toast';
-import * as dialogs from "ui/dialogs";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 
 var page: Page;
 let vm: ProgressViewModel;

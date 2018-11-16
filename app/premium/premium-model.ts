@@ -4,7 +4,7 @@ import {GeneralService} from "../services/general.service";
 import {AdService} from "../services/ad.service";
 import * as appSettings from 'application-settings';
 import * as constantsModule from '../shared/constants';
-import * as dialogs from "ui/dialogs";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 
 export class PremiumModel extends Observable {
 

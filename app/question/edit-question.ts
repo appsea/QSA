@@ -2,12 +2,12 @@ import {EventData, Observable} from "tns-core-modules/data/observable";
 import {isAndroid} from "platform";
 import {android, AndroidActivityBackPressedEventData, AndroidApplication} from "application";
 import * as navigationModule from '../shared/navigation';
-import {NavigatedData, Page} from "ui/page";
+import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
+import {topmost} from "tns-core-modules/ui/frame";
 import {EditQuestionViewModel} from "./edit-question-model";
 import {State} from "../shared/questions.model";
-import {Repeater} from 'ui/repeater';
+import {Repeater} from 'tns-core-modules/ui/repeater';
 
 let vm: EditQuestionViewModel;
 let state: State;

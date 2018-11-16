@@ -1,7 +1,7 @@
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {EventData} from "data/observable";
+import {EventData} from "tns-core-modules/data/observable";
 import {ChartViewModel} from "./chart-view-model";
-import {topmost} from "ui/frame";
+import {topmost} from "tns-core-modules/ui/frame";
 
 export function onPageLoaded(args) {
     const page = args.object;

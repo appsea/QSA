@@ -1,16 +1,16 @@
-import {EventData} from "data/observable";
+import {EventData} from "tns-core-modules/data/observable";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
-import {NavigatedData, Page} from "ui/page";
+import {topmost} from "tns-core-modules/ui/frame";
+import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import {QuestionViewModel} from "./question-view-model";
-import * as ListView from "ui/list-view";
+import * as ListView from "tns-core-modules/ui/list-view";
 import {isAndroid} from "platform";
 import {android, AndroidActivityBackPressedEventData, AndroidApplication} from "application";
-import {SwipeGestureEventData} from "ui/gestures";
+import {SwipeGestureEventData} from "tns-core-modules/ui/gestures";
 import {ScrollView} from "tns-core-modules/ui/scroll-view";
 import {AdService} from "../services/ad.service";
 import {ConnectionService} from "../shared/connection.service";
-import * as dialogs from "ui/dialogs";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 import * as constantsModule from '../shared/constants';
 
 let vm: QuestionViewModel;

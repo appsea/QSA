@@ -4,8 +4,8 @@ import { QuestionService } from "../services/question.service";
 import { SettingsService } from "../services/settings.service";
 import { AdService } from "../services/ad.service";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { topmost } from "ui/frame";
-import * as dialogs from "ui/dialogs";
+import { topmost } from "tns-core-modules/ui/frame";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 import * as navigationModule from '../shared/navigation';
 import * as constantsModule from '../shared/constants';
 
@@ -75,6 +75,7 @@ export class QuestionViewModel extends Observable {
     }
 
     private fetchUniqueQuestion() {
+        console.log("Fetching Question...");
         this._questionService.getNextQuestion().then((que: IQuestion) => {
             if (!this.alreadyAsked(que)) {
                 this._state.questionNumber = this._state.questionNumber + 1;

@@ -1,4 +1,4 @@
-import {Observable} from "data/observable";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import * as appVersion from "nativescript-appversion";
 
 import {ObservableProperty} from "../../shared/observable-property-decorator";

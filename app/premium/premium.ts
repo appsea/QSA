@@ -1,10 +1,10 @@
 import {AdService} from "../services/ad.service";
-import {CreateViewEventData} from "ui/placeholder";
+import {CreateViewEventData} from "tns-core-modules/ui/placeholder";
 import {EventData, Observable} from "tns-core-modules/data/observable";
-import {ItemEventData} from "ui/list-view";
-import {NavigatedData, Page} from "ui/page";
+import {ItemEventData} from "tns-core-modules/ui/list-view";
+import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
+import {topmost} from "tns-core-modules/ui/frame";
 import {AndroidActivityBackPressedEventData, AndroidApplication} from "application";
 import {isAndroid} from "platform";
 import {PremiumModel} from "./premium-model";
@@ -14,7 +14,7 @@ import * as navigationModule from '../shared/navigation';
 import * as purchase from "nativescript-purchase";
 import * as appSettings from 'application-settings';
 import * as constantsModule from '../shared/constants';
-import * as dialogs from "ui/dialogs";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 
 let vm: PremiumModel;
 let showDialog: boolean = true;

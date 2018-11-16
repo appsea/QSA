@@ -1,5 +1,5 @@
-import * as frameModule from 'ui/frame';
-import {topmost} from 'ui/frame';
+import * as frameModule from 'tns-core-modules/ui/frame';
+import {topmost} from 'tns-core-modules/ui/frame';
 import {State} from "./questions.model";
 
 export function	gotoResultPage(state: State) {

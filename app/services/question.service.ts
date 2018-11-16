@@ -9,7 +9,7 @@ import {HttpService} from "./http.service";
 import {QuizUtil} from "../shared/quiz.util";
 import {PersistenceService} from "./persistence.service";
 import {QuestionUtil} from "./question.util";
-import * as dialogs from "ui/dialogs";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 import * as constantsModule from '../shared/constants';
 import * as appVersion from "nativescript-appversion";
 import * as utils from "utils/utils";

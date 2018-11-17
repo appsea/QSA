@@ -1,12 +1,11 @@
-import {EventData} from "tns-core-modules/data/observable";
-import {topmost} from "tns-core-modules/ui/frame";
-import {GridLayout} from "tns-core-modules/ui/layouts/grid-layout";
-import {MyDrawerViewModel} from "./MyDrawer-view-model";
-import * as SocialShare from 'nativescript-social-share';
-import {exit} from 'nativescript-exit';
-import {SettingsService} from "../../services/settings.service";
-import {ConnectionService} from "../connection.service";
+import * as SocialShare from "nativescript-social-share";
+import { EventData } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
+import { topmost } from "tns-core-modules/ui/frame";
+import { GridLayout } from "tns-core-modules/ui/layouts/grid-layout";
+import { SettingsService } from "../../services/settings.service";
+import { ConnectionService } from "../connection.service";
+import { MyDrawerViewModel } from "./MyDrawer-view-model";
 
 /* ***********************************************************
 * Use the "loaded" event handler of the wrapping layout element to bind the view model to your view.
@@ -60,5 +59,5 @@ export function goPremium(args: EventData): void {
 }
 
 export function logout(args: EventData): void {
-    exit();
+    //exit();
 }

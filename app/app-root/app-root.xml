@@ -55,6 +55,6 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
     </nsDrawer:RadSideDrawer.drawerContent>
 
     <nsDrawer:RadSideDrawer.mainContent>
-        <Frame defaultPage="question/home-page"></Frame>
+        <Frame defaultPage="question/practice"></Frame>
     </nsDrawer:RadSideDrawer.mainContent>
 </nsDrawer:RadSideDrawer>

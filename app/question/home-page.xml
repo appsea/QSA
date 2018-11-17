@@ -19,7 +19,7 @@
             tap="onDrawerButtonTap"
             ios.position="left">
         </ActionItem>
-        <Label class="action-bar-title" text="Home"></Label>
+        <Label class="action-bar-title" text="Question"></Label>
     </ActionBar>
 
     <DockLayout stretchLastChild="true">

@@ -1,23 +1,23 @@
-import {EventData, Observable} from "tns-core-modules/data/observable";
-import {State} from "../shared/questions.model";
-import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "tns-core-modules/ui/frame";
-import * as navigationModule from '../shared/navigation';
-import {NavigatedData, Page} from 'tns-core-modules/ui/page';
-import {AndroidActivityBackPressedEventData, AndroidApplication} from "application";
-import {isAndroid} from "platform";
-import {MapViewModel} from "./map-view-model";
-import {GridItemEventData} from "nativescript-grid-view";
+import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
+import { GridItemEventData } from "nativescript-grid-view";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { isAndroid } from "platform";
+import { EventData, Observable } from "tns-core-modules/data/observable";
+import { topmost } from "tns-core-modules/ui/frame";
+import { NavigatedData, Page } from "tns-core-modules/ui/page";
+import { State } from "~/shared/questions.model";
+import * as navigationModule from "../shared/navigation";
+import { MapViewModel } from "./map-view-model";
 
-var page: Page;
-var state: State;
+let page: Page;
+let state: State;
 let vm: MapViewModel;
 
 export function onPageLoaded(args: EventData): void {
     if (!isAndroid) {
         return;
     }
-    let page = args.object;
+    const page: any = args.object;
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
 }
 
@@ -25,7 +25,6 @@ export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEvent
     navigationModule.goBack();
     args.cancel = true;
 }
-
 
 export function pageNavigatingTo(args: NavigatedData): void {
     page = <Page>args.object;

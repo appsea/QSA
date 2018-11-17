@@ -48,7 +48,6 @@ export function onNavigatingTo(args) {
     * Skipping the re-initialization on back navigation means the user will see the
     * page in the same data state that he left it in before navigating.
     *************************************************************/
-    console.log("Loading nav pra...");
     if (args.isBackNavigation) {
         return;
     }
@@ -56,7 +55,6 @@ export function onNavigatingTo(args) {
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     banner = page.getViewById("banner");
     suggestionButton = page.getViewById("suggestionButton");
-    console.log("Loading nav pra...");
     if (!SettingsService.route()) {
         _page = page;
         optionList = page.getViewById("optionList");
@@ -84,13 +82,13 @@ export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEvent
 *************************************************************/
 export function onDrawerButtonTap(args: EventData) {
     resetBanner();
-    vm.showDrawer();
+    QuestionViewModel.showDrawer();
 }
 
 export function handleSwipe(args) {
-    if (args.direction == 1) {
+    if (args.direction === 1) {
         previous();
-    } else if (args.direction == 2) {
+    } else if (args.direction === 2) {
         next();
     }
 }

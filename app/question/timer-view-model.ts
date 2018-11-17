@@ -1,8 +1,8 @@
-import {EventData, Observable} from "tns-core-modules/data/observable";
-import {clearInterval, setInterval, setTimeout} from "timer";
-import {QuestionViewModel} from "./question-view-model";
-import {State} from "../shared/questions.model";
-import {SettingsService} from "../services/settings.service";
+import { clearInterval, setInterval, setTimeout } from "timer";
+import { EventData, Observable } from "tns-core-modules/data/observable";
+import { SettingsService } from "~/services/settings.service";
+import { State } from "~/shared/questions.model";
+import { QuestionViewModel } from "./question-view-model";
 
 export class TimerViewModel extends QuestionViewModel {
     private _seconds: number = 0;
@@ -16,35 +16,36 @@ export class TimerViewModel extends QuestionViewModel {
         this.startTimer();
     }
 
-    public previous(): void {
+    previous(): void {
         super.goPrevious();
     }
 
-    public publish() {
+    publish() {
         super.publish();
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent, propertyName: 'time', value: this._time});
+        this.notify({object: this, eventName: Observable.propertyChangeEvent, propertyName: "time", value: this._time});
     }
 
-    public saveAndPublish(mode: string, state: State) {
+    saveAndPublish(mode: string, state: State) {
         state.time = this._minutes;
         SettingsService.getInstance().saveCache(mode, state);
         this.publish();
     }
 
-    public startTimer() {
+    startTimer() {
         this.clock = setInterval(() => {
             if (this._seconds <= 0) {
-                if(--this._minutes==-1){
+                if (--this._minutes === -1) {
                     this._minutes = 0;
                     this.stopTimer();
                     this.showResult();
-                }else{
+                } else {
                     this._seconds = 59;
                 }
             } else {
                 this._seconds--;
             }
-            this._time = (("0" + this._minutes).slice(this._minutes>99?-3:-2)) + ":"+(("0" + this._seconds).slice(-2)) + " MIN";
+            this._time = (("0" + this._minutes).slice(this._minutes > 99 ? -3 : -2)) + ":" + (("0" + this._seconds)
+                .slice(-2)) + " MIN";
             this.publish();
         }, 1000);
     }

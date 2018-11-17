@@ -1,15 +1,50 @@
-import { EventData, Observable } from "tns-core-modules/data/observable";
-import { IOption, IQuestion, State } from "../shared/questions.model";
-import { QuestionService } from "../services/question.service";
-import { SettingsService } from "../services/settings.service";
-import { AdService } from "../services/ad.service";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { topmost } from "tns-core-modules/ui/frame";
+import * as app from "tns-core-modules/application";
+import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
-import * as navigationModule from '../shared/navigation';
-import * as constantsModule from '../shared/constants';
+import { topmost } from "tns-core-modules/ui/frame";
+import { AdService } from "~/services/ad.service";
+import { QuestionService } from "~/services/question.service";
+import { SettingsService } from "~/services/settings.service";
+import { IOption, IQuestion, State } from "~/shared/questions.model";
+import * as constantsModule from "../shared/constants";
+import * as navigationModule from "../shared/navigation";
 
 export class QuestionViewModel extends Observable {
+
+    get question() {
+        if (!this._question) {
+            this._question = {description: "", options: [], explanation: "", show: false};
+        }
+
+        return this._question;
+    }
+
+    get state() {
+        return this._state;
+    }
+
+    get allQuestionsAsked() {
+        return this._state.questions.length === this._state.totalQuestions;
+    }
+
+    get options() {
+        return this._question.options;
+    }
+
+    get questionNumber() {
+        this._questionNumber = this._state.questionNumber;
+
+        return this._questionNumber;
+    }
+
+    static showDrawer() {
+        const sideDrawer = <RadSideDrawer>app.getRootView();
+        sideDrawer.showDrawer();
+        AdService.getInstance().hideAd();
+    }
+
+    private static attempt: boolean;
     private _questionService: QuestionService;
     private _settingsService: SettingsService;
 
@@ -18,7 +53,6 @@ export class QuestionViewModel extends Observable {
     private _questionNumber: number;
 
     private _mode: string;
-    private static attempt: boolean;
 
     constructor(mode: string) {
         super();
@@ -29,26 +63,12 @@ export class QuestionViewModel extends Observable {
         this.showFromState();
     }
 
-    public showDrawer() {
-        const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
-        sideDrawer.showDrawer();
-        AdService.getInstance().hideAd();
-    }
-
-    private showFromState(): void {
-        if (this._state.questionNumber != 0 && (this._state.questions.length >= this._state.questionNumber || this._state.questionNumber === this._state.totalQuestions)) {
-            this._question = this._state.questions[this._state.questionNumber - 1];
-        } else {
-            this.next();
-        }
-    }
-
-    public previous(): void {
+    previous(): void {
         AdService.getInstance().showInterstitial();
         this.goPrevious();
     }
 
-    public goPrevious() {
+    goPrevious() {
         if (this._state.questionNumber > 1) {
             this._state.questionNumber = this._state.questionNumber - 1;
             this._question = this._state.questions[this._state.questionNumber - 1];
@@ -74,34 +94,10 @@ export class QuestionViewModel extends Observable {
         this.publish();
     }
 
-    private fetchUniqueQuestion() {
-        console.log("Fetching Question...");
-        this._questionService.getNextQuestion().then((que: IQuestion) => {
-            if (!this.alreadyAsked(que)) {
-                this._state.questionNumber = this._state.questionNumber + 1;
-                this._question = que;
-                this._state.questions.push(this._question);
-                this.saveAndPublish(this._mode, this._state);
-                QuestionViewModel.attempt = false;
-            } else {
-                if (this._settingsService.allQuestionsAsked(this.state.questions.length)) {
-                    this.fetchUniqueQuestion();
-                } else {
-                    dialogs.confirm("Hurray!! You are done practicing all the questions. Click Ok to restart.").then((proceed) => {
-                        if (proceed) {
-                            SettingsService.getInstance().clearCache(this._mode);
-                            navigationModule.toPage("question/practice")
-                        }
-                    });
-                }
-            }
-        });
-    }
-
     alreadyAsked(newQuestion: IQuestion): boolean {
-        let result = this.state.questions.find(question => question.number === newQuestion.number);
-        let alreadyAsked = result != null;
-        return alreadyAsked;
+        const result = this.state.questions.find((question) => question.number === newQuestion.number);
+
+        return result != null;
     }
 
     quit(): void {
@@ -122,85 +118,57 @@ export class QuestionViewModel extends Observable {
         });
     }
 
-    get question() {
-        if (!this._question) {
-            this._question = { description: '', options: [], explanation: '', show: false }
-        }
-        return this._question;
-    }
-
-    get state() {
-        return this._state;
-    }
-
-    get allQuestionsAsked() {
-        return this._state.questions.length == this._state.totalQuestions;
-    }
-
     isPractice(): boolean {
         return this._mode === constantsModule.PRACTICE;
     }
 
-    get options() {
-        return this._question.options;
-    }
-
-    get questionNumber() {
-        this._questionNumber = this._state.questionNumber;
-        return this._questionNumber;
-    }
-
-    public publish() {
+    publish() {
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
-            propertyName: 'question',
+            propertyName: "question",
             value: this._question
         });
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
-            propertyName: 'options',
+            propertyName: "options",
             value: this._question.options
         });
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
-            propertyName: 'state',
+            propertyName: "state",
             value: this._state
         });
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
-            propertyName: 'questionNumber',
+            propertyName: "questionNumber",
             value: this._state.questionNumber
         });
     }
 
-    public showResult() {
+    showResult() {
         this._settingsService.clearCache(this._mode);
         this._state.mode = this._mode;
         navigationModule.gotoResultPage(this._state);
     }
 
     showAnswer(): void {
-        this.question.options.forEach(option => option.show = true);
+        this.question.options.forEach((option) => option.show = true);
         this.question.show = true;
         this.publish();
     }
 
     selectOption(args: any) {
-        let selectedOption: IOption = args.view.bindingContext;
+        const selectedOption: IOption = args.view.bindingContext;
         if (selectedOption.selected) {
             selectedOption.selected = false;
             this.question.skipped = true;
         } else {
             this.question.options.forEach((item, index) => {
-                if (item.tag === selectedOption.tag) {
-                    item.selected = true;
-                } else {
-                    item.selected = false;
-                }
+                item.selected = item.tag === selectedOption.tag;
             });
             this.question.skipped = false;
         }
@@ -208,22 +176,56 @@ export class QuestionViewModel extends Observable {
         QuestionService.getInstance().handleWrongQuestions(this.question);
     }
 
-    public saveAndPublish(_mode: string, _state: State) {
+    saveAndPublish(_mode: string, _state: State) {
         this._settingsService.saveCache(this._mode, this._state);
         this.publish();
     }
 
-    public showMap() {
+    showMap() {
         this._state.mode = this._mode;
         navigationModule.gotoQuestionMap(this._state);
     }
 
-    public goToEditPage() {
+    goToEditPage() {
         this._state.mode = this._mode;
-        navigationModule.gotoEditPage(this._state)
+        navigationModule.gotoEditPage(this._state);
     }
 
-    public enableSelection(): boolean {
-        return this._question.options.filter(option => option.selected).length > 0 || this._question.show;
+    enableSelection(): boolean {
+        return this._question.options.filter((option) => option.selected).length > 0 || this._question.show;
+    }
+
+    private showFromState(): void {
+        if (this._state.questionNumber !== 0
+            && (this._state.questions.length >= this._state.questionNumber
+                || this._state.questionNumber === this._state.totalQuestions)) {
+            this._question = this._state.questions[this._state.questionNumber - 1];
+        } else {
+            this.next();
+        }
+    }
+
+    private fetchUniqueQuestion() {
+        this._questionService.getNextQuestion().then((que: IQuestion) => {
+            if (!this.alreadyAsked(que)) {
+                this._state.questionNumber = this._state.questionNumber + 1;
+                this._question = que;
+                this._state.questions.push(this._question);
+                this.saveAndPublish(this._mode, this._state);
+                QuestionViewModel.attempt = false;
+            } else {
+                if (this._settingsService.allQuestionsAsked(this.state.questions.length)) {
+                    this.fetchUniqueQuestion();
+                } else {
+                    dialogs.confirm("Hurray!! You are done practicing all the questions. Click Ok to restart.")
+                        .then((proceed) => {
+                            if (proceed) {
+                                SettingsService.getInstance().clearCache(this._mode);
+                                navigationModule.toPage("question/practice");
+                            }
+                        });
+                }
+            }
+        });
     }
 }

@@ -1,0 +1,82 @@
+<Page
+        navigatingTo="onNavigatingTo"
+        loaded="onPageLoaded"
+        xmlns:nsDrawer="nativescript-ui-sidedrawer"
+        xmlns:myDrawer="shared/my-drawer"
+        xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!-- 
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!-- 
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <ActionItem icon="res://navigation/menu"
+                    android:visibility="collapsed"
+                    tap="onDrawerButtonTap"
+                    ios.position="left">
+        </ActionItem>
+        <Label class="action-bar-title" text="Edit"/>
+    </ActionBar>
+
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="{{ state.mode }}"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="bottom" orientation="horizontal" horizontalAlignment="center">
+                    <Button text="Cancel" class="btn c-bg-grey-dark" width="45%" tap="cancel"/>
+                    <Button text="Save" class="btn btn-primary" width="45%" tap="save"/>
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="input-field margin">
+                        <Label text="Description" class="label font-weight-bold m-b-5"/>
+                        <TextView class="input" text="{{ question.description }}"></TextView>
+                        <Label text="Explanation" class="label font-weight-bold m-b-5"/>
+                        <TextView class="input" text="{{ question.explanation }}"></TextView>
+                        <Label text="Select correct option" class="label font-weight-bold m-b-5"/>
+                        <Repeater items="{{ question.options }}" row="1" id="optionList">
+                            <Repeater.itemTemplate>
+                                <StackLayout
+                                        class="{{ selected ? 'selected': 'not-selected' }}"
+                                        tap="selectOption">
+                                    <Label text="{{ description}}"
+                                           class="{{ selected ? 'selected': 'not-selected' }}"
+                                           textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"/>
+                                </StackLayout>
+                            </Repeater.itemTemplate>
+                        </Repeater>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

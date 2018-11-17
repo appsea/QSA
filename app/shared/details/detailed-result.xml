@@ -1,0 +1,116 @@
+<Page
+        class="page"
+        navigatingTo="pageNavigatingTo"
+        loaded="onPageLoaded"
+        xmlns:nsDrawer="nativescript-ui-sidedrawer"
+        xmlns:myDrawer="shared/my-drawer"
+        xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <ActionItem icon="res://navigation/menu"
+                    android:visibility="collapsed"
+                    tap="onDrawerButtonTap"
+                    ios.position="left">
+        </ActionItem>
+        <Label class="action-bar-title">
+            <label.formattedText>
+                <formattedString>
+                    <formattedString.spans>
+                        <span text="{{ message }}"/>
+                        <span text=" Questions"/>
+                    </formattedString.spans>
+                </formattedString>
+            </label.formattedText>
+        </Label>
+    </ActionBar>
+
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="{{ state.mode }}"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top">
+                </StackLayout>
+                <StackLayout dock="bottom" class="layout-class" horizontalAlignment="center" orientation="horizontal">
+                    <Button class="all t-12" text="All" tap="all" width="20%" margin="2dpi" />
+                    <Button class="correct t-12" text="Correct" tap="correct" width="25%" margin="2dpi" />
+                    <Button class="incorrect t-12" text="Wrong" tap="incorrect" width="25%" margin="2dpi" />
+                    <Button class="skipped t-12" text="Skipped" tap="skipped" width="30%" margin="2dpi" />
+                </StackLayout>
+                <StackLayout visibility="{{ questions.length === 0 ? 'visible' : 'collapsed' }}" class="margin" horizontalAlignment="center">
+                    <Label textWrap="true" textAlignment="center" marginTop="20dpi">
+                        <label.formattedText>
+                            <formattedString>
+                                <formattedString.spans>
+                                    <span text="No Questions Were "/>
+                                    <span text="{{ message }}"/>
+                                </formattedString.spans>
+                            </formattedString>
+                        </label.formattedText>
+                    </Label>
+                </StackLayout>
+                <StackLayout class="margin" visibility="{{ questions.length > 0 ? 'visible' : 'collapsed' }}">
+                    <ListView id="listView" items="{{ questions }}" separatorColor="blue" itemTemplateSelector="$index">
+                        <ListView.itemTemplate>
+                            <StackLayout>
+                                <Label marginTop="20dpi" textAlignment="center" fontWeight="Bold">
+                                    <Label.formattedText>
+                                        <FormattedString>
+                                            <FormattedString.spans>
+                                                <span text="Question " />
+                                                <span text="{{ $index + 1 }}"/>
+                                                <span text=" Of "/>
+                                                <span text="{{$parents['ListView'].questions, $parents['ListView'].questions.length }}" />
+                                            </FormattedString.spans>
+                                        </FormattedString>
+                                    </Label.formattedText>
+                                </Label>
+                                <Label text="{{ description }}" textWrap="true"/>
+                                <Label class="{{ (!options[0].selected && !options[0].correct)? 'not-selected': (skipped && options[0].correct)? 'skipped':(options[0].selected && !options[0].correct)?'incorrect': 'correct'}}"  text="{{ options[0].description }}" textWrap="true" marginTop="50px"/>
+                                <Label class="{{ (!options[1].selected && !options[1].correct)? 'not-selected': (skipped && options[1].correct)? 'skipped':(options[1].selected && !options[1].correct)?'incorrect': 'correct'}}"  text="{{ options[1].description }}" textWrap="true" marginTop="50px"/>
+                                <Label class="{{ (!options[2].selected && !options[2].correct)? 'not-selected': (skipped && options[2].correct)? 'skipped':(options[2].selected && !options[2].correct)?'incorrect': 'correct'}}"  text="{{ options[2].description }}" textWrap="true" marginTop="50px"/>
+                                <Label class="{{ (!options[3].selected && !options[3].correct)? 'not-selected': (skipped && options[3].correct)? 'skipped':(options[3].selected && !options[3].correct)?'incorrect': 'correct'}}"  text="{{ options[3].description }}" textWrap="true" marginTop="50px"/>
+                                <Label text="Explanation: " style="font-weight: bold; margin-top: 10dpi"  textWrap="true" visibility="{{ explanation ? 'visible' : 'collapsed' }}"/>
+                                <Label text="{{ explanation }}" textWrap="true" visibility="{{ explanation ? 'visible' : 'collapsed' }}"/>
+                            </StackLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
+                </StackLayout>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

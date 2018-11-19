@@ -1,7 +1,7 @@
-import {EventData, Observable} from "tns-core-modules/data/observable";
 import * as appVersion from "nativescript-appversion";
+import { EventData, Observable } from "tns-core-modules/data/observable";
 
-import {ObservableProperty} from "../../shared/observable-property-decorator";
+import { ObservableProperty } from "~/shared/observable-property-decorator";
 
 /* ***********************************************************
 * Keep data that is displayed in your app drawer in the MyDrawer custom component view model.
@@ -20,9 +20,9 @@ export class MyDrawerViewModel extends Observable {
         this.findVersion();
     }
 
-    public findVersion() {
+    findVersion() {
         appVersion.getVersionName().then((version: string) => {
-            this.version = 'v ' + version;
+            this.version = "v " + version;
         });
     }
 }

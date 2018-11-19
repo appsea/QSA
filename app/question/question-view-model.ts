@@ -39,7 +39,7 @@ export class QuestionViewModel extends Observable {
     }
 
     static showDrawer() {
-        const sideDrawer = <RadSideDrawer>app.getRootView();
+        const sideDrawer: RadSideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
         AdService.getInstance().hideAd();
     }

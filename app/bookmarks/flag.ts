@@ -1,20 +1,27 @@
-import { android, AndroidActivityBackPressedEventData, AndroidApplication } from "application";
+import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { isAndroid } from "platform";
-import { EventData } from "tns-core-modules/data/observable";
+import { isAndroid, screen } from "platform";
+import { EventData, Observable } from "tns-core-modules/data/observable";
+import * as ButtonModule from "tns-core-modules/ui/button";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
-import * as ListView from "tns-core-modules/ui/list-view";
+import { Label } from "tns-core-modules/ui/label";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
+import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
+import { Repeater } from "tns-core-modules/ui/repeater";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
-import { AdService } from "../services/ad.service";
-import { ConnectionService } from "../shared/connection.service";
-import * as constantsModule from "../shared/constants";
-import { TimerViewModel } from "./timer-view-model";
+import { TextView } from "tns-core-modules/ui/text-view";
+import { AdService } from "~/services/ad.service";
+import { ConnectionService } from "~/shared/connection.service";
+import { FlagQuestionModel } from "./flag-question-model";
 import {QuestionViewModel} from "~/question/question-view-model";
 
-let vm: TimerViewModel;
-let optionList: ListView.ListView;
+let vm: FlagQuestionModel;
+let optionList: Repeater;
+let suggestionButton: ButtonModule.Button;
+let defaultExplanation: Label;
+let explanationHeader: Label;
+let _page: any;
 let scrollView: ScrollView;
 let banner: any;
 
@@ -31,15 +38,6 @@ export function resetBanner() {
     }
 }
 
-export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
-    previous();
-    args.cancel = true;
-}
-
-export function onNavigatingFrom(args: NavigatedData) {
-    vm.stopTimer();
-}
-
 /* ***********************************************************
 * Use the "onNavigatingTo" handler to initialize the page binding context.
 *************************************************************/
@@ -49,29 +47,25 @@ export function onNavigatingTo(args: NavigatedData) {
     * Skipping the re-initialization on back navigation means the user will see the
     * page in the same data state that he left it in before navigating.
     *************************************************************/
+
     if (args.isBackNavigation) {
-        vm.startTimer();
         return;
     }
-    const page = <Page>args.object;
-    page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
-    optionList = page.getViewById("optionList");
-    scrollView = page.getViewById("scrollView");
-    banner = page.getViewById("banner");
-    vm = new TimerViewModel(constantsModule.MOCK);
-    page.bindingContext = vm;
+    _page = <Page>args.object;
+    vm = new FlagQuestionModel();
+    _page.bindingContext = vm;
+    _page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
+    banner = _page.getViewById("banner");
+    optionList = _page.getViewById("optionList");
+    suggestionButton = _page.getViewById("suggestionButton");
+    explanationHeader = _page.getViewById("explanationHeader");
+    defaultExplanation = _page.getViewById("defaultExplanation");
+    scrollView = _page.getViewById("scrollView");
 }
 
-export function handleSwipe(args) {
-    if (args.direction == 1) {
-        previous();
-    } else if (args.direction == 2) {
-        next();
-    }
-}
-
-export function showMap(): void {
-    vm.showMap();
+export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
+    previous();
+    args.cancel = true;
 }
 
 /* ***********************************************************
@@ -84,15 +78,36 @@ export function onDrawerButtonTap(args: EventData) {
     QuestionViewModel.showDrawer();
 }
 
+export function handleSwipe(args) {
+    if (args.direction === 1) {
+        previous();
+    } else if (args.direction === 2) {
+        next();
+    }
+}
+
+export function moveToLast() {
+    suggestionButton = _page.getViewById("suggestionButton");
+    if (suggestionButton) {
+        const locationRelativeTo = suggestionButton.getLocationRelativeTo(scrollView);
+        if (scrollView && locationRelativeTo) {
+            scrollView.scrollToVerticalOffset(locationRelativeTo.y, false);
+        }
+    }
+}
+
+export function goToEditPage(): void {
+    vm.goToEditPage();
+}
+
 export function previous(): void {
+    if (!vm) {
+        vm = new FlagQuestionModel();
+    }
     vm.previous();
     if (scrollView) {
         scrollView.scrollToVerticalOffset(0, false);
     }
-}
-
-export function flag(): void {
-    vm.flag();
 }
 
 export function next(): void {
@@ -110,23 +125,19 @@ export function next(): void {
     }
 }
 
-export function submit(): void {
-    vm.submit();
-}
-
-export function quit(): void {
-    vm.quit();
-}
-
 export function showAnswer(): void {
     vm.showAnswer();
+    optionList.refresh();
+    moveToLast();
+}
+
+export function flag(): void {
+    vm.flag();
 }
 
 export function selectOption(args): void {
+    vm.showAnswer();
     vm.selectOption(args);
     optionList.refresh();
-}
-
-export function goToEditPage(): void {
-    vm.goToEditPage();
+    moveToLast();
 }

@@ -1,9 +1,12 @@
 import * as SocialShare from "nativescript-social-share";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import * as app from "tns-core-modules/application";
 import { EventData } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
 import { GridLayout } from "tns-core-modules/ui/layouts/grid-layout";
-import { SettingsService } from "../../services/settings.service";
+import { AppRootViewModel } from "~/app-root/app-root-view-model";
+import { SettingsService } from "~/services/settings.service";
 import { ConnectionService } from "../connection.service";
 import { MyDrawerViewModel } from "./MyDrawer-view-model";
 
@@ -16,6 +19,12 @@ export function onLoaded(args: EventData): void {
     component.bindingContext = new MyDrawerViewModel(componentTitle);
 }
 
+const closeDrawer = () => {
+    const drawerComponent = <RadSideDrawer>app.getRootView();
+    console.info("drawerComponent", drawerComponent);
+    drawerComponent.closeDrawer();
+};
+
 /* ***********************************************************
 * Use the "tap" event handler of the <GridLayout> component for handling navigation item taps.
 * The "tap" event handler of the app drawer <GridLayout> item is used to navigate the app
@@ -24,13 +33,20 @@ export function onLoaded(args: EventData): void {
 export function onNavigationItemTap(args: EventData): void {
     const component = <GridLayout>args.object;
     const componentRoute = component.get("route");
+    const componentTitle = component.get("params");
+    const bindingContext = <AppRootViewModel>component.bindingContext;
+    bindingContext.selectedPage = componentTitle;
     SettingsService.getInstance().saveRoute(componentRoute);
+
     topmost().navigate({
         moduleName: componentRoute,
         transition: {
             name: "fade"
         }
     });
+
+    closeDrawer();
+
 }
 
 export function navigate(args: EventData): void {
@@ -42,6 +58,8 @@ export function navigate(args: EventData): void {
             name: "fade"
         }
     });
+
+    closeDrawer();
 }
 
 export function share(args: EventData): void {
@@ -51,6 +69,9 @@ export function share(args: EventData): void {
 
 export function goPremium(args: EventData): void {
     if (ConnectionService.getInstance().isConnected()) {
+        const component = <GridLayout>args.object;
+        const bindingContext = <AppRootViewModel>component.bindingContext;
+        bindingContext.selectedPage = "premium";
         navigate(args);
     } else {
         dialogs.alert("Please connect to internet for the purchase!!");
@@ -59,5 +80,5 @@ export function goPremium(args: EventData): void {
 }
 
 export function logout(args: EventData): void {
-    //exit();
+    android.os.Process.killProcess(android.os.Process.myPid());
 }

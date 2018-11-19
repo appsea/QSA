@@ -1,20 +1,27 @@
-import { android, AndroidActivityBackPressedEventData, AndroidApplication } from "application";
+import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { isAndroid } from "platform";
-import { EventData } from "tns-core-modules/data/observable";
+import { isAndroid, screen } from "platform";
+import { EventData, Observable } from "tns-core-modules/data/observable";
+import * as ButtonModule from "tns-core-modules/ui/button";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
-import { SwipeGestureEventData } from "tns-core-modules/ui/gestures";
-import * as ListView from "tns-core-modules/ui/list-view";
+import { Label } from "tns-core-modules/ui/label";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
+import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
+import { Repeater } from "tns-core-modules/ui/repeater";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
+import { TextView } from "tns-core-modules/ui/text-view";
+import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
 import { ConnectionService } from "~/shared/connection.service";
-import * as constantsModule from "../shared/constants";
-import { QuestionViewModel } from "./question-view-model";
+import { WrongQuestionModel } from "./wrong-question-model";
 
-let vm: QuestionViewModel;
-let optionList: ListView.ListView;
+let vm: WrongQuestionModel;
+let optionList: Repeater;
+let suggestionButton: ButtonModule.Button;
+let defaultExplanation: Label;
+let explanationHeader: Label;
+let _page: any;
 let scrollView: ScrollView;
 let banner: any;
 
@@ -30,20 +37,6 @@ export function resetBanner() {
         banner.height = "0";
     }
 }
-
-export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
-    previous();
-    args.cancel = true;
-}
-
-export function handleSwipe(args) {
-    if (args.direction === 1) {
-        previous();
-    } else if (args.direction === 2) {
-        next();
-    }
-}
-
 /* ***********************************************************
 * Use the "onNavigatingTo" handler to initialize the page binding context.
 *************************************************************/
@@ -53,17 +46,25 @@ export function onNavigatingTo(args: NavigatedData) {
     * Skipping the re-initialization on back navigation means the user will see the
     * page in the same data state that he left it in before navigating.
     *************************************************************/
+
     if (args.isBackNavigation) {
         return;
     }
+    _page = <Page>args.object;
+    vm = new WrongQuestionModel();
+    _page.bindingContext = vm;
+    _page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
+    banner = _page.getViewById("banner");
+    optionList = _page.getViewById("optionList");
+    suggestionButton = _page.getViewById("suggestionButton");
+    explanationHeader = _page.getViewById("explanationHeader");
+    defaultExplanation = _page.getViewById("defaultExplanation");
+    scrollView = _page.getViewById("scrollView");
+}
 
-    const page = <Page>args.object;
-    page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
-    optionList = page.getViewById("optionList");
-    scrollView = page.getViewById("scrollView");
-    banner = page.getViewById("banner");
-    vm = new QuestionViewModel(constantsModule.QUICK);
-    page.bindingContext = vm;
+export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
+    previous();
+    args.cancel = true;
 }
 
 /* ***********************************************************
@@ -76,15 +77,40 @@ export function onDrawerButtonTap(args: EventData) {
     QuestionViewModel.showDrawer();
 }
 
-export function previous(): void {
-    vm.previous();
-    if (scrollView) {
-        scrollView.scrollToVerticalOffset(0, false);
+export function handleSwipe(args) {
+    if (args.direction === 1) {
+        previous();
+    } else if (args.direction === 2) {
+        next();
     }
+}
+
+export function moveToLast() {
+    suggestionButton = _page.getViewById("suggestionButton");
+    if (suggestionButton) {
+        const locationRelativeTo = suggestionButton.getLocationRelativeTo(scrollView);
+        if (scrollView && locationRelativeTo) {
+            scrollView.scrollToVerticalOffset(locationRelativeTo.y, false);
+        }
+    }
+}
+
+export function goToEditPage(): void {
+    vm.goToEditPage();
 }
 
 export function flag(): void {
     vm.flag();
+}
+
+export function previous(): void {
+    if (!vm) {
+        vm = new WrongQuestionModel();
+    }
+    vm.previous();
+    if (scrollView) {
+        scrollView.scrollToVerticalOffset(0, false);
+    }
 }
 
 export function next(): void {
@@ -102,27 +128,18 @@ export function next(): void {
     }
 }
 
-export function submit(): void {
-    vm.submit();
-}
-
-export function quit(): void {
-    vm.quit();
-}
-
-export function showMap(): void {
-    vm.showMap();
-}
-
 export function showAnswer(): void {
     vm.showAnswer();
+    optionList.refresh();
+    moveToLast();
 }
 
 export function selectOption(args): void {
+    vm.showAnswer();
     vm.selectOption(args);
     optionList.refresh();
+    moveToLast();
 }
 
-export function goToEditPage(): void {
-    vm.goToEditPage();
+export function creatingView(args: CreateViewEventData) {
 }

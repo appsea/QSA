@@ -28,7 +28,7 @@ export interface State {
     questionNumber: number;
     totalQuestions: number;
     mode?: string;
-    time?:number;
+    time?: number;
 }
 
 export interface Map {

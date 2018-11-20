@@ -5,6 +5,7 @@ import { isAndroid } from "platform";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
+import { QuestionViewModel } from "~/question/question-view-model";
 import { State } from "~/shared/questions.model";
 import * as navigationModule from "../shared/navigation";
 import { MapViewModel } from "./map-view-model";
@@ -17,8 +18,8 @@ export function onPageLoaded(args: EventData): void {
     if (!isAndroid) {
         return;
     }
-    const page: any = args.object;
-    page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
+    const pg: any = args.object;
+    pg.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
@@ -26,7 +27,7 @@ export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEvent
     args.cancel = true;
 }
 
-export function pageNavigatingTo(args: NavigatedData): void {
+export function onNavigatingTo(args: NavigatedData): void {
     page = <Page>args.object;
     state = <State> page.navigationContext;
     vm = new MapViewModel(state);
@@ -34,8 +35,7 @@ export function pageNavigatingTo(args: NavigatedData): void {
 }
 
 export function onDrawerButtonTap(args: EventData) {
-    const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
-    sideDrawer.showDrawer();
+    QuestionViewModel.showDrawer();
 }
 
 export function gridViewItemTap(args: GridItemEventData) {

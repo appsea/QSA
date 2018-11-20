@@ -1,11 +1,11 @@
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
-import {EventData, Observable} from "tns-core-modules/data/observable";
-import {IOption, IQuestion, State} from "../shared/questions.model";
-import * as navigationModule from '../shared/navigation';
-import {QuestionService} from "../services/question.service";
-import {AdService} from "../services/ad.service";
-import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "tns-core-modules/ui/frame";
+import { topmost } from "tns-core-modules/ui/frame";
+import { AdService } from "../services/ad.service";
+import { QuestionService } from "../services/question.service";
+import * as navigationModule from "../shared/navigation";
+import { IOption, IQuestion, State } from "../shared/questions.model";
 
 export class BookmarkQuestionModel extends Observable {
     private _questions: Array<IQuestion> = [];
@@ -19,7 +19,7 @@ export class BookmarkQuestionModel extends Observable {
         this._mode = mode;
     }
 
-    public showDrawer() {
+    showDrawer() {
         const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
         if (sideDrawer) {
             sideDrawer.showDrawer();
@@ -27,7 +27,7 @@ export class BookmarkQuestionModel extends Observable {
         AdService.getInstance().hideAd();
     }
 
-    public previous(): void {
+    previous(): void {
         AdService.getInstance().showInterstitial();
         if (this._questionNumber > 1) {
             this._questionNumber = this._questionNumber - 1;
@@ -57,7 +57,7 @@ export class BookmarkQuestionModel extends Observable {
 
     get question() {
         if (!this._question) {
-            this._question = {description: '', options: [], explanation: '', show: false}
+            this._question = {description: "", options: [], explanation: "", show: false};
         }
         return this._question;
     }
@@ -78,36 +78,35 @@ export class BookmarkQuestionModel extends Observable {
         return this._questions.length;
     }
 
-    public publish() {
+    publish() {
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
-            propertyName: 'question',
+            propertyName: "question",
             value: this._question
         });
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
-            propertyName: 'options',
+            propertyName: "options",
             value: this._question.options
         });
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
-            propertyName: 'questionNumber',
+            propertyName: "questionNumber",
             value: this._questionNumber
         });
     }
 
-
     showAnswer(): void {
-        this.question.options.forEach(option => option.show = true);
+        this.question.options.forEach((option) => option.show = true);
         this.question.show = true;
         this.publish();
     }
 
     selectOption(args: any) {
-        let selectedOption: IOption = args.view.bindingContext;
+        const selectedOption: IOption = args.view.bindingContext;
         if (selectedOption.selected) {
             selectedOption.selected = false;
             this.question.skipped = true;
@@ -125,8 +124,8 @@ export class BookmarkQuestionModel extends Observable {
         QuestionService.getInstance().handleWrongQuestions(this.question);
     }
 
-    public goToEditPage() {
-        let state: State = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
+    goToEditPage() {
+        const state: State = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
         navigationModule.gotoEditPage(state);
     }
 }

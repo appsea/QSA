@@ -1,10 +1,9 @@
-import * as frameModule from 'tns-core-modules/ui/frame';
-import {topmost} from 'tns-core-modules/ui/frame';
-import {State} from "./questions.model";
+import * as frameModule from "tns-core-modules/ui/frame";
+import { State } from "./questions.model";
 
 export function	gotoResultPage(state: State) {
     frameModule.topmost().navigate({
-        moduleName: 'shared/result/result-page',
+        moduleName: "shared/result/result-page",
         clearHistory: true,
         context: state,
         transition: {
@@ -15,7 +14,7 @@ export function	gotoResultPage(state: State) {
 
 export function	gotoEditPage(state: State) {
     frameModule.topmost().navigate({
-        moduleName: 'question/edit-question',
+        moduleName: "question/edit-question",
         context: state,
         transition: {
             name: "fade"
@@ -25,7 +24,7 @@ export function	gotoEditPage(state: State) {
 
 export function	gotoQuestionMap(state: State) {
     frameModule.topmost().navigate({
-        moduleName: 'question/map',
+        moduleName: "question/map",
         context: state,
         transition: {
             name: "fade"
@@ -44,7 +43,7 @@ export function	toPage(path: string) {
 
 export function	gotoDetailsPage(state: State) {
     frameModule.topmost().navigate({
-        moduleName: 'shared/details/detailed-result',
+        moduleName: "shared/details/detailed-result",
         context: state,
         transition: {
             name: "fade"
@@ -53,5 +52,5 @@ export function	gotoDetailsPage(state: State) {
 }
 
 export function	goBack() {
-    topmost().goBack();
+    frameModule.topmost().goBack();
 }

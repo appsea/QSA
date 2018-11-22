@@ -1,19 +1,19 @@
 /**
  * Created by rakesh on 15-Nov-2017.
  */
-import {IQuestion} from "../shared/questions.model";
-import {SettingsService} from "./settings.service";
-import { Observable } from "tns-core-modules/data/observable";
-import {ConnectionService} from "../shared/connection.service";
-import {HttpService} from "./http.service";
-import {QuizUtil} from "../shared/quiz.util";
-import {PersistenceService} from "./persistence.service";
-import {QuestionUtil} from "./question.util";
-import * as dialogs from "tns-core-modules/ui/dialogs";
-import * as constantsModule from '../shared/constants';
 import * as appVersion from "nativescript-appversion";
+import * as Toast from "nativescript-toast";
+import { Observable } from "tns-core-modules/data/observable";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 import * as utils from "utils/utils";
-import * as Toast from 'nativescript-toast';
+import { ConnectionService } from "~/shared/connection.service";
+import { IQuestion } from "~/shared/questions.model";
+import { QuizUtil } from "~/shared/quiz.util";
+import * as constantsModule from "../shared/constants";
+import { HttpService } from "./http.service";
+import { PersistenceService } from "./persistence.service";
+import { QuestionUtil } from "./question.util";
+import { SettingsService } from "./settings.service";
 
 export class QuestionService {
 
@@ -37,7 +37,7 @@ export class QuestionService {
     }
 
     handleWrongQuestions(question: IQuestion) {
-        let wrongQuestions: Array<IQuestion> = PersistenceService.getInstance().readWrongQuestions();
+        const wrongQuestions: Array<IQuestion> = PersistenceService.getInstance().readWrongQuestions();
         if (QuestionUtil.isWrong(question)) {
             this.add(constantsModule.WRONG_QUESTION, question, wrongQuestions);
         } else {
@@ -46,7 +46,7 @@ export class QuestionService {
     }
 
     handleFlagQuestion(question: IQuestion) {
-        let flaggedQuestions: Array<IQuestion> = PersistenceService.getInstance().readFlaggedQuestions();
+        const flaggedQuestions: Array<IQuestion> = PersistenceService.getInstance().readFlaggedQuestions();
         if (!this.containsQuestion(question, flaggedQuestions)) {
             Toast.makeText("Added to flagged questions.", "long").show();
             question.flagged = true;
@@ -59,41 +59,32 @@ export class QuestionService {
         }
     }
 
-    public add(key: string, question: IQuestion, questions: Array<IQuestion>) {
+    add(key: string, question: IQuestion, questions: Array<IQuestion>) {
         if (!this.containsQuestion(question, questions)) {
             questions.push(question);
             PersistenceService.getInstance().addQuestions(key, questions);
         }
     }
 
-    public remove(key: string, question: IQuestion, questions: Array<IQuestion>) {
-        let filteredRecords: Array<IQuestion> = questions.filter(item => item.number !== question.number);
+    remove(key: string, question: IQuestion, questions: Array<IQuestion>) {
+        const filteredRecords: Array<IQuestion> = questions.filter((item) => item.number !== question.number);
         PersistenceService.getInstance().addQuestions(key, filteredRecords);
     }
 
-    private containsQuestion(search: IQuestion, questions: Array<IQuestion>): boolean {
-        let contains = false;
-        questions.forEach(question => {
-            if (question.number === search.number) {
-                contains = true;
-            }
-        });
-        return contains;
-    }
-
-    public update(question: IQuestion) {
-        let url = constantsModule.FIREBASE_URL + "suggestions.json";
-        var questionWithDate = {question: question, date: QuizUtil.getDate()};
+    update(question: IQuestion) {
+        const url = constantsModule.FIREBASE_URL + "suggestions.json";
+        const questionWithDate = {question, date: QuizUtil.getDate()};
         HttpService.getInstance().httpPost(url, questionWithDate);
     }
 
     getFirebaseQuestion(): Promise<IQuestion> {
         this.checkQuestionUpdate();
-        if (this.questions.length != 0) {
+        if (this.questions.length !== 0) {
             return this.readFromQuestions();
         } else {
             if (this._settingsService.hasQuestions()) {
                 this.questions = this._settingsService.readQuestions();
+
                 return this.readFromQuestions();
             } else {
                 if (!ConnectionService.getInstance().isConnected()) {
@@ -103,11 +94,28 @@ export class QuestionService {
                 }
             }
         }
+
         return this.getNextQuestionFromCache();
+    }
+
+    isFlagged(question: IQuestion): boolean {
+        return this.containsQuestion(question, PersistenceService.getInstance().readFlaggedQuestions());
+    }
+
+    private containsQuestion(search: IQuestion, questions: Array<IQuestion>): boolean {
+        let contains = false;
+        questions.forEach((question) => {
+            if (question.number === search.number) {
+                contains = true;
+            }
+        });
+
+        return contains;
     }
 
     private getRandomNumber(max: number): number {
         const randomNumber = Math.floor(Math.random() * (max));
+
         return randomNumber;
     }
 
@@ -133,8 +141,8 @@ export class QuestionService {
 
     private readFromQuestions(): Promise<IQuestion> {
         return new Promise<IQuestion>((resolve, reject) => {
-            let randomNumber = this.getRandomNumber(this.questions.length);
-            let question = this.questions[randomNumber];
+            const randomNumber = this.getRandomNumber(this.questions.length);
+            const question = this.questions[randomNumber];
             question.flagged = this.isFlagged(question);
             resolve(question);
         });
@@ -149,14 +157,14 @@ export class QuestionService {
     private checkUpdates() {
         if (!this._checked) {
             HttpService.getInstance().checkPlayStoreVersion().then((playStoreVersion: string) => {
-                appVersion.getVersionCode().then((appVersion: string) => {
-                    if (Number(playStoreVersion) > Number(appVersion)) {
+                appVersion.getVersionCode().then((versionCode: string) => {
+                    if (Number(playStoreVersion) > Number(versionCode)) {
                         dialogs.confirm({
                             title: "Notification",
                             message: "A latest version of Base Sas is now available on play store.",
                             okButtonText: "Update",
                             cancelButtonText: "Remind me Later"
-                        }).then(proceed => {
+                        }).then((proceed) => {
                             if (proceed) {
                                 utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.quiz.sas");
                             }
@@ -167,33 +175,32 @@ export class QuestionService {
         }
 
     }
-
-    public isFlagged(question: IQuestion): boolean {
-        return this.containsQuestion(question, PersistenceService.getInstance().readFlaggedQuestions());
-    }
 }
 
 const QUESTIONS: Array<IQuestion> = [
     {
-        "description": "Why PROC FSLIST is used?",
-        "explanation": "The FSLIST procedure enables you to browse external files that are not SAS data sets within a SAS session. Because the files are displayed in an interactive window, the procedure provides a highly convenient mechanism for examining file contents.",
-        "number": "-1",
-        "options": [{
-            "correct": false,
-            "description": "A. to write to an external file",
-            "tag": "A"
+        description: "Why PROC FSLIST is used?",
+        explanation: "The FSLIST procedure enables you to browse external files " +
+        "that are not SAS data sets within a SAS session. " +
+        "Because the files are displayed in an interactive window, " +
+        "the procedure provides a highly convenient mechanism for examining file contents.",
+        number: "-1",
+        options: [{
+            correct: false,
+            description: "A. to write to an external file",
+            tag: "A"
         }, {
-            "correct": true,
-            "description": "B. to read from an external file",
-            "tag": "B"
+            correct: true,
+            description: "B. to read from an external file",
+            tag: "B"
         }, {
-            "correct": false,
-            "description": "C. to sort by date",
-            "tag": "C"
+            correct: false,
+            description: "C. to sort by date",
+            tag: "C"
         }, {
-            "correct": false,
-            "description": "D. not a valid statement",
-            "tag": "D"
+            correct: false,
+            description: "D. not a valid statement",
+            tag: "D"
         }]
     }
-]
+];

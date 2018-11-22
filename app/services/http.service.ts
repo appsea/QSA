@@ -1,6 +1,6 @@
 import { Observable } from "tns-core-modules/data/observable";
+import { IQuestion } from "~/shared/questions.model";
 import * as constantsModule from "../shared/constants";
-import { IQuestion } from "../shared/questions.model";
 import { SettingsService } from "./settings.service";
 
 const httpModule = require("http");

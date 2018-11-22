@@ -3,7 +3,7 @@
  */
 import { Observable } from "tns-core-modules/data/observable";
 import * as constantsModule from "../shared/constants";
-import { QuizUtil } from "../shared/quiz.util";
+import { QuizUtil } from "~/shared/quiz.util";
 import { HttpService } from "./http.service";
 
 export class GeneralService {

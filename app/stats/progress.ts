@@ -7,9 +7,9 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { QuestionViewModel } from "~/question/question-view-model";
+import { SelectedPageService } from "~/shared/selected-page-service";
 import * as navigationModule from "../shared/navigation";
 import { ProgressViewModel } from "./progress-view-model";
-import {SelectedPageService} from "~/shared/selected-page-service";
 
 let page: Page;
 let vm: ProgressViewModel;
@@ -51,5 +51,4 @@ export function resetExamStats(): void {
             Toast.makeText("Cleared Exam Stats!!!", "long").show();
         }
     });
-
 }

@@ -36,6 +36,7 @@ export class PersistenceService {
         if (appSettings.hasKey(RESULT)) {
             items = JSON.parse(appSettings.getString(RESULT));
         }
+
         return items;
     }
 
@@ -62,6 +63,7 @@ export class PersistenceService {
         } catch (error) {
             questions = [];
         }
+
         return questions;
     }
 

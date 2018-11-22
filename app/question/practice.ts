@@ -160,6 +160,3 @@ export function selectOption(args): void {
         moveToLast();
     }
 }
-
-export function creatingView(args: CreateViewEventData) {
-}

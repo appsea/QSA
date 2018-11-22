@@ -20,6 +20,7 @@ export class SettingsViewModel extends Observable {
     }
 
     private publish() {
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent, propertyName: "settings", value: this._settings});
+        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
+                      propertyName: "settings", value: this._settings});
     }
 }

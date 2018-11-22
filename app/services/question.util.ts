@@ -10,6 +10,7 @@ export class QuestionUtil {
                 break;
             }
         }
+
         return isCorrect;
     }
 
@@ -21,6 +22,7 @@ export class QuestionUtil {
                 break;
             }
         }
+
         return isSkipped;
     }
 

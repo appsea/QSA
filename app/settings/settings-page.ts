@@ -7,9 +7,9 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { QuestionViewModel } from "~/question/question-view-model";
+import { SelectedPageService } from "~/shared/selected-page-service";
 import * as navigationModule from "../shared/navigation";
 import { SettingsViewModel } from "./settings-view-model";
-import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: SettingsViewModel;
 

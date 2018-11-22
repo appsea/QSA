@@ -48,7 +48,7 @@ export class MapViewModel extends Observable {
 
     gridViewItemTap(args: GridItemEventData) {
         const item = this.items[args.index];
-        if (this.items.length > args.index && this.items[args.index].status != TBD) {
+        if (this.items.length > args.index && this.items[args.index].status !== TBD) {
             this.state.questionNumber = item.value;
             SettingsService.getInstance().saveCache(this.state.mode, this.state);
             navigationModule.toPage("question/practice");
@@ -64,19 +64,19 @@ export class MapViewModel extends Observable {
 
     answered() {
         this._message = "Answered";
-        this.items = this.allItems.filter((item) => item.status != SKIPPED && item.status != TBD);
+        this.items = this.allItems.filter((item) => item.status !== SKIPPED && item.status !== TBD);
         this.publish();
     }
 
     skipped() {
         this._message = "Skipped";
-        this.items = this.allItems.filter((item) => item.status == SKIPPED);
+        this.items = this.allItems.filter((item) => item.status === SKIPPED);
         this.publish();
     }
 
     tbd() {
         this._message = "remaining";
-        this.items = this.allItems.filter((item) => item.status == TBD);
+        this.items = this.allItems.filter((item) => item.status === TBD);
         this.publish();
     }
 

@@ -14,8 +14,8 @@ import { TextView } from "tns-core-modules/ui/text-view";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
 import { ConnectionService } from "~/shared/connection.service";
+import { SelectedPageService } from "~/shared/selected-page-service";
 import { WrongQuestionModel } from "./wrong-question-model";
-import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: WrongQuestionModel;
 let optionList: Repeater;
@@ -141,7 +141,4 @@ export function selectOption(args): void {
     vm.selectOption(args);
     optionList.refresh();
     moveToLast();
-}
-
-export function creatingView(args: CreateViewEventData) {
 }

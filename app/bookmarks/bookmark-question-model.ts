@@ -59,6 +59,7 @@ export class BookmarkQuestionModel extends Observable {
         if (!this._question) {
             this._question = {description: "", options: [], explanation: "", show: false};
         }
+
         return this._question;
     }
 
@@ -112,11 +113,7 @@ export class BookmarkQuestionModel extends Observable {
             this.question.skipped = true;
         } else {
             this.question.options.forEach((item, index) => {
-                if (item.tag === selectedOption.tag) {
-                    item.selected = true;
-                } else {
-                    item.selected = false;
-                }
+                item.selected = item.tag === selectedOption.tag;
             });
             this.question.skipped = false;
         }

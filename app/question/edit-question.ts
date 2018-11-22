@@ -5,8 +5,8 @@ import { EventData, Observable } from "tns-core-modules/data/observable";
 import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { Repeater } from "tns-core-modules/ui/repeater";
-import * as navigationModule from "../shared/navigation";
 import { State } from "~/shared/questions.model";
+import * as navigationModule from "../shared/navigation";
 import { EditQuestionViewModel } from "./edit-question-model";
 
 let vm: EditQuestionViewModel;

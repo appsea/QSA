@@ -31,11 +31,7 @@ export class DetailedResultViewModel extends Observable {
     all(): void {
         this._message = "All";
         this.allQuestions.forEach((question) => {
-           if (QuestionUtil.isSkipped(question)) {
-               question.skipped = true;
-           } else {
-               question.skipped = false;
-           }
+            question.skipped = QuestionUtil.isSkipped(question);
         });
         this._questions = this.allQuestions;
         this._size = this._questions.length;

@@ -11,11 +11,11 @@ import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { Repeater } from "tns-core-modules/ui/repeater";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { TextView } from "tns-core-modules/ui/text-view";
+import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
 import { ConnectionService } from "~/shared/connection.service";
+import { SelectedPageService } from "~/shared/selected-page-service";
 import { FlagQuestionModel } from "./flag-question-model";
-import {QuestionViewModel} from "~/question/question-view-model";
-import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: FlagQuestionModel;
 let optionList: Repeater;

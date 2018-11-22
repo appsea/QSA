@@ -53,4 +53,8 @@ export class TimerViewModel extends QuestionViewModel {
     stopTimer() {
         clearTimeout(this.clock);
     }
+
+    get time() {
+        return this._time;
+    }
 }

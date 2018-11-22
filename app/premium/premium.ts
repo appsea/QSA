@@ -16,6 +16,7 @@ import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
 import { PremiumModel } from "./premium-model";
 import {QuestionViewModel} from "~/question/question-view-model";
+import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: PremiumModel;
 let showDialog: boolean = true;
@@ -41,7 +42,7 @@ export function onNavigatingTo(args: NavigatedData) {
     const page = <Page>args.object;
     vm = new PremiumModel();
     page.bindingContext = vm;
-
+    SelectedPageService.getInstance().updateSelectedPage("premium");
     purchase.on(purchase.transactionUpdatedEvent, (transaction: Transaction) => {
         if (transaction.transactionState === TransactionState.Restored
             || transaction.transactionState === TransactionState.Purchased) {

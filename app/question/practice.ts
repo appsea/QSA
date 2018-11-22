@@ -11,11 +11,12 @@ import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { Repeater } from "tns-core-modules/ui/repeater";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { TextView } from "tns-core-modules/ui/text-view";
-import { AdService } from "../services/ad.service";
-import { SettingsService } from "../services/settings.service";
-import { ConnectionService } from "../shared/connection.service";
+import { AdService } from "~/services/ad.service";
+import { SettingsService } from "~/services/settings.service";
+import { ConnectionService } from "~/shared/connection.service";
 import * as constantsModule from "../shared/constants";
 import { QuestionViewModel } from "./question-view-model";
+import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: QuestionViewModel;
 let optionList: Repeater;
@@ -61,6 +62,7 @@ export function onNavigatingTo(args) {
         scrollView = page.getViewById("scrollView");
         vm = new QuestionViewModel(constantsModule.PRACTICE);
         page.bindingContext = vm;
+        SelectedPageService.getInstance().updateSelectedPage("practice");
     } else {
         explanationHeader = page.getViewById("explanationHeader");
         defaultExplanation = page.getViewById("defaultExplanation");

@@ -9,6 +9,7 @@ import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { QuestionViewModel } from "~/question/question-view-model";
 import * as navigationModule from "../shared/navigation";
 import { SettingsViewModel } from "./settings-view-model";
+import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: SettingsViewModel;
 
@@ -34,6 +35,7 @@ export function onNavigatingTo(args: NavigatedData) {
     const page = <Page>args.object;
     vm = new SettingsViewModel();
     page.bindingContext = vm;
+    SelectedPageService.getInstance().updateSelectedPage("settings");
 }
 
 export function onDrawerButtonTap(args: EventData) {

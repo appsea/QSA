@@ -12,6 +12,7 @@ import { AdService } from "~/services/ad.service";
 import { ConnectionService } from "~/shared/connection.service";
 import * as constantsModule from "../shared/constants";
 import { QuestionViewModel } from "./question-view-model";
+import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: QuestionViewModel;
 let optionList: ListView.ListView;
@@ -56,7 +57,7 @@ export function onNavigatingTo(args: NavigatedData) {
     if (args.isBackNavigation) {
         return;
     }
-
+    SelectedPageService.getInstance().updateSelectedPage("quick");
     const page = <Page>args.object;
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     optionList = page.getViewById("optionList");

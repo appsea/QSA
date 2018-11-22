@@ -9,6 +9,7 @@ import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { QuestionViewModel } from "~/question/question-view-model";
 import * as navigationModule from "../shared/navigation";
 import { ProgressViewModel } from "./progress-view-model";
+import {SelectedPageService} from "~/shared/selected-page-service";
 
 let page: Page;
 let vm: ProgressViewModel;
@@ -27,6 +28,7 @@ export function onNavigatingTo(args: NavigatedData): void {
     page = <Page>args.object;
     vm = new ProgressViewModel();
     page.bindingContext = vm;
+    SelectedPageService.getInstance().updateSelectedPage("stats");
 }
 
 export function onDrawerButtonTap(args: EventData) {

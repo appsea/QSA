@@ -12,6 +12,7 @@ import { ConnectionService } from "../shared/connection.service";
 import * as constantsModule from "../shared/constants";
 import { TimerViewModel } from "./timer-view-model";
 import {QuestionViewModel} from "~/question/question-view-model";
+import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: TimerViewModel;
 let optionList: ListView.ListView;
@@ -51,6 +52,7 @@ export function onNavigatingTo(args: NavigatedData) {
     *************************************************************/
     if (args.isBackNavigation) {
         vm.startTimer();
+
         return;
     }
     const page = <Page>args.object;
@@ -60,12 +62,13 @@ export function onNavigatingTo(args: NavigatedData) {
     banner = page.getViewById("banner");
     vm = new TimerViewModel(constantsModule.MOCK);
     page.bindingContext = vm;
+    SelectedPageService.getInstance().updateSelectedPage("mock");
 }
 
 export function handleSwipe(args) {
-    if (args.direction == 1) {
+    if (args.direction === 1) {
         previous();
-    } else if (args.direction == 2) {
+    } else if (args.direction === 2) {
         next();
     }
 }

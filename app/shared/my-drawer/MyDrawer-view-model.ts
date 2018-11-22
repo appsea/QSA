@@ -2,6 +2,7 @@ import * as appVersion from "nativescript-appversion";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 
 import { ObservableProperty } from "~/shared/observable-property-decorator";
+import { SelectedPageService } from "~/shared/selected-page-service";
 
 /* ***********************************************************
 * Keep data that is displayed in your app drawer in the MyDrawer custom component view model.
@@ -17,6 +18,11 @@ export class MyDrawerViewModel extends Observable {
         super();
 
         this.selectedPage = selectedPage;
+        SelectedPageService.getInstance().selectedPage$
+            .subscribe((sp: string) => {
+                console.log("Subscription....");
+                this.selectedPage = sp;
+            });
         this.findVersion();
     }
 

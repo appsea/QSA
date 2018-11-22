@@ -15,6 +15,7 @@ import { AdService } from "~/services/ad.service";
 import { ConnectionService } from "~/shared/connection.service";
 import { FlagQuestionModel } from "./flag-question-model";
 import {QuestionViewModel} from "~/question/question-view-model";
+import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: FlagQuestionModel;
 let optionList: Repeater;
@@ -61,6 +62,7 @@ export function onNavigatingTo(args: NavigatedData) {
     explanationHeader = _page.getViewById("explanationHeader");
     defaultExplanation = _page.getViewById("defaultExplanation");
     scrollView = _page.getViewById("scrollView");
+    SelectedPageService.getInstance().updateSelectedPage("flag");
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {

@@ -1,14 +1,17 @@
-import { EventData, Observable } from "tns-core-modules/data/observable";
-import { PersistenceService } from "../services/persistence.service";
-import { Result } from "../shared/questions.model";
+import { PersistenceService } from "~/services/persistence.service";
+import { Result } from "~/shared/questions.model";
 
-export class ChartViewModel extends Observable {
+export class ChartViewModel {
 
-    get readPercentage() {
-        const tp = [];
+    private _stats = [];
+
+    constructor() {
         const results: Array<Result> = PersistenceService.getInstance().getResult();
-        results.forEach((result) => tp.push({Percentage: +result.percentage.substr(0, result.percentage.length - 3)}));
+        results.forEach((result) =>
+            this._stats.push({Percentage: +result.percentage.substr(0, result.percentage.length - 3)}));
+    }
 
-        return tp;
+    get stats() {
+        return this._stats;
     }
 }

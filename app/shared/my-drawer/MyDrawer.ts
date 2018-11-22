@@ -32,9 +32,6 @@ const closeDrawer = () => {
 export function onNavigationItemTap(args: EventData): void {
     const component = <GridLayout>args.object;
     const componentRoute = component.get("route");
-    const componentTitle = component.get("params");
-    const bindingContext = <AppRootViewModel>component.bindingContext;
-    bindingContext.selectedPage = componentTitle;
     SettingsService.getInstance().saveRoute(componentRoute);
 
     topmost().navigate({
@@ -51,10 +48,6 @@ export function onNavigationItemTap(args: EventData): void {
 export function navigate(args: EventData): void {
     const component = <GridLayout>args.object;
     const componentRoute = component.get("route");
-    const componentTitle = component.get("params");
-    const bindingContext = <AppRootViewModel>component.bindingContext;
-    bindingContext.selectedPage = componentTitle;
-
     topmost().navigate({
         moduleName: componentRoute,
         transition: {
@@ -72,10 +65,6 @@ export function share(args: EventData): void {
 
 export function goPremium(args: EventData): void {
     if (ConnectionService.getInstance().isConnected()) {
-        const component = <GridLayout>args.object;
-        const bindingContext = <AppRootViewModel>component.bindingContext;
-        console.log("Hi premium");
-        bindingContext.selectedPage = "premium";
         navigate(args);
     } else {
         dialogs.alert("Please connect to internet for the purchase!!");

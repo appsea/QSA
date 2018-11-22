@@ -5,16 +5,16 @@ import * as connectivity from "tns-core-modules/connectivity";
  */
 export class ConnectionService {
 
+    static connected: boolean = true;
+
     static getInstance(): ConnectionService {
         return ConnectionService._instance;
     }
 
     private static _instance: ConnectionService = new ConnectionService();
 
-    static connected: boolean = true;
-
-    constructor(){
-        connectivity.startMonitoring(function onConnectionTypeChanged(newConnectionType: number) {
+    constructor() {
+        connectivity.startMonitoring((newConnectionType) => {
             switch (newConnectionType) {
                 case connectivity.connectionType.none:
                     ConnectionService.connected = false;

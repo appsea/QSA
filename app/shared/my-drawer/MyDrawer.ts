@@ -5,7 +5,6 @@ import { EventData } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
 import { GridLayout } from "tns-core-modules/ui/layouts/grid-layout";
-import { AppRootViewModel } from "~/app-root/app-root-view-model";
 import { SettingsService } from "~/services/settings.service";
 import { ConnectionService } from "../connection.service";
 import { MyDrawerViewModel } from "./MyDrawer-view-model";

@@ -2,8 +2,8 @@
  * Created by rakesh on 15-Nov-2017.
  */
 import { Observable } from "tns-core-modules/data/observable";
-import * as constantsModule from "../shared/constants";
 import { QuizUtil } from "~/shared/quiz.util";
+import * as constantsModule from "../shared/constants";
 import { HttpService } from "./http.service";
 
 export class GeneralService {

@@ -1,11 +1,11 @@
 /**
  * Created by rakesh on 15-Nov-2017.
  */
-import {IQuestion, Result} from "../shared/questions.model";
-import * as constantsModule from '../shared/constants';
-import {RESULT} from '../shared/constants';
-import * as appSettings from 'application-settings';
+import * as appSettings from "application-settings";
 import { Observable } from "tns-core-modules/data/observable";
+import { RESULT } from "~/shared/constants";
+import { IQuestion, Result } from "~/shared/questions.model";
+import * as constantsModule from "../shared/constants";
 
 export class PersistenceService {
 
@@ -21,20 +21,6 @@ export class PersistenceService {
 
     readFlaggedQuestions(): Array<IQuestion> {
         return this.readQuestions(constantsModule.FLAG_QUESTION);
-    }
-
-    private readQuestions(key: string): Array<IQuestion> {
-        let questions: Array<IQuestion>;
-        try {
-            questions = this.hasBookmarkedQuestions(key) ? JSON.parse(appSettings.getString(key)) : [];
-        } catch (error) {
-            questions = [];
-        }
-        return questions;
-    }
-
-    private hasBookmarkedQuestions(key: string): boolean {
-        return appSettings.hasKey(key);
     }
 
     addQuestions(key: string, questions: Array<IQuestion>) {
@@ -55,11 +41,11 @@ export class PersistenceService {
 
     saveResult(result: Result): void {
         if (appSettings.hasKey(RESULT)) {
-            let items: Array<Result> = JSON.parse(appSettings.getString(RESULT));
+            const items: Array<Result> = JSON.parse(appSettings.getString(RESULT));
             items.push(result);
             appSettings.setString(RESULT, JSON.stringify(items));
         } else {
-            let items: Array<Result> = [];
+            const items: Array<Result> = [];
             items.push(result);
             appSettings.setString(RESULT, JSON.stringify(items));
         }
@@ -67,5 +53,19 @@ export class PersistenceService {
 
     resetExamStats(): void {
         appSettings.remove(RESULT);
+    }
+
+    private readQuestions(key: string): Array<IQuestion> {
+        let questions: Array<IQuestion>;
+        try {
+            questions = this.hasBookmarkedQuestions(key) ? JSON.parse(appSettings.getString(key)) : [];
+        } catch (error) {
+            questions = [];
+        }
+        return questions;
+    }
+
+    private hasBookmarkedQuestions(key: string): boolean {
+        return appSettings.hasKey(key);
     }
 }

@@ -6,8 +6,8 @@ import { EventData, Observable } from "tns-core-modules/data/observable";
 import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { QuestionViewModel } from "~/question/question-view-model";
+import * as navigationModule from "~/shared/navigation";
 import { State } from "~/shared/questions.model";
-import * as navigationModule from "../shared/navigation";
 import { MapViewModel } from "./map-view-model";
 
 let page: Page;

@@ -1,13 +1,13 @@
-import {EventData, Observable} from "tns-core-modules/data/observable";
-import {isAndroid} from "platform";
-import {android, AndroidActivityBackPressedEventData, AndroidApplication} from "application";
-import * as navigationModule from '../shared/navigation';
+import { android, AndroidActivityBackPressedEventData, AndroidApplication } from "application";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { isAndroid } from "platform";
+import { EventData, Observable } from "tns-core-modules/data/observable";
+import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
-import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "tns-core-modules/ui/frame";
-import {EditQuestionViewModel} from "./edit-question-model";
-import {State} from "../shared/questions.model";
-import {Repeater} from 'tns-core-modules/ui/repeater';
+import { Repeater } from "tns-core-modules/ui/repeater";
+import * as navigationModule from "../shared/navigation";
+import { State } from "~/shared/questions.model";
+import { EditQuestionViewModel } from "./edit-question-model";
 
 let vm: EditQuestionViewModel;
 let state: State;
@@ -17,7 +17,7 @@ export function onPageLoaded(args: EventData): void {
     if (!isAndroid) {
         return;
     }
-    let page = args.object;
+    const page = args.object;
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
 }
 
@@ -32,7 +32,7 @@ export function onNavigatingTo(args: NavigatedData) {
     * page in the same data state that he left it in before navigating.
     *************************************************************/
     const page = <Page>args.object;
-    optionList = page.getViewById("optionList")
+    optionList = page.getViewById("optionList");
     state = <State> page.navigationContext;
     vm = new EditQuestionViewModel(state);
     page.bindingContext = vm;
@@ -45,11 +45,11 @@ export function onDrawerButtonTap(args: EventData) {
 
 export function save(): void {
     vm.save();
-    navigationModule.goBack()
+    navigationModule.goBack();
 }
 
 export function cancel(): void {
-    navigationModule.goBack()
+    navigationModule.goBack();
 }
 
 export function selectOption(args): void {

@@ -14,9 +14,9 @@ import { TextView } from "tns-core-modules/ui/text-view";
 import { AdService } from "~/services/ad.service";
 import { SettingsService } from "~/services/settings.service";
 import { ConnectionService } from "~/shared/connection.service";
+import { SelectedPageService } from "~/shared/selected-page-service";
 import * as constantsModule from "../shared/constants";
 import { QuestionViewModel } from "./question-view-model";
-import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: QuestionViewModel;
 let optionList: Repeater;

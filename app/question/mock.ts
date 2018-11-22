@@ -7,12 +7,12 @@ import { topmost } from "tns-core-modules/ui/frame";
 import * as ListView from "tns-core-modules/ui/list-view";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
-import { AdService } from "../services/ad.service";
-import { ConnectionService } from "../shared/connection.service";
+import { QuestionViewModel } from "~/question/question-view-model";
+import { SelectedPageService } from "~/shared/selected-page-service";
+import { AdService } from "~/services/ad.service";
+import { ConnectionService } from "~/shared/connection.service";
 import * as constantsModule from "../shared/constants";
 import { TimerViewModel } from "./timer-view-model";
-import {QuestionViewModel} from "~/question/question-view-model";
-import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: TimerViewModel;
 let optionList: ListView.ListView;

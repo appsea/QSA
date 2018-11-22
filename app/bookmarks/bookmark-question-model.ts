@@ -2,10 +2,10 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
-import { AdService } from "../services/ad.service";
-import { QuestionService } from "../services/question.service";
+import { AdService } from "~/services/ad.service";
+import { QuestionService } from "~/services/question.service";
+import { IOption, IQuestion, State } from "~/shared/questions.model";
 import * as navigationModule from "../shared/navigation";
-import { IOption, IQuestion, State } from "../shared/questions.model";
 
 export class BookmarkQuestionModel extends Observable {
     private _questions: Array<IQuestion> = [];

@@ -1,8 +1,6 @@
-import {IQuestion} from "../shared/questions.model";
+import { IQuestion } from "~/shared/questions.model";
 
 export class QuestionUtil {
-
-    private constructor(){}
 
     static isCorrect(question: IQuestion) {
         let isCorrect = false;
@@ -29,4 +27,6 @@ export class QuestionUtil {
     static isWrong(question: IQuestion) {
         return !this.isSkipped(question) && !this.isCorrect(question);
     }
+
+    private constructor() {}
 }

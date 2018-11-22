@@ -7,8 +7,8 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { QuestionViewModel } from "~/question/question-view-model";
+import * as navigationModule from "~/shared/navigation";
 import { SelectedPageService } from "~/shared/selected-page-service";
-import * as navigationModule from "../shared/navigation";
 import { ProgressViewModel } from "./progress-view-model";
 
 let page: Page;

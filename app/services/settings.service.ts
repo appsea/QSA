@@ -1,17 +1,26 @@
-import * as appSettings from 'application-settings';
-import {IQuestion, ISetting, State} from "../shared/questions.model";
-import * as navigationModule from '../shared/navigation';
-import * as constantsModule from '../shared/constants';
+import * as appSettings from "application-settings";
+import { IQuestion, ISetting, State } from "~/shared/questions.model";
+import * as constantsModule from "../shared/constants";
+import * as navigationModule from "../shared/navigation";
 
 export class SettingsService {
-
-    private setting: ISetting;
 
     static getInstance(): SettingsService {
         return SettingsService._instance;
     }
 
+    static route(): boolean {
+        const path = SettingsService.getInstance().getRoute();
+        if (!path.includes(constantsModule.PRACTICE)) {
+            navigationModule.toPage(path);
+            return true;
+        }
+        return false;
+    }
+
     private static _instance: SettingsService = new SettingsService();
+
+    private setting: ISetting;
 
     constructor() {
         this.handleStructureChange();
@@ -19,7 +28,7 @@ export class SettingsService {
         this.createSetting();
     }
 
-    public createSetting(): void {
+    createSetting(): void {
         if (appSettings.hasKey(constantsModule.SETTINGS)) {
             this.setting = this.readSettings();
         } else {
@@ -128,13 +137,12 @@ export class SettingsService {
         return appSettings.hasKey(constantsModule.QUESTIONS);
     }
 
-    static route(): boolean {
-        let path = SettingsService.getInstance().getRoute();
-        if (!path.includes(constantsModule.PRACTICE)) {
-            navigationModule.toPage(path);
-            return true;
-        }
-        return false;
+    hasSize(): boolean {
+        return appSettings.hasKey(constantsModule.QUESTIONS_SIZE);
+    }
+
+    allQuestionsAsked(alreadyAsked: number): boolean {
+        return this.hasSize() ? alreadyAsked < appSettings.getNumber(constantsModule.QUESTIONS_SIZE) : alreadyAsked < 449;
     }
 
     private getDefaultQuick() {
@@ -156,7 +164,7 @@ export class SettingsService {
 
     private handleStructureChange() {
         if (appSettings.hasKey(constantsModule.SETTINGS) && !appSettings.hasKey(constantsModule.ADDTICK)) {
-            let setting: ISetting = JSON.parse(appSettings.getString(constantsModule.SETTINGS));
+            const setting: ISetting = JSON.parse(appSettings.getString(constantsModule.SETTINGS));
             setting.totalTime = this.getDefaultSetting().totalTime;
             appSettings.setString(constantsModule.SETTINGS, JSON.stringify(setting));
             appSettings.setBoolean(constantsModule.ADDTICK, true);
@@ -169,13 +177,5 @@ export class SettingsService {
             totalTime: 110,
             totalQuestionsMock: 67
         };
-    }
-
-    hasSize(): boolean {
-        return appSettings.hasKey(constantsModule.QUESTIONS_SIZE);
-    }
-
-    allQuestionsAsked(alreadyAsked: number): boolean {
-        return this.hasSize() ? alreadyAsked < appSettings.getNumber(constantsModule.QUESTIONS_SIZE) : alreadyAsked < 449;
     }
 }

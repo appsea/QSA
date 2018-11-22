@@ -11,12 +11,12 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { ItemEventData } from "tns-core-modules/ui/list-view";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
+import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
+import { SelectedPageService } from "~/shared/selected-page-service";
 import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
 import { PremiumModel } from "./premium-model";
-import {QuestionViewModel} from "~/question/question-view-model";
-import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: PremiumModel;
 let showDialog: boolean = true;

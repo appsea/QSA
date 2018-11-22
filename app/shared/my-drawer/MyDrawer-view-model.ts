@@ -20,7 +20,6 @@ export class MyDrawerViewModel extends Observable {
         this.selectedPage = selectedPage;
         SelectedPageService.getInstance().selectedPage$
             .subscribe((sp: string) => {
-                console.log("Subscription....");
                 this.selectedPage = sp;
             });
         this.findVersion();

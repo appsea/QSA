@@ -61,10 +61,8 @@ export function onDrawerButtonTap(args: EventData) {
 }
 
 export function pay(data: ItemEventData) {
-    console.log("Paying");
     showDialog = true;
     vm.pay();
-    console.log("Paying done..");
 }
 
 export function onRestoreTap(data: ItemEventData) {

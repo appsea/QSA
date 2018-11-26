@@ -34,8 +34,20 @@ export class HttpService {
         return httpModule.getJSON(url);
     }
 
+    getPremiumQuestions<T>(): Promise<T> {
+        const url = constantsModule.FIREBASE_URL + "premium.json";
+
+        return httpModule.getJSON(url);
+    }
+
     findLatestQuestionVersion(): Promise<string> {
         const url = constantsModule.FIREBASE_URL + "questionVersion.json";
+
+        return httpModule.getString(url);
+    }
+
+    findPremiumQuestionVersion(): Promise<string> {
+        const url = constantsModule.FIREBASE_URL + "premiumVersion.json";
 
         return httpModule.getString(url);
     }

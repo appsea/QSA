@@ -1,5 +1,5 @@
-export const FIREBASE_URL = "https://base-sasquiz.firebaseio.com/";
-export const PREMIUM = "PREMIUM";
+export const FIREBASE_URL = "https://sas-quiz.firebaseio.com/";
+export const PREMIUM = "PREMIUMm";
 export const WRONG_QUESTION = "WRONG_QUESTION";
 export const FLAG_QUESTION = "FLAG_QUESTION";
 export const RESULT = "RESULT";
@@ -9,6 +9,7 @@ export const VERSION_NUMBER: number = 11;
 export const CLEAR: boolean = false;
 export const VERSION: string = "VERSION";
 export const QUESTION_VERSION: string = "QUESTION_VERSION";
+export const PREMIUM_VERSION: string = "PREMIUM_VERSION";
 export const MAIN: string = "main";
 export const TICK: string = "tick";
 export const QUICK: string = "quick";

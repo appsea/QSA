@@ -1,10 +1,10 @@
 {
   "nativescript": {
     "id": "com.exuberant.quiz.sas",
-    "tns-android": {
+    "tns-ios": {
       "version": "5.0.0"
     },
-    "tns-ios": {
+    "tns-android": {
       "version": "5.0.0"
     }
   },
@@ -24,9 +24,10 @@
     "nativescript-ui-chart": "^3.9.1",
     "nativescript-ui-sidedrawer": "~5.0.0",
     "rxjs": "~6.2.0",
-    "tns-core-modules": "~5.0.0"
+    "tns-core-modules": "^5.0.3"
   },
   "devDependencies": {
+    "ajv": "^6.5.5",
     "nativescript-dev-sass": "~1.6.0",
     "nativescript-dev-typescript": "~0.7.0",
     "nativescript-dev-webpack": "^0.18.0",

@@ -13,6 +13,7 @@ import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
+import { QuestionService } from "~/services/question.service";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
@@ -48,6 +49,7 @@ export function onNavigatingTo(args: NavigatedData) {
             || transaction.transactionState === TransactionState.Purchased) {
             appSettings.setBoolean(constantsModule.PREMIUM, true);
             AdService.getInstance().showAd = false;
+            QuestionService.getInstance().readAllQuestions();
             if (showDialog) {
                 dialogs.alert("Congratulations! You are a premium user now!");
                 showDialog = false;

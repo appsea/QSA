@@ -3,6 +3,7 @@
  */
 import * as appVersion from "nativescript-appversion";
 import * as Toast from "nativescript-toast";
+import { isAndroid } from "platform";
 import { Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import * as utils from "utils/utils";
@@ -102,6 +103,21 @@ export class QuestionService {
         return this.containsQuestion(question, PersistenceService.getInstance().readFlaggedQuestions());
     }
 
+    readAllQuestions(): void {
+        HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
+            this.questions = questions;
+            if (PersistenceService.getInstance().isPremium()) {
+                HttpService.getInstance().getPremiumQuestions<Array<IQuestion>>().
+                then((premiumQuestions: Array<IQuestion>) => {
+                    const updatedQuestions: Array<IQuestion> = questions.concat(premiumQuestions);
+                    this._settingsService.saveQuestions(updatedQuestions);
+                });
+            } else {
+                this._settingsService.saveQuestions(questions);
+            }
+        });
+    }
+
     private containsQuestion(search: IQuestion, questions: Array<IQuestion>): boolean {
         let contains = false;
         questions.forEach((question) => {
@@ -119,13 +135,6 @@ export class QuestionService {
         return randomNumber;
     }
 
-    private readAllQuestions(): void {
-        HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
-            this.questions = questions;
-            this._settingsService.saveQuestions(questions);
-        });
-    }
-
     private checkQuestionUpdate(): void {
         if (!this._checked) {
             HttpService.getInstance().findLatestQuestionVersion().then((latestQuestionVersion: string) => {
@@ -134,7 +143,7 @@ export class QuestionService {
                     this._settingsService.saveQuestionVersion(Number(latestQuestionVersion));
                 }
             });
-            this.checkUpdates();
+            this.checkForApplicationUpdate();
             this._checked = true;
         }
     }
@@ -154,7 +163,7 @@ export class QuestionService {
         });
     }
 
-    private checkUpdates() {
+    private checkForApplicationUpdate() {
         if (!this._checked) {
             HttpService.getInstance().checkPlayStoreVersion().then((playStoreVersion: string) => {
                 appVersion.getVersionCode().then((versionCode: string) => {
@@ -166,7 +175,9 @@ export class QuestionService {
                             cancelButtonText: "Remind me Later"
                         }).then((proceed) => {
                             if (proceed) {
-                                utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.quiz.sas");
+                                if (isAndroid) {
+                                    utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.quiz.sas");
+                                }
                             }
                         });
                     }

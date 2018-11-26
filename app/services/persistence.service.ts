@@ -3,7 +3,7 @@
  */
 import * as appSettings from "application-settings";
 import { Observable } from "tns-core-modules/data/observable";
-import { RESULT } from "~/shared/constants";
+import { PREMIUM, RESULT } from "~/shared/constants";
 import { IQuestion, Result } from "~/shared/questions.model";
 import * as constantsModule from "../shared/constants";
 
@@ -54,6 +54,10 @@ export class PersistenceService {
 
     resetExamStats(): void {
         appSettings.remove(RESULT);
+    }
+
+    isPremium(): boolean {
+        return appSettings.hasKey(PREMIUM);
     }
 
     private readQuestions(key: string): Array<IQuestion> {

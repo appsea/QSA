@@ -116,9 +116,18 @@ export class SettingsService {
         appSettings.setNumber(constantsModule.QUESTION_VERSION, questionVersion);
     }
 
+    savePremiumQuestionVersion(premiumQuestionVersion: number): void {
+        appSettings.setNumber(constantsModule.PREMIUM_VERSION, premiumQuestionVersion);
+    }
+
     readQuestionVersion(): number {
         return appSettings.hasKey(constantsModule.QUESTION_VERSION)
             ? appSettings.getNumber(constantsModule.QUESTION_VERSION) : 0;
+    }
+
+    readPremiumQuestionVersion(): number {
+        return appSettings.hasKey(constantsModule.PREMIUM_VERSION)
+            ? appSettings.getNumber(constantsModule.PREMIUM_VERSION) : 0;
     }
 
     readQuestions(): Array<IQuestion> {

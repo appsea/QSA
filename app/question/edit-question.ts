@@ -5,6 +5,7 @@ import { EventData, Observable } from "tns-core-modules/data/observable";
 import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { Repeater } from "tns-core-modules/ui/repeater";
+import { QuestionViewModel } from "~/question/question-view-model";
 import { State } from "~/shared/questions.model";
 import * as navigationModule from "../shared/navigation";
 import { EditQuestionViewModel } from "./edit-question-model";
@@ -39,8 +40,7 @@ export function onNavigatingTo(args: NavigatedData) {
 }
 
 export function onDrawerButtonTap(args: EventData) {
-    const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
-    sideDrawer.showDrawer();
+    QuestionViewModel.showDrawer();
 }
 
 export function save(): void {

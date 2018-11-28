@@ -46,3 +46,8 @@ export interface Result {
     percentage: string;
     pass: boolean;
 }
+
+export interface IPracticeStats {
+    attempted: Array<number>;
+    correct: Array<number>;
+}

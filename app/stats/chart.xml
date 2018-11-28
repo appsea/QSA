@@ -24,18 +24,57 @@
     </ActionBar>
 
     <StackLayout>
-        <chart:RadCartesianChart id="cartesianChart">
+        <chart:RadCartesianChart row="1" selectionMode="Single">
+            <chart:RadCartesianChart.horizontalAxis>
+                <chart:CategoricalAxis lineColor="#ebf1f2"
+                                       lineThickness="2" labelTextColor="#021042"
+                                       labelMargin="10" android:labelMargin="20" />
+            </chart:RadCartesianChart.horizontalAxis>
+            <chart:RadCartesianChart.verticalAxis>
+                <chart:LinearAxis lineColor="#ebf1f2" labelFormat="%.0f"
+                                  lineThickness="2" labelTextColor="#021042"
+                                  labelMargin="10" android:labelMargin="20" />
+            </chart:RadCartesianChart.verticalAxis>
             <chart:RadCartesianChart.series>
-                <chart:LineSeries items="{{ stats }}" valueProperty="Percentage" showLabels="true" textSize="2" maximum="100.00">
-
-                    <chart:LineSeries.horizontalAxis>
-                        <chart:CategoricalAxis/>
-                    </chart:LineSeries.horizontalAxis>
-                    <chart:LineSeries.verticalAxis>
-                        <chart:LinearAxis/>
-                    </chart:LineSeries.verticalAxis>
-                </chart:LineSeries>
+                <chart:AreaSeries seriesName="Area" maximum="100" showLabels="true"
+                                  items="{{ stats }}"
+                                  stackMode="Stack" valueProperty="Percentage"
+                                  selectionMode="Series" />
             </chart:RadCartesianChart.series>
+            <chart:RadCartesianChart.grid>
+                <chart:RadCartesianChartGrid
+                        horizontalLinesVisible="true"
+                        verticalLinesVisible="false"
+                        verticalStripLinesVisible="false"
+                        horizontalStripLinesVisible="false"
+                        horizontalStrokeColor="#e5e5e5" />
+            </chart:RadCartesianChart.grid>
+            <chart:RadCartesianChart.palettes>
+                <chart:Palette seriesName="Area">
+                    <chart:Palette.entries>
+                        <chart:PaletteEntry android:fillColor="rgba(235,241,242,1)"
+                                            ios:fillColor="rgba(235,241,242,1)"
+                                            strokeColor="#ff116a" strokeWidth="3"
+                                            android:strokeWidth="6" />
+                        <chart:PaletteEntry android:fillColor="rgba(235,241,242,1)"
+                                            ios:fillColor="rgba(235,241,242,1)"
+                                            strokeColor="#ff116a" strokeWidth="3"
+                                            android:strokeWidth="6" />
+                    </chart:Palette.entries>
+                </chart:Palette>
+                <chart:Palette seriesName="Area" seriesState="Selected">
+                    <chart:Palette.entries>
+                        <chart:PaletteEntry android:fillColor="rgba(235,241,242,1)"
+                                            ios:fillColor="rgba(235,241,242,1)"
+                                            strokeColor="#ff116a" strokeWidth="3"
+                                            android:strokeWidth="6" />
+                        <chart:PaletteEntry android:fillColor="rgba(235,241,242,1)"
+                                            ios:fillColor="rgba(235,241,242,1)"
+                                            strokeColor="#ff116a" strokeWidth="3"
+                                            android:strokeWidth="6" />
+                    </chart:Palette.entries>
+                </chart:Palette>
+            </chart:RadCartesianChart.palettes>
         </chart:RadCartesianChart>
     </StackLayout>
 </Page>

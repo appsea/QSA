@@ -1,5 +1,5 @@
 export const FIREBASE_URL = "https://sas-quiz.firebaseio.com/";
-export const PREMIUM = "PREMIUMm";
+export const PREMIUM = "PREMIUM";
 export const WRONG_QUESTION = "WRONG_QUESTION";
 export const FLAG_QUESTION = "FLAG_QUESTION";
 export const RESULT = "RESULT";
@@ -15,6 +15,7 @@ export const TICK: string = "tick";
 export const QUICK: string = "quick";
 export const QUICK1: string = "short";
 export const PRACTICE: string = "practice";
+export const PRACTICE_STATS: string = "PRACTICE_STATS";
 export const ROUTE: string = "route";
 export const QUESTIONS: string = "questions";
 export const QUESTIONS_SIZE: string = "size";

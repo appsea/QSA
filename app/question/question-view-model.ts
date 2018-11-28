@@ -6,6 +6,7 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { AdService } from "~/services/ad.service";
 import { QuestionService } from "~/services/question.service";
 import { SettingsService } from "~/services/settings.service";
+import { StatsService } from "~/services/stats.service";
 import { IOption, IQuestion, State } from "~/shared/questions.model";
 import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
@@ -193,6 +194,10 @@ export class QuestionViewModel extends Observable {
 
     enableSelection(): boolean {
         return this._question.options.filter((option) => option.selected).length > 0 || this._question.show;
+    }
+
+    updatePracticeStats() {
+        StatsService.getInstance().updatePracticeStats(this.question);
     }
 
     private showFromState(): void {

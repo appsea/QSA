@@ -33,7 +33,7 @@
                     <Label class="h3 text-center p-10 progress-heading" text="Overall"
                            textWrap="true"/>
                     <GridLayout columns="2*, 2*, *" rows="auto, *" borderColor="#696969" borderWidth="1"
-                                class="progress-background" borderRadius="5">
+                                class="progress-background m-l-4 m-r-4" borderRadius="5">
                         <Label row="0" col="0" class="{{ overall.pass? 'result-count-passed':'result-count-failed' }}"
                                height="auto">
                             <label.formattedText>
@@ -73,7 +73,7 @@
                               class="m-l-4 m-r-4">
                         <Repeater.itemTemplate>
                             <GridLayout columns="2*, 2*, *" rows="auto, *" borderColor="#696969" borderWidth="1"
-                                        class="progress-background" borderRadius="5">
+                                        class="progress-background m-t-5" borderRadius="5">
                                 <Label row="0" col="0" text="{{ date }}"
                                        class="{{ pass? 'exam-date-passed':'exam-date-failed' }}" height="auto"/>
                                 <Label row="1" col="0"

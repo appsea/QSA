@@ -158,5 +158,6 @@ export function selectOption(args): void {
         vm.selectOption(args);
         optionList.refresh();
         moveToLast();
+        vm.updatePracticeStats();
     }
 }

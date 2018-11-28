@@ -3,9 +3,8 @@
  */
 import * as appSettings from "application-settings";
 import { Observable } from "tns-core-modules/data/observable";
-import { PREMIUM, RESULT } from "~/shared/constants";
-import { IQuestion, Result } from "~/shared/questions.model";
-import * as constantsModule from "../shared/constants";
+import {FLAG_QUESTION, PRACTICE, PRACTICE_STATS, PREMIUM, RESULT, WRONG_QUESTION} from "~/shared/constants";
+import { IPracticeStats, IQuestion, Result } from "~/shared/questions.model";
 
 export class PersistenceService {
 
@@ -15,12 +14,17 @@ export class PersistenceService {
 
     private static _instance: PersistenceService = new PersistenceService();
 
+    readPracticeStats(): IPracticeStats {
+        return appSettings.hasKey(PRACTICE_STATS) ? JSON.parse(appSettings.getString(PRACTICE_STATS))
+            : {attempted: new Array<number>(), correct: new Array<number>()};
+    }
+
     readWrongQuestions(): Array<IQuestion> {
-        return this.readQuestions(constantsModule.WRONG_QUESTION);
+        return this.readQuestions(WRONG_QUESTION);
     }
 
     readFlaggedQuestions(): Array<IQuestion> {
-        return this.readQuestions(constantsModule.FLAG_QUESTION);
+        return this.readQuestions(FLAG_QUESTION);
     }
 
     addQuestions(key: string, questions: Array<IQuestion>) {
@@ -50,6 +54,10 @@ export class PersistenceService {
             items.push(result);
             appSettings.setString(RESULT, JSON.stringify(items));
         }
+    }
+
+    savePracticeStats(practiceStats: IPracticeStats): any {
+        appSettings.setString(PRACTICE_STATS, JSON.stringify(practiceStats));
     }
 
     resetExamStats(): void {

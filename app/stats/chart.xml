@@ -47,7 +47,7 @@
                         verticalLinesVisible="false"
                         verticalStripLinesVisible="false"
                         horizontalStripLinesVisible="false"
-                        horizontalStrokeColor="#e5e5e5" />
+                        horizontalStrokeColor="#5ce549" />
             </chart:RadCartesianChart.grid>
             <chart:RadCartesianChart.palettes>
                 <chart:Palette seriesName="Area">
@@ -66,11 +66,11 @@
                     <chart:Palette.entries>
                         <chart:PaletteEntry android:fillColor="rgba(235,241,242,1)"
                                             ios:fillColor="rgba(235,241,242,1)"
-                                            strokeColor="#ff116a" strokeWidth="3"
+                                            strokeColor="#1714ff" strokeWidth="3"
                                             android:strokeWidth="6" />
                         <chart:PaletteEntry android:fillColor="rgba(235,241,242,1)"
                                             ios:fillColor="rgba(235,241,242,1)"
-                                            strokeColor="#ff116a" strokeWidth="3"
+                                            strokeColor="#1714ff" strokeWidth="3"
                                             android:strokeWidth="6" />
                     </chart:Palette.entries>
                 </chart:Palette>

@@ -47,7 +47,7 @@
                         verticalLinesVisible="false"
                         verticalStripLinesVisible="false"
                         horizontalStripLinesVisible="false"
-                        horizontalStrokeColor="#5ce549" />
+                        horizontalStrokeColor="#e5e5e5"/>
             </chart:RadCartesianChart.grid>
             <chart:RadCartesianChart.palettes>
                 <chart:Palette seriesName="Area">

@@ -26,6 +26,7 @@
         <Label text="Total Questions" class="label font-weight-bold m-b-5"/>
         <Label text="{{ totalQuestions }}" class="label font-weight-bold m-b-5"/>
         <Label text="Questions Accessible" class="label font-weight-bold m-b-5"/>
+        <Progress minValue="0" maxValue="100" value="{{ percentage }}" color="#5ad420" loaded="onProgressLoaded"/>
         <Label text="{{ accessibleQuestion }}" class="label font-weight-bold m-b-5"/>
         <Label text="{{ attempted }}" class="label font-weight-bold m-b-5"/>
         <Label text="{{ correct }}" class="label font-weight-bold m-b-5"/>
@@ -35,6 +36,7 @@
 
         <Button text="Top Up All Question" class="btn btn-primary" tap="goPremium"/>
         <Label text="Mock Exam" class="label font-weight-bold m-b-5"/>
+
 
     </StackLayout>
 </Page>

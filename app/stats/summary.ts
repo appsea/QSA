@@ -1,15 +1,17 @@
 import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
-import * as Toast from "nativescript-toast";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { isAndroid } from "platform";
+import { isAndroid, isIOS } from "platform";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
+import { Progress } from "tns-core-modules/ui/progress";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import { SummaryViewModel } from "~/stats/summary-view-model";
 import * as navigationModule from "../shared/navigation";
+
+declare let CGAffineTransformMakeScale: any; // or use tns-platform-declarations instead of casting to any
 
 let vm: SummaryViewModel;
 
@@ -48,4 +50,20 @@ export function topUpRewards(args: EventData) {
 
 export function goPremium() {
     vm.goPremium();
+}
+
+export function onProgressLoaded(args: EventData) {
+
+    const progress = <Progress>args.object;
+
+    if (isAndroid) {
+        progress.android.setScaleY(8);  //  progress.android === android.widget.ProgressBar
+        // progress.android.bottomLeftRadius = 5;  //  progress.android === android.widget.ProgressBar
+        // progress.android.setCornerRadius(5);  //  progress.android === android.widget.ProgressBar
+        // progress.android.corner.setRadius(2);  //  progress.android === android.widget.ProgressBar
+    } else if (isIOS) {
+        const transform = CGAffineTransformMakeScale(1.0, 5.0);
+        progress.ios.transform = transform; // progress.ios === UIProgressView
+    }
+
 }

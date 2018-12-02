@@ -45,10 +45,10 @@ export class SummaryViewModel extends Observable {
     private publish() {
         let percentage: number = 0;
         if (this._ps.attempted.length !== 0) {
-            percentage = (this._ps.correct.length * 100 / this._ps.attempted.length);
+            percentage = Math.floor(this._ps.correct.length * 100 / this._ps.attempted.length);
         }
 
-        const percentageString = percentage.toFixed(2) + "%";
+        const percentageString = percentage + "%";
         this.notify({ object: this, eventName: Observable.propertyChangeEvent,
                       propertyName: "totalQuestions", value: this._totalQuestions});
         this.notify({ object: this, eventName: Observable.propertyChangeEvent,

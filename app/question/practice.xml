@@ -52,7 +52,7 @@
             <StackLayout id="banner">
             </StackLayout>
         </StackLayout>
-        <ScrollView id="scrollView" onswipe="handleSwipe">
+        <ScrollView id="scrollView" onswipe="handleSwipe" scrollBarIndicatorVisible="false">
             <StackLayout class="margin" onswipe="handleSwipe">
                 <Label text="{{ question.description }}" textWrap="true" onswipe="handleSwipe"/>
                 <Repeater items="{{ options }}" row="1" id="optionList" onswipe="handleSwipe">

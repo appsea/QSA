@@ -1,0 +1,40 @@
+<Page
+        class="page"
+        navigatingTo="onNavigatingTo"
+        xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android
+        because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the
+        NavigationButton as a side-drawer button in iOS is not possible,
+        because its function is to always navigate back in the application.
+        -->
+        <ActionItem icon="res://navigation/menu"
+                    android:visibility="collapsed"
+                    tap="onDrawerButtonTap"
+                    ios.position="left">
+        </ActionItem>
+        <Label class="action-bar-title" text="Summary"/>
+    </ActionBar>
+
+    <StackLayout class="input-field m-t-20" horizontalAlignment="center" width="90%">
+        <Label text="Total Questions" class="label font-weight-bold m-b-5"/>
+        <Label text="{{ totalQuestions }}" class="label font-weight-bold m-b-5"/>
+        <Label text="Questions Accessible" class="label font-weight-bold m-b-5"/>
+        <Label text="{{ accessibleQuestion }}" class="label font-weight-bold m-b-5"/>
+        <Label text="{{ attempted }}" class="label font-weight-bold m-b-5"/>
+        <Label text="{{ correct }}" class="label font-weight-bold m-b-5"/>
+        <Label text="{{ percentage }}" class="label font-weight-bold m-b-5"/>
+
+        <Button text="Top Up 10 Question" class="btn btn-primary" tap="topUpRewards"/>
+
+        <Button text="Top Up All Question" class="btn btn-primary" tap="goPremium"/>
+        <Label text="Mock Exam" class="label font-weight-bold m-b-5"/>
+
+    </StackLayout>
+</Page>

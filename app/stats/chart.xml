@@ -31,7 +31,7 @@
                                        labelMargin="10" android:labelMargin="20" />
             </chart:RadCartesianChart.horizontalAxis>
             <chart:RadCartesianChart.verticalAxis>
-                <chart:LinearAxis lineColor="#ebf1f2" labelFormat="%.0f"
+                <chart:LinearAxis lineColor="#ffffff" labelFormat="%.0f"
                                   lineThickness="2" labelTextColor="#021042"
                                   labelMargin="10" android:labelMargin="20" />
             </chart:RadCartesianChart.verticalAxis>

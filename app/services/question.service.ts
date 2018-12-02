@@ -1,6 +1,7 @@
 /**
  * Created by rakesh on 15-Nov-2017.
  */
+import * as appSettings from "application-settings";
 import * as appVersion from "nativescript-appversion";
 import * as Toast from "nativescript-toast";
 import { isAndroid } from "platform";
@@ -83,8 +84,8 @@ export class QuestionService {
         if (this.questions.length !== 0) {
             return this.readFromQuestions();
         } else {
-            if (this._settingsService.hasQuestions()) {
-                this.questions = this._settingsService.readQuestions();
+            if (this.hasQuestions()) {
+                this.questions = this.readQuestions();
 
                 return this.readFromQuestions();
             } else {
@@ -107,15 +108,82 @@ export class QuestionService {
         HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
             this.questions = questions;
             if (PersistenceService.getInstance().isPremium()) {
-                HttpService.getInstance().getPremiumQuestions<Array<IQuestion>>().
-                then((premiumQuestions: Array<IQuestion>) => {
-                    const updatedQuestions: Array<IQuestion> = questions.concat(premiumQuestions);
-                    this._settingsService.saveQuestions(updatedQuestions);
-                });
+                HttpService.getInstance().getPremiumQuestions<Array<IQuestion>>()
+                    .then((premiumQuestions: Array<IQuestion>) => {
+                        const updatedQuestions: Array<IQuestion> = questions.concat(premiumQuestions);
+                        this.saveQuestions(updatedQuestions);
+                    });
             } else {
-                this._settingsService.saveQuestions(questions);
+                this.saveQuestions(questions);
             }
         });
+    }
+
+    findPremiumRange(startAt: number, endAt: number): void {
+        HttpService.getInstance().findPremiumRange<Array<IQuestion>>("number", startAt, endAt)
+            .then((newQuestions: Array<IQuestion>) => {
+                console.log("Got new range questions", newQuestions.length);
+                let questions: Array<IQuestion> = this.readQuestions();
+                console.log("Before", questions.length);
+                questions = questions.concat(newQuestions);
+                console.log("After", questions.length);
+                this.saveQuestions(questions);
+
+            }).catch((e) => console.error("Error Loading Premium Range Questions...", e));
+    }
+
+    saveQuestions(questions: Array<IQuestion>): void {
+        const json: string = JSON.stringify(questions);
+        appSettings.setString(constantsModule.QUESTIONS, json);
+        appSettings.setNumber(constantsModule.QUESTIONS_SIZE, questions.length);
+    }
+
+    saveQuestionVersion(questionVersion: number): void {
+        appSettings.setNumber(constantsModule.QUESTION_VERSION, questionVersion);
+    }
+
+    savePremiumQuestionVersion(premiumQuestionVersion: number): void {
+        appSettings.setNumber(constantsModule.PREMIUM_VERSION, premiumQuestionVersion);
+    }
+
+    readQuestionVersion(): number {
+        return appSettings.hasKey(constantsModule.QUESTION_VERSION)
+            ? appSettings.getNumber(constantsModule.QUESTION_VERSION) : 0;
+    }
+
+    readQuestionSize(): number {
+        return appSettings.hasKey(constantsModule.QUESTIONS_SIZE)
+            ? appSettings.getNumber(constantsModule.QUESTIONS_SIZE) : 0;
+    }
+
+    readPremiumQuestionVersion(): number {
+        return appSettings.hasKey(constantsModule.PREMIUM_VERSION)
+            ? appSettings.getNumber(constantsModule.PREMIUM_VERSION) : 0;
+    }
+
+    readQuestions(): Array<IQuestion> {
+        let questions: Array<IQuestion>;
+        try {
+            questions = this.hasQuestions() ? JSON.parse(appSettings.getString(constantsModule.QUESTIONS)) : [];
+        } catch (error) {
+            questions = [];
+        }
+
+        return questions;
+    }
+
+    hasQuestions(): boolean {
+        return appSettings.hasKey(constantsModule.QUESTIONS);
+    }
+
+    hasSize(): boolean {
+        return appSettings.hasKey(constantsModule.QUESTIONS_SIZE);
+    }
+
+    allQuestionsAsked(alreadyAsked: number): boolean {
+        return this.hasSize()
+            ? alreadyAsked < appSettings.getNumber(constantsModule.QUESTIONS_SIZE)
+            : alreadyAsked < 449;
     }
 
     private containsQuestion(search: IQuestion, questions: Array<IQuestion>): boolean {
@@ -138,9 +206,9 @@ export class QuestionService {
     private checkQuestionUpdate(): void {
         if (!this._checked) {
             HttpService.getInstance().findLatestQuestionVersion().then((latestQuestionVersion: string) => {
-                if (this._settingsService.readQuestionVersion() < Number(latestQuestionVersion)) {
+                if (this.readQuestionVersion() < Number(latestQuestionVersion)) {
                     this.readAllQuestions();
-                    this._settingsService.saveQuestionVersion(Number(latestQuestionVersion));
+                    this.saveQuestionVersion(Number(latestQuestionVersion));
                 }
             });
             this.checkForApplicationUpdate();
@@ -176,7 +244,8 @@ export class QuestionService {
                         }).then((proceed) => {
                             if (proceed) {
                                 if (isAndroid) {
-                                    utils.openUrl("https://play.google.com/store/apps/details?id=com.exuberant.quiz.sas");
+                                    utils.openUrl("https://play.google.com/store/apps/details?" +
+                                        "id=com.exuberant.quiz.sas");
                                 }
                             }
                         });

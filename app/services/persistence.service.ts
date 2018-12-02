@@ -3,7 +3,7 @@
  */
 import * as appSettings from "application-settings";
 import { Observable } from "tns-core-modules/data/observable";
-import {FLAG_QUESTION, PRACTICE, PRACTICE_STATS, PREMIUM, RESULT, WRONG_QUESTION} from "~/shared/constants";
+import { FLAG_QUESTION, PRACTICE_STATS, PREMIUM, RESULT, WRONG_QUESTION } from "~/shared/constants";
 import { IPracticeStats, IQuestion, Result } from "~/shared/questions.model";
 
 export class PersistenceService {
@@ -56,7 +56,7 @@ export class PersistenceService {
         }
     }
 
-    savePracticeStats(practiceStats: IPracticeStats): any {
+    savePracticeStats(practiceStats: IPracticeStats) {
         appSettings.setString(PRACTICE_STATS, JSON.stringify(practiceStats));
     }
 

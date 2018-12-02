@@ -106,41 +106,6 @@ export class SettingsService {
         appSettings.setString(constantsModule.SETTINGS, newSetting);
     }
 
-    saveQuestions(questions: Array<IQuestion>): void {
-        const json: string = JSON.stringify(questions);
-        appSettings.setString(constantsModule.QUESTIONS, json);
-        appSettings.setNumber(constantsModule.QUESTIONS_SIZE, questions.length);
-    }
-
-    saveQuestionVersion(questionVersion: number): void {
-        appSettings.setNumber(constantsModule.QUESTION_VERSION, questionVersion);
-    }
-
-    savePremiumQuestionVersion(premiumQuestionVersion: number): void {
-        appSettings.setNumber(constantsModule.PREMIUM_VERSION, premiumQuestionVersion);
-    }
-
-    readQuestionVersion(): number {
-        return appSettings.hasKey(constantsModule.QUESTION_VERSION)
-            ? appSettings.getNumber(constantsModule.QUESTION_VERSION) : 0;
-    }
-
-    readPremiumQuestionVersion(): number {
-        return appSettings.hasKey(constantsModule.PREMIUM_VERSION)
-            ? appSettings.getNumber(constantsModule.PREMIUM_VERSION) : 0;
-    }
-
-    readQuestions(): Array<IQuestion> {
-        let questions: Array<IQuestion>;
-        try {
-            questions = this.hasQuestions() ? JSON.parse(appSettings.getString(constantsModule.QUESTIONS)) : [];
-        } catch (error) {
-            questions = [];
-        }
-
-        return questions;
-    }
-
     saveRoute(path: string): void {
         appSettings.setString(constantsModule.ROUTE, path);
     }
@@ -151,20 +116,6 @@ export class SettingsService {
         }
 
         return "question/practice";
-    }
-
-    hasQuestions(): boolean {
-        return appSettings.hasKey(constantsModule.QUESTIONS);
-    }
-
-    hasSize(): boolean {
-        return appSettings.hasKey(constantsModule.QUESTIONS_SIZE);
-    }
-
-    allQuestionsAsked(alreadyAsked: number): boolean {
-        return this.hasSize()
-            ? alreadyAsked < appSettings.getNumber(constantsModule.QUESTIONS_SIZE)
-            : alreadyAsked < 449;
     }
 
     private getDefaultQuick() {

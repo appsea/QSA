@@ -219,7 +219,7 @@ export class QuestionViewModel extends Observable {
                 this.saveAndPublish(this._mode, this._state);
                 QuestionViewModel.attempt = false;
             } else {
-                if (this._settingsService.allQuestionsAsked(this.state.questions.length)) {
+                if (QuestionService.getInstance().allQuestionsAsked(this.state.questions.length)) {
                     this.fetchUniqueQuestion();
                 } else {
                     dialogs.confirm("Hurray!! You are done practicing all the questions. Click Ok to restart.")

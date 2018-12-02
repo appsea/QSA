@@ -52,8 +52,22 @@ export class HttpService {
         return httpModule.getString(url);
     }
 
+    findPremiumRange<T>(orderBy: string, startAt: number, endAt: number): Promise<T> {
+        const url = constantsModule.FIREBASE_URL + "premium.json" + "?orderBy=\"" + orderBy
+            + "\"&startAt=\"" + startAt + "\"&endAt=\"" + endAt + "\"";
+        console.log("url:" , url);
+
+        return httpModule.getJSON(url);
+    }
+
     checkPlayStoreVersion(): Promise<string> {
         const url = constantsModule.FIREBASE_URL + "playStoreVersion.json";
+
+        return httpModule.getString(url);
+    }
+
+    checkTotalQuestions(): Promise<string> {
+        const url = constantsModule.FIREBASE_URL + "totalQuestions.json";
 
         return httpModule.getString(url);
     }

@@ -42,7 +42,7 @@ Feel free to customize layouts and components to change how your app drawer look
             </GridLayout>
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'stats' ? ' selected': '') }}"
-                        route="stats/progress" params="stats"  tap="navigate">
+                        route="stats/summary" params="stats"  tap="navigate">
                 <Label row="0" col="0" text="&#xf201;" class="fa t-14"/>
                 <Label row="0" col="1" text="Progress" class="p-r-10" />
             </GridLayout>

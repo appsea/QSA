@@ -58,9 +58,6 @@ export function onProgressLoaded(args: EventData) {
 
     if (isAndroid) {
         progress.android.setScaleY(8);  //  progress.android === android.widget.ProgressBar
-        // progress.android.bottomLeftRadius = 5;  //  progress.android === android.widget.ProgressBar
-        // progress.android.setCornerRadius(5);  //  progress.android === android.widget.ProgressBar
-        // progress.android.corner.setRadius(2);  //  progress.android === android.widget.ProgressBar
     } else if (isIOS) {
         const transform = CGAffineTransformMakeScale(1.0, 5.0);
         progress.ios.transform = transform; // progress.ios === UIProgressView

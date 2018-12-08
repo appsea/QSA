@@ -3,7 +3,7 @@
 
 // Font icon class
 .fa {
-    font-family: "fa-solid-900";
+    font-family: 'fa-solid-900', fontawesome-webfont;
 }
 
 // Common page class
@@ -139,7 +139,6 @@ Label {
 .drawer-header {
     color: white;
     font-size: 20dpi;
-    horizontal-align: left;
     vertical-align: bottom;
 }
 
@@ -188,7 +187,6 @@ Label {
 
 .progress-result-failed {
     color: #ed1b1f;
-    font-weight: bold;
     font-size: 16dpi;
     font-weight: bold;
 }
@@ -208,4 +206,28 @@ Label {
     vertical-align: bottom;
     padding: 16;
     font-size: 20;
+}
+
+
+.attempted{
+    font-size: 20;
+    color: blue;
+}
+
+
+.total{
+    font-size: 20;
+    color: blue;
+}
+
+
+.type{
+    font-size: 10;
+    color: blue;
+}
+
+.v-line {
+    width: 5;
+    height: 50;
+    background-color: red;
 }

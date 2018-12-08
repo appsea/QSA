@@ -153,7 +153,7 @@ export class QuestionService {
 
     readQuestionSize(): number {
         return appSettings.hasKey(constantsModule.QUESTIONS_SIZE)
-            ? appSettings.getNumber(constantsModule.QUESTIONS_SIZE) : 0;
+            ? appSettings.getNumber(constantsModule.QUESTIONS_SIZE) : 200;
     }
 
     readPremiumQuestionVersion(): number {

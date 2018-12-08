@@ -22,21 +22,69 @@
         <Label class="action-bar-title" text="Summary"/>
     </ActionBar>
 
-    <StackLayout class="input-field m-t-20" horizontalAlignment="center" width="90%">
-        <Label text="Total Questions" class="label font-weight-bold m-b-5"/>
-        <Label text="{{ totalQuestions }}" class="label font-weight-bold m-b-5"/>
-        <Label text="Questions Accessible" class="label font-weight-bold m-b-5"/>
-        <Progress minValue="0" maxValue="100" value="{{ percentage }}" color="#5ad420" loaded="onProgressLoaded"/>
-        <Label text="{{ accessibleQuestion }}" class="label font-weight-bold m-b-5"/>
-        <Label text="{{ attempted }}" class="label font-weight-bold m-b-5"/>
-        <Label text="{{ correct }}" class="label font-weight-bold m-b-5"/>
-        <Label text="{{ percentage }}" class="label font-weight-bold m-b-5"/>
+    <ScrollView class="input-field page page-login" horizontalAlignment="center" width="100%"
+                backgroundImage="res://mesh">
+        <StackLayout orientation="vertical">
+            <StackLayout backgroundColor="white" margin="10">
+                <Label class="h3 text-center p-10 progress-heading" text="Question Bank"
+                       textWrap="true"/>
+                <Progress value="20" width="80%" loaded="onProgressLoaded"
+                          color="blue" class="m-t-15"/>
+                <Label class="attempted m-10" color="blue" horizontalAlignment="center">
+                    <label.formattedText>
+                        <formattedString>
+                            <formattedString.spans>
+                                <span text="100" class="attempted"/>
+                                <span text=" of " class="total"/>
+                                <span text="150" class="total"/>
+                                <span text=" Accessible" class="total"/>
+                            </formattedString.spans>
+                        </formattedString>
+                    </label.formattedText>
+                </Label>
+                <StackLayout class="hr-light"/>
+                <StackLayout orientation="horizontal" horizontalAlignment="center" class="m-5">
+                    <Button class="btn btn-primary btn-rounded-sm fa" text="&#xf43f;  Premium"
+                            tap="{{ onButtonTap }}" width="45%"/>
+                    <Button class="btn btn-primary btn-rounded-sm fa" text="&#xf03d;  Free +10"
+                            tap="{{ onButtonTap }}" width="45%"/>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout backgroundColor="white" margin="10">
+                <Label class="h3 text-center p-10 progress-heading" text="Practice Stats"
+                       textWrap="true"/>
+                <Progress value="20" width="80%" loaded="onProgressLoaded"
+                          color="blue" class="m-t-15"/>
 
-        <Button text="Top Up 10 Question" class="btn btn-primary" tap="topUpRewards"/>
-
-        <Button text="Top Up All Question" class="btn btn-primary" tap="goPremium"/>
-        <Label text="Mock Exam" class="label font-weight-bold m-b-5"/>
-
-
-    </StackLayout>
+                <Label class="attempted m-10" horizontalAlignment="center">
+                    <label.formattedText>
+                        <formattedString>
+                            <formattedString.spans>
+                                <span text="142" class="attempted"/>
+                                <span text=" of " class="total"/>
+                                <span text="200" class="total"/>
+                                <span text=" Questions" class="total"/>
+                            </formattedString.spans>
+                        </formattedString>
+                    </label.formattedText>
+                </Label>
+                <StackLayout class="hr-light"/>
+                <GridLayout columns="*,auto, *" rows="auto, auto" backgroundColor="white">
+                    <FlexboxLayout row="0" col="0" flexDirection="column"
+                                   style="padding: 15 10" horizontalAlignment="center">
+                        <Label text="94%" class="attempted" horizontalAlignment="right"/>
+                        <Label text="Complete" class="type"
+                               horizontalAlignment="center"/>
+                    </FlexboxLayout>
+                    <Label class="v-line" row="0" col="1"/>
+                    <FlexboxLayout row="0" col="2" flexDirection="column"
+                                   style="padding: 15 10" horizontalAlignment="center">
+                        <Label text="82%" class="attempted"/>
+                        <Label text="Accuracy" class="type"
+                               horizontalAlignment="center"/>
+                    </FlexboxLayout>
+                </GridLayout>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
 </Page>

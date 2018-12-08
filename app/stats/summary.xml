@@ -22,14 +22,13 @@
         <Label class="action-bar-title" text="Summary"/>
     </ActionBar>
 
-    <ScrollView class="input-field page page-login" horizontalAlignment="center" width="100%"
-                backgroundImage="res://mesh">
+    <ScrollView class="input-field page page-login" horizontalAlignment="center" width="100%" backgroundImage="res://mesh">
         <StackLayout orientation="vertical">
-            <StackLayout backgroundColor="white" margin="10">
+            <StackLayout backgroundColor="white" margin="10" borderRadius="10">
                 <Label class="h3 text-center p-10 progress-heading" text="Question Bank"
                        textWrap="true"/>
                 <Progress value="20" width="80%" loaded="onProgressLoaded"
-                          color="blue" class="m-t-15"/>
+                          color="#07C65A" class="m-t-15"/>
                 <Label class="attempted m-10" color="blue" horizontalAlignment="center">
                     <label.formattedText>
                         <formattedString>
@@ -50,11 +49,11 @@
                             tap="{{ onButtonTap }}" width="45%"/>
                 </StackLayout>
             </StackLayout>
-            <StackLayout backgroundColor="white" margin="10">
+            <StackLayout backgroundColor="white" margin="10" borderRadius="10">
                 <Label class="h3 text-center p-10 progress-heading" text="Practice Stats"
                        textWrap="true"/>
                 <Progress value="20" width="80%" loaded="onProgressLoaded"
-                          color="blue" class="m-t-15"/>
+                          color="#07C65A" class="m-t-15"/>
 
                 <Label class="attempted m-10" horizontalAlignment="center">
                     <label.formattedText>
@@ -69,7 +68,7 @@
                     </label.formattedText>
                 </Label>
                 <StackLayout class="hr-light"/>
-                <GridLayout columns="*,auto, *" rows="auto, auto" backgroundColor="white">
+                <GridLayout columns="*,auto, *" rows="auto, auto" borderRadius="10">
                     <FlexboxLayout row="0" col="0" flexDirection="column"
                                    style="padding: 15 10" horizontalAlignment="center">
                         <Label text="94%" class="attempted" horizontalAlignment="right"/>

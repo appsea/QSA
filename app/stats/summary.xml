@@ -23,7 +23,7 @@
     </ActionBar>
 
     <ScrollView class="input-field page page-login" horizontalAlignment="center" width="100%" backgroundImage="res://mesh">
-        <StackLayout orientation="vertical">
+        <StackLayout orientation="vertical" horizontalAlignment="center"  style="text-align:center">
             <StackLayout backgroundColor="white" margin="10" borderRadius="10">
                 <Label class="h3 text-center p-10 progress-heading" text="Question Bank"
                        textWrap="true"/>
@@ -44,9 +44,9 @@
                 <StackLayout class="hr-light"/>
                 <StackLayout orientation="horizontal" horizontalAlignment="center" class="m-5">
                     <Button class="btn btn-primary btn-rounded-sm fa" text="&#xf43f;  Premium"
-                            tap="{{ onButtonTap }}" width="45%"/>
+                            tap="{{ onButtonTap }}" width="48%"/>
                     <Button class="btn btn-primary btn-rounded-sm fa" text="&#xf03d;  Free +10"
-                            tap="{{ onButtonTap }}" width="45%"/>
+                            tap="{{ onButtonTap }}" width="48%"/>
                 </StackLayout>
             </StackLayout>
             <StackLayout backgroundColor="white" margin="10" borderRadius="10">
@@ -81,6 +81,35 @@
                         <Label text="82%" class="attempted"/>
                         <Label text="Accuracy" class="type"
                                horizontalAlignment="center"/>
+                    </FlexboxLayout>
+                </GridLayout>
+            </StackLayout>
+            <StackLayout backgroundColor="white" margin="10" borderRadius="10">
+                <Label class="h3 text-center p-10 progress-heading" text="Mock Stats"
+                       textWrap="true" />
+                <Progress value="20" width="80%" loaded="onProgressLoaded"
+                          color="#07C65A" class="m-t-15"/>
+                <StackLayout class="hr-light m-t-30"/>
+                <GridLayout columns="*, auto, 1.5*, auto, *" rows="auto"
+                            class="progress-background m-l-4 m-r-4" borderRadius="5">
+                    <FlexboxLayout row="0" col="0" flexDirection="column"
+                                   style="padding: 15 10">
+                        <Label text="10" class="mock-stat" />
+                        <Label text="Tests" class="mock-type"
+                               horizontalAlignment="center" />
+                    </FlexboxLayout>
+                    <Label class="v-line" row="0" col="1" />
+                    <FlexboxLayout row="0" col="2" flexDirection="column"
+                                   style="padding: 15 10">
+                        <Label text="105/600" class="mock-stat"/>
+                        <Label text="Correct" class="mock-type"/>
+                    </FlexboxLayout>
+                    <Label class="v-line" row="0" col="3" />
+                    <FlexboxLayout row="0" col="4" flexDirection="column"
+                                   style="padding: 15 10" horizontalAlignment="center"
+                                   verticalAlignment="center">
+                        <Label text="50%" class="mock-stat" />
+                        <Label text="Accuracy" class="mock-type" />
                     </FlexboxLayout>
                 </GridLayout>
             </StackLayout>

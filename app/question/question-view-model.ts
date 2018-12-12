@@ -7,7 +7,7 @@ import { AdService } from "~/services/ad.service";
 import { QuestionService } from "~/services/question.service";
 import { SettingsService } from "~/services/settings.service";
 import { StatsService } from "~/services/stats.service";
-import { IOption, IQuestion, State } from "~/shared/questions.model";
+import { IOption, IQuestion, IState } from "~/shared/questions.model";
 import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
 
@@ -50,7 +50,7 @@ export class QuestionViewModel extends Observable {
     private _settingsService: SettingsService;
 
     private _question: IQuestion;
-    private _state: State;
+    private _state: IState;
     private _questionNumber: number;
 
     private _mode: string;
@@ -177,7 +177,7 @@ export class QuestionViewModel extends Observable {
         QuestionService.getInstance().handleWrongQuestions(this.question);
     }
 
-    saveAndPublish(_mode: string, _state: State) {
+    saveAndPublish(_mode: string, _state: IState) {
         this._settingsService.saveCache(this._mode, this._state);
         this.publish();
     }

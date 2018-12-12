@@ -1,6 +1,6 @@
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import { QuestionUtil } from "~/services/question.util";
-import { IQuestion, State } from "../questions.model";
+import { IQuestion, IState } from "../questions.model";
 
 export class DetailedResultViewModel extends Observable {
 
@@ -19,9 +19,9 @@ export class DetailedResultViewModel extends Observable {
     private allQuestions: Array<IQuestion>;
     private _message: string;
     private _size: number;
-    private state: State;
+    private state: IState;
 
-    constructor(state: State) {
+    constructor(state: IState) {
         super();
         this.state = state;
         this.allQuestions = state.questions;

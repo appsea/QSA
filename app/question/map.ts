@@ -7,11 +7,11 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { QuestionViewModel } from "~/question/question-view-model";
 import * as navigationModule from "~/shared/navigation";
-import { State } from "~/shared/questions.model";
+import { IState } from "~/shared/questions.model";
 import { MapViewModel } from "./map-view-model";
 
 let page: Page;
-let state: State;
+let state: IState;
 let vm: MapViewModel;
 
 export function onPageLoaded(args: EventData): void {
@@ -29,7 +29,7 @@ export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEvent
 
 export function onNavigatingTo(args: NavigatedData): void {
     page = <Page>args.object;
-    state = <State> page.navigationContext;
+    state = <IState> page.navigationContext;
     vm = new MapViewModel(state);
     page.bindingContext = vm;
 }

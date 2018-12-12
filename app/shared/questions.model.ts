@@ -22,7 +22,7 @@ export interface ISetting {
     totalTime: number;
 }
 
-export interface State {
+export interface IState {
     questionWrapper?: IQuestion;
     questions: Array<IQuestion>;
     questionNumber: number;
@@ -31,20 +31,21 @@ export interface State {
     time?: number;
 }
 
-export interface Map {
+export interface IMap {
     value: number;
     status: string;
 }
 
-export interface Result {
+export interface IResult {
     itemType?: string;
     date?: string;
     correct: number;
     wrong?: number;
+    totalExams?: number;
     skipped?: number;
     total: number;
     percentage: string;
-    pass: boolean;
+    pass?: boolean;
 }
 
 export interface IPracticeStats {

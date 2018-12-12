@@ -1,7 +1,7 @@
 import * as frameModule from "tns-core-modules/ui/frame";
-import { State } from "./questions.model";
+import { IState } from "./questions.model";
 
-export function	gotoResultPage(state: State) {
+export function	gotoResultPage(state: IState) {
     frameModule.topmost().navigate({
         moduleName: "shared/result/result-page",
         clearHistory: true,
@@ -12,7 +12,7 @@ export function	gotoResultPage(state: State) {
     });
 }
 
-export function	gotoEditPage(state: State) {
+export function	gotoEditPage(state: IState) {
     frameModule.topmost().navigate({
         moduleName: "question/edit-question",
         context: state,
@@ -22,7 +22,7 @@ export function	gotoEditPage(state: State) {
     });
 }
 
-export function	gotoQuestionMap(state: State) {
+export function	gotoQuestionMap(state: IState) {
     frameModule.topmost().navigate({
         moduleName: "question/map",
         context: state,
@@ -41,7 +41,7 @@ export function	toPage(path: string) {
     });
 }
 
-export function	gotoDetailsPage(state: State) {
+export function	gotoDetailsPage(state: IState) {
     frameModule.topmost().navigate({
         moduleName: "shared/details/detailed-result",
         context: state,

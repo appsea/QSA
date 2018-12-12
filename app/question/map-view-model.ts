@@ -4,7 +4,7 @@ import { EventData, Observable } from "tns-core-modules/data/observable";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { QuestionUtil } from "~/services/question.util";
 import { SettingsService } from "~/services/settings.service";
-import { Map, State } from "~/shared/questions.model";
+import { IMap, IState } from "~/shared/questions.model";
 import * as navigationModule from "../shared/navigation";
 
 const ALL: string = "all";
@@ -24,12 +24,12 @@ export class MapViewModel extends Observable {
     get message() {
         return this._message;
     }
-    allItems: Array<Map> = [];
-    items: Array<Map> = [];
-    private _state: State;
+    allItems: Array<IMap> = [];
+    items: Array<IMap> = [];
+    private _state: IState;
     private _message: string;
 
-    constructor(state: State) {
+    constructor(state: IState) {
         super();
         this._state = state;
         for (let loop = 0; loop < state.totalQuestions; loop++) {

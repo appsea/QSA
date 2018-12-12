@@ -7,7 +7,7 @@ import * as ListView from "tns-core-modules/ui/list-view";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { QuestionViewModel } from "~/question/question-view-model";
 import * as navigationModule from "../navigation";
-import { State } from "../questions.model";
+import { IState } from "../questions.model";
 import { DetailedResultViewModel } from "./detailed-result-view-model";
 
 let page: Page;
@@ -30,7 +30,7 @@ export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEvent
 export function onNavigatingTo(args: NavigatedData): void {
     page = <Page>args.object;
     list = page.getViewById("listView");
-    const state: State = <State> page.navigationContext;
+    const state: IState = <IState> page.navigationContext;
     vm = new DetailedResultViewModel(state);
     page.bindingContext = vm;
 }

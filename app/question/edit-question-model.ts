@@ -1,7 +1,7 @@
 import * as Toast from "nativescript-toast";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import { QuestionService } from "~/services/question.service";
-import { IOption, IQuestion, State } from "~/shared/questions.model";
+import { IOption, IQuestion, IState } from "~/shared/questions.model";
 
 export class EditQuestionViewModel extends Observable {
 
@@ -12,11 +12,11 @@ export class EditQuestionViewModel extends Observable {
     get state() {
         return this._state;
     }
-    private _state: State;
+    private _state: IState;
     private _question: IQuestion;
     private _originalQuestion: string;
 
-    constructor(state: State) {
+    constructor(state: IState) {
         super();
         this._originalQuestion = JSON.stringify(state.questions[state.questionNumber - 1]);
         this._question = JSON.parse(this._originalQuestion);

@@ -39,7 +39,7 @@
                             <label.formattedText>
                                 <formattedString>
                                     <formattedString.spans>
-                                        <span text="{{ overall.wrong }}"/>
+                                        <span text="{{ overall.totalExams }}"/>
                                         <span text=" Tests"/>
                                     </formattedString.spans>
                                 </formattedString>

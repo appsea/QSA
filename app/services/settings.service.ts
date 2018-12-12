@@ -1,5 +1,5 @@
 import * as appSettings from "application-settings";
-import { IQuestion, ISetting, State } from "~/shared/questions.model";
+import { IQuestion, ISetting, IState } from "~/shared/questions.model";
 import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
 
@@ -58,8 +58,8 @@ export class SettingsService {
         return setting;
     }
 
-    readCache(mode: string): State {
-        let state: State;
+    readCache(mode: string): IState {
+        let state: IState;
         if (appSettings.hasKey(mode)) {
             state = JSON.parse(appSettings.getString(mode));
         } else if (mode === constantsModule.QUICK) {
@@ -73,7 +73,7 @@ export class SettingsService {
         return state;
     }
 
-    saveCache(mode: string, state: State): void {
+    saveCache(mode: string, state: IState): void {
         const newState: string = JSON.stringify(state);
         appSettings.setString(mode, newState);
     }

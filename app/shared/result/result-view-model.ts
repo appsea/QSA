@@ -3,7 +3,7 @@ import { PersistenceService } from "~/services/persistence.service";
 import { QuestionUtil } from "~/services/question.util";
 import * as constantsModule from "../constants";
 import * as navigationModule from "../navigation";
-import { Result, State } from "../questions.model";
+import { IResult, IState } from "../questions.model";
 import { QuizUtil } from "../quiz.util";
 
 export class ResultViewModel extends Observable {
@@ -27,10 +27,10 @@ export class ResultViewModel extends Observable {
     get pass() {
         return this._result.pass;
     }
-    private _state: State;
-    private _result: Result;
+    private _state: IState;
+    private _result: IResult;
 
-    constructor(state: State) {
+    constructor(state: IState) {
         super();
         this._state = state;
         this.process();

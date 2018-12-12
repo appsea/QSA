@@ -1,7 +1,7 @@
 import { clearInterval, setInterval, setTimeout } from "timer";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import { SettingsService } from "~/services/settings.service";
-import { State } from "~/shared/questions.model";
+import { IState } from "~/shared/questions.model";
 import { QuestionViewModel } from "./question-view-model";
 
 export class TimerViewModel extends QuestionViewModel {
@@ -25,7 +25,7 @@ export class TimerViewModel extends QuestionViewModel {
         this.notify({object: this, eventName: Observable.propertyChangeEvent, propertyName: "time", value: this._time});
     }
 
-    saveAndPublish(mode: string, state: State) {
+    saveAndPublish(mode: string, state: IState) {
         state.time = this._minutes;
         SettingsService.getInstance().saveCache(mode, state);
         this.publish();

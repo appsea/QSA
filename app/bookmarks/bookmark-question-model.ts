@@ -4,7 +4,7 @@ import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
 import { AdService } from "~/services/ad.service";
 import { QuestionService } from "~/services/question.service";
-import { IOption, IQuestion, State } from "~/shared/questions.model";
+import { IOption, IQuestion, IState } from "~/shared/questions.model";
 import * as navigationModule from "../shared/navigation";
 
 export class BookmarkQuestionModel extends Observable {
@@ -122,7 +122,7 @@ export class BookmarkQuestionModel extends Observable {
     }
 
     goToEditPage() {
-        const state: State = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
+        const state: IState = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
         navigationModule.gotoEditPage(state);
     }
 }

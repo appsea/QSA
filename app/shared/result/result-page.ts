@@ -8,11 +8,11 @@ import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { QuestionViewModel } from "~/question/question-view-model";
 import * as navigationModule from "../navigation";
-import { State } from "../questions.model";
+import { IState } from "../questions.model";
 import { ResultViewModel } from "./result-view-model";
 
 let page: Page;
-let state: State;
+let state: IState;
 let vm: ResultViewModel;
 
 export function onPageLoaded(args: EventData): void {
@@ -37,7 +37,7 @@ export function onNavigatingTo(args: NavigatedData): void {
         return;
     }
     page = <Page>args.object;
-    state = <State> page.navigationContext;
+    state = <IState> page.navigationContext;
     vm = new ResultViewModel(state);
     page.bindingContext = vm;
 }

@@ -6,12 +6,12 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { Repeater } from "tns-core-modules/ui/repeater";
 import { QuestionViewModel } from "~/question/question-view-model";
-import { State } from "~/shared/questions.model";
+import { IState } from "~/shared/questions.model";
 import * as navigationModule from "../shared/navigation";
 import { EditQuestionViewModel } from "./edit-question-model";
 
 let vm: EditQuestionViewModel;
-let state: State;
+let state: IState;
 let optionList: Repeater;
 
 export function onPageLoaded(args: EventData): void {
@@ -34,7 +34,7 @@ export function onNavigatingTo(args: NavigatedData) {
     *************************************************************/
     const page = <Page>args.object;
     optionList = page.getViewById("optionList");
-    state = <State> page.navigationContext;
+    state = <IState> page.navigationContext;
     vm = new EditQuestionViewModel(state);
     page.bindingContext = vm;
 }

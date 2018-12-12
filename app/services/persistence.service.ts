@@ -4,7 +4,7 @@
 import * as appSettings from "application-settings";
 import { Observable } from "tns-core-modules/data/observable";
 import { FLAG_QUESTION, PRACTICE_STATS, PREMIUM, RESULT, WRONG_QUESTION } from "~/shared/constants";
-import { IPracticeStats, IQuestion, Result } from "~/shared/questions.model";
+import { IPracticeStats, IQuestion, IResult } from "~/shared/questions.model";
 
 export class PersistenceService {
 
@@ -31,12 +31,12 @@ export class PersistenceService {
         appSettings.setString(key, JSON.stringify(questions));
     }
 
-    addResult(results: Array<Result>) {
+    addResult(results: Array<IResult>) {
         appSettings.setString(RESULT, JSON.stringify(results));
     }
 
-    getResult(): Array<Result> {
-        let items: Array<Result> = [];
+    getResult(): Array<IResult> {
+        let items: Array<IResult> = [];
         if (appSettings.hasKey(RESULT)) {
             items = JSON.parse(appSettings.getString(RESULT));
         }
@@ -44,13 +44,13 @@ export class PersistenceService {
         return items;
     }
 
-    saveResult(result: Result): void {
+    saveResult(result: IResult): void {
         if (appSettings.hasKey(RESULT)) {
-            const items: Array<Result> = JSON.parse(appSettings.getString(RESULT));
+            const items: Array<IResult> = JSON.parse(appSettings.getString(RESULT));
             items.push(result);
             appSettings.setString(RESULT, JSON.stringify(items));
         } else {
-            const items: Array<Result> = [];
+            const items: Array<IResult> = [];
             items.push(result);
             appSettings.setString(RESULT, JSON.stringify(items));
         }

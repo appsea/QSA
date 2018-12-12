@@ -121,14 +121,11 @@ export class QuestionService {
 
     findPremiumRange(startAt: number, endAt: number): void {
         HttpService.getInstance().findPremiumRange<Array<IQuestion>>("number", startAt, endAt)
-            .then((newQuestions: Array<IQuestion>) => {
-                console.log("Got new range questions", newQuestions.length);
+            .then((map: any) => {
+                const newQuestions: Array<IQuestion>  = Object.keys(map).map((key) => map[key]);
                 let questions: Array<IQuestion> = this.readQuestions();
-                console.log("Before", questions.length);
                 questions = questions.concat(newQuestions);
-                console.log("After", questions.length);
                 this.saveQuestions(questions);
-
             }).catch((e) => console.error("Error Loading Premium Range Questions...", e));
     }
 

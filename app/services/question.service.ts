@@ -119,8 +119,8 @@ export class QuestionService {
         });
     }
 
-    findPremiumRange(startAt: number, endAt: number): void {
-        HttpService.getInstance().findPremiumRange<Array<IQuestion>>("number", startAt, endAt)
+    findPremiumRange(startAt: number, endAt: number): Promise<void> {
+        return HttpService.getInstance().findPremiumRange<Array<IQuestion>>("number", startAt, endAt)
             .then((map: any) => {
                 const newQuestions: Array<IQuestion>  = Object.keys(map).map((key) => map[key]);
                 let questions: Array<IQuestion> = this.readQuestions();

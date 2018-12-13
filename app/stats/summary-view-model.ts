@@ -102,7 +102,7 @@ export class SummaryViewModel extends Observable {
     topUpRewards() {
         if (ConnectionService.getInstance().isConnected()) {
             QuestionService.getInstance().findPremiumRange((this._questionSize + 1),
-                (this._questionSize + this._rewards));
+                (this._questionSize + this._rewards)).then(this.load());
         } else {
             dialogs.alert("Please connect to internet!!!");
         }

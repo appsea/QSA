@@ -23,13 +23,14 @@ export class AdService {
     private _showAd: boolean;
 
     constructor() {
-        this._showAd = false;
+        this._showAd = true;
         if (!appSettings.hasKey(constantsModule.PREMIUM)) {
             HttpService.getInstance().showAds().then((show) => {
-                if (show === "true") {
-                    this._showAd = true;
-                }
+                this._showAd = show === "true";
             });
+        } else {
+
+            this._showAd = false;
         }
 
     }

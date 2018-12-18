@@ -45,6 +45,8 @@ export class QuestionViewModel extends Observable {
         AdService.getInstance().hideAd();
     }
 
+    private static count: number = 0;
+
     private static attempt: boolean;
     private _questionService: QuestionService;
     private _settingsService: SettingsService;
@@ -64,8 +66,13 @@ export class QuestionViewModel extends Observable {
         this.showFromState();
     }
 
+    showInterstetial(): any {
+        if (QuestionViewModel.count % constantsModule.AD_COUNT === 0) {
+            AdService.getInstance().showInterstitial();
+        }
+    }
+
     previous(): void {
-        AdService.getInstance().showInterstitial();
         this.goPrevious();
     }
 
@@ -200,6 +207,10 @@ export class QuestionViewModel extends Observable {
         StatsService.getInstance().updatePracticeStats(this.question);
     }
 
+    private increment() {
+        QuestionViewModel.count = QuestionViewModel.count + 1;
+    }
+
     private showFromState(): void {
         if (this._state.questionNumber !== 0
             && (this._state.questions.length >= this._state.questionNumber
@@ -218,6 +229,7 @@ export class QuestionViewModel extends Observable {
                 this._state.questions.push(this._question);
                 this.saveAndPublish(this._mode, this._state);
                 QuestionViewModel.attempt = false;
+                this.increment();
             } else {
                 if (QuestionService.getInstance().allQuestionsAsked(this.state.questions.length)) {
                     this.fetchUniqueQuestion();

@@ -5,55 +5,10 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { AdService } from "~/services/ad.service";
 import { QuestionService } from "~/services/question.service";
 import { IOption, IQuestion, IState } from "~/shared/questions.model";
+import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
 
 export class BookmarkQuestionModel extends Observable {
-    private _questions: Array<IQuestion> = [];
-    private _question: IQuestion;
-    private _questionNumber: number = 0;
-    private _mode: string;
-
-    constructor(questions: Array<IQuestion>, mode: string) {
-        super();
-        this._questions = questions;
-        this._mode = mode;
-    }
-
-    showDrawer() {
-        const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
-        if (sideDrawer) {
-            sideDrawer.showDrawer();
-        }
-        AdService.getInstance().hideAd();
-    }
-
-    previous(): void {
-        AdService.getInstance().showInterstitial();
-        if (this._questionNumber > 1) {
-            this._questionNumber = this._questionNumber - 1;
-            this._question = this._questions[this._questionNumber];
-            this.publish();
-        }
-    }
-
-    next(message: string): void {
-        if (this._questions.length > this._questionNumber) {
-            this._question = this._questions[this._questionNumber];
-            this._questionNumber = this._questionNumber + 1;
-            this.publish();
-        } else {
-            dialogs.confirm(message).then((proceed) => {
-                if (proceed || this.length < 1) {
-                    navigationModule.toPage("question/practice");
-                }
-            });
-        }
-    }
-
-    flag(): void {
-        QuestionService.getInstance().handleFlagQuestion(this._question);
-        this.publish();
-    }
 
     get question() {
         if (!this._question) {
@@ -77,6 +32,60 @@ export class BookmarkQuestionModel extends Observable {
 
     get length() {
         return this._questions.length;
+    }
+    private static count: number = 0;
+    private _questions: Array<IQuestion> = [];
+    private _question: IQuestion;
+    private _questionNumber: number = 0;
+    private _mode: string;
+
+    constructor(questions: Array<IQuestion>, mode: string) {
+        super();
+        this._questions = questions;
+        this._mode = mode;
+    }
+
+    showDrawer() {
+        const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
+        if (sideDrawer) {
+            sideDrawer.showDrawer();
+        }
+        AdService.getInstance().hideAd();
+    }
+
+    previous(): void {
+        if (this._questionNumber > 1) {
+            this._questionNumber = this._questionNumber - 1;
+            this._question = this._questions[this._questionNumber];
+            this.publish();
+        }
+    }
+
+    showInterstetial(): any {
+        if (BookmarkQuestionModel.count % constantsModule.AD_COUNT === 0) {
+            AdService.getInstance().showInterstitial();
+        }
+    }
+
+    next(message: string): void {
+        if (this._questions.length > this._questionNumber) {
+            this._question = this._questions[this._questionNumber];
+            this._questionNumber = this._questionNumber + 1;
+            this.publish();
+            this.increment();
+            this.showInterstetial();
+        } else {
+            dialogs.confirm(message).then((proceed) => {
+                if (proceed || this.length < 1) {
+                    navigationModule.toPage("question/practice");
+                }
+            });
+        }
+    }
+
+    flag(): void {
+        QuestionService.getInstance().handleFlagQuestion(this._question);
+        this.publish();
     }
 
     publish() {
@@ -124,5 +133,9 @@ export class BookmarkQuestionModel extends Observable {
     goToEditPage() {
         const state: IState = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
         navigationModule.gotoEditPage(state);
+    }
+
+    private increment() {
+        BookmarkQuestionModel.count = BookmarkQuestionModel.count + 1;
     }
 }

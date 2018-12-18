@@ -5,6 +5,7 @@ import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as ButtonModule from "tns-core-modules/ui/button";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
+import { SwipeDirection } from "tns-core-modules/ui/gestures";
 import { Label } from "tns-core-modules/ui/label";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
@@ -56,6 +57,7 @@ export function onNavigatingTo(args) {
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     banner = page.getViewById("banner");
     suggestionButton = page.getViewById("suggestionButton");
+    setTimeout(() => AdService.getInstance().doPreloadInterstitial(), 10);
     if (!SettingsService.route()) {
         _page = page;
         optionList = page.getViewById("optionList");
@@ -88,9 +90,7 @@ export function onDrawerButtonTap(args: EventData) {
 }
 
 export function handleSwipe(args) {
-    if (args.direction === 1) {
-        previous();
-    } else if (args.direction === 2) {
+    if (args.direction === SwipeDirection.left) {
         next();
     }
 }
@@ -136,6 +136,7 @@ export function next(): void {
             scrollView.scrollToVerticalOffset(0, false);
         }
     }
+    vm.showInterstetial();
 }
 
 export function submit(): void {

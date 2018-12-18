@@ -100,6 +100,7 @@ export function next(): void {
         if (scrollView) {
             scrollView.scrollToVerticalOffset(0, false);
         }
+        vm.showInterstetial();
     }
 }
 

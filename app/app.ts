@@ -7,7 +7,9 @@ purpose of the file is to pass control to the app’s first module.
 import * as app from "application";
 import * as purchase from "nativescript-purchase";
 import { isAndroid } from "platform";
+import { setTimeout } from "timer";
 import * as frame from "tns-core-modules/ui/frame";
+import { AdService } from "~/services/ad.service";
 import { GeneralService } from "./services/general.service";
 
 purchase.init([
@@ -35,7 +37,6 @@ application.on(application.uncaughtErrorEvent, (args) => {
 });
 
 app.run({ moduleName: "app-root/app-root" });
-
 /*
 Do not place any code after the application has been started as it will not
 be executed on iOS.

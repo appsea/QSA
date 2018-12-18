@@ -8,13 +8,14 @@
       "version": "5.0.0"
     }
   },
-  "description": "NativeScript Application",
+  "description": "Base Sas Quiz",
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "<fill-your-repository-here>",
   "scripts": {
     "lint": "tslint \"app/**/*.ts\""
   },
   "dependencies": {
+    "nativescript-admob": "^3.2.0",
     "nativescript-appversion": "^1.4.1",
     "nativescript-grid-view": "^4.1.1",
     "nativescript-purchase": "^2.0.5",

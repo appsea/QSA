@@ -6,6 +6,7 @@ export const RESULT = "RESULT";
 export const MOCK = "MOCK";
 export const PASSING_PERCENTAGE = 70;
 export const VERSION_NUMBER: number = 11;
+export const AD_COUNT: number = 5;
 export const CLEAR: boolean = false;
 export const VERSION: string = "VERSION";
 export const QUESTION_VERSION: string = "QUESTION_VERSION";

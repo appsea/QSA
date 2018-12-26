@@ -66,9 +66,14 @@
                 <Label text="{{ question.description}}" textWrap="true" onswipe="handleSwipe"/>
                 <Repeater items="{{ options }}" row="1" id="optionList" onswipe="handleSwipe">
                     <Repeater.itemTemplate>
-                        <StackLayout class="{{ selected ? 'selected' : 'not-selected' }}"  tap="selectOption"  onswipe="handleSwipe">
-                            <Label text="{{ description}}" onswipe="handleSwipe"  tap="selectOption" class="{{ selected ? 'selected' : 'not-selected' }}" textWrap="true" marginTop="10dpi" marginBottom="10dpi"/>
-                        </StackLayout>
+                        <GridLayout columns="auto,*" tap="selectOption" class="{{ selected ? 'selected' : 'not-selected' }}">
+                            <Label col="0" text="{{ tag + '. ' }}"
+                                   textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
+                                   onswipe="handleSwipe" class="{{ selected ? 'selected' : 'not-selected' }}"/>
+                            <Label col="1" text="{{ description }}"
+                                   textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
+                                   onswipe="handleSwipe" class="{{ selected ? 'selected' : 'not-selected' }}"/>
+                        </GridLayout>
                     </Repeater.itemTemplate>
                 </Repeater>
             </StackLayout>

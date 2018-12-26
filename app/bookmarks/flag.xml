@@ -62,14 +62,16 @@
                 <Label text="{{ question.description }}" textWrap="true" onswipe="handleSwipe"/>
                 <Repeater items="{{ options }}" row="1" id="optionList" onswipe="handleSwipe">
                     <Repeater.itemTemplate>
-                        <StackLayout
-                                class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}"
-                                tap="selectOption" onswipe="handleSwipe">
-                            <Label text="{{ description}}"
+                        <GridLayout columns="auto,*" class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}">
+                            <Label col="0" text="{{ tag + '. ' }}"
                                    class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}"
                                    textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
                                    onswipe="handleSwipe"/>
-                        </StackLayout>
+                            <Label col="1" text="{{ description }}"
+                                   class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}"
+                                   textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
+                                   onswipe="handleSwipe"/>
+                        </GridLayout>
                     </Repeater.itemTemplate>
                 </Repeater>
                 <Label id="explanationHeader" text="Explanation: " marginTop="20dpi"

@@ -29,7 +29,10 @@ export class PremiumModel extends Observable {
                 this._loading = false;
                 this.publish();
             })
-            .catch((e) => console.error("Error Loading the in app products..." + e));
+            .catch((e) => {
+                this._item.priceFormatted = "Oops..Please try again!!";
+                this._loading = false;
+            });
         this.publish();
     }
 
@@ -57,7 +60,7 @@ export class PremiumModel extends Observable {
     grantRights() {
         appSettings.setBoolean(constantsModule.PREMIUM, true);
         AdService.getInstance().showAd = false;
-        QuestionService.getInstance().readAllQuestions();
+        QuestionService.getInstance().readAllQuestions(-1);
     }
 
     private publish() {

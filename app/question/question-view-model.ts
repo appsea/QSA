@@ -18,6 +18,21 @@ export class QuestionViewModel extends Observable {
             this._question = {description: "", options: [], explanation: "", show: false};
         }
 
+        for (const option of this._question.options) {
+            if (option.description.startsWith("A.")) {
+                option.description = option.description.replace("A. ", "").trim();
+            }
+            if (option.description.startsWith("B.")) {
+                option.description = option.description.replace("B. ", "").trim();
+            }
+            if (option.description.startsWith("C.")) {
+                option.description = option.description.replace("C. ", "").trim();
+            }
+            if (option.description.startsWith("D.")) {
+                option.description = option.description.replace("D. ", "").trim();
+            }
+        }
+
         return this._question;
     }
 
@@ -47,7 +62,6 @@ export class QuestionViewModel extends Observable {
 
     private static count: number = 0;
 
-    private static attempt: boolean;
     private _questionService: QuestionService;
     private _settingsService: SettingsService;
 
@@ -91,7 +105,6 @@ export class QuestionViewModel extends Observable {
                 this._question = this._state.questions[this._state.questionNumber - 1];
                 this.saveAndPublish(this._mode, this._state);
             } else {
-                QuestionViewModel.attempt = true;
                 this.fetchUniqueQuestion();
             }
         }
@@ -228,7 +241,6 @@ export class QuestionViewModel extends Observable {
                 this._question = que;
                 this._state.questions.push(this._question);
                 this.saveAndPublish(this._mode, this._state);
-                QuestionViewModel.attempt = false;
                 this.increment();
             } else {
                 if (QuestionService.getInstance().allQuestionsAsked(this.state.questions.length)) {

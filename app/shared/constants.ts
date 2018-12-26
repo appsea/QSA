@@ -10,7 +10,6 @@ export const AD_COUNT: number = 5;
 export const CLEAR: boolean = false;
 export const VERSION: string = "VERSION";
 export const QUESTION_VERSION: string = "QUESTION_VERSION";
-export const PREMIUM_VERSION: string = "PREMIUM_VERSION";
 export const MAIN: string = "main";
 export const TICK: string = "tick";
 export const QUICK: string = "quick";

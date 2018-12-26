@@ -92,7 +92,7 @@ export class QuestionService {
                 if (!ConnectionService.getInstance().isConnected()) {
                     dialogs.alert("Please connect to internet so that we can prepare quality questions for you!!");
                 } else {
-                    this.readAllQuestions();
+                    this.readAllQuestions(-1);
                 }
             }
         }
@@ -104,17 +104,23 @@ export class QuestionService {
         return this.containsQuestion(question, PersistenceService.getInstance().readFlaggedQuestions());
     }
 
-    readAllQuestions(): void {
+    readAllQuestions(latestQuestionVersion): void {
         HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
+            const oldQuestionSize: number = QuestionService.getInstance().readQuestionSize();
             this.questions = questions;
+            this.saveQuestions(questions);
             if (PersistenceService.getInstance().isPremium()) {
                 HttpService.getInstance().getPremiumQuestions<Array<IQuestion>>()
                     .then((premiumQuestions: Array<IQuestion>) => {
                         const updatedQuestions: Array<IQuestion> = questions.concat(premiumQuestions);
                         this.saveQuestions(updatedQuestions);
                     });
-            } else {
-                this.saveQuestions(questions);
+            } else if (latestQuestionVersion > 3) {
+                if (oldQuestionSize > questions.length) {
+                    this.findPremiumRange(questions.length + 1, oldQuestionSize).
+                    then(() => console.log("Loaded Premium Range", questions.length + 1, oldQuestionSize),
+                        (error) => console.error("Error loading premium range", error));
+                }
             }
         });
     }
@@ -122,7 +128,7 @@ export class QuestionService {
     findPremiumRange(startAt: number, endAt: number): Promise<void> {
         return HttpService.getInstance().findPremiumRange<Array<IQuestion>>("number", startAt, endAt)
             .then((map: any) => {
-                const newQuestions: Array<IQuestion>  = Object.keys(map).map((key) => map[key]);
+                const newQuestions: Array<IQuestion> = Object.keys(map).map((key) => map[key]);
                 let questions: Array<IQuestion> = this.readQuestions();
                 questions = questions.concat(newQuestions);
                 this.saveQuestions(questions);
@@ -139,10 +145,6 @@ export class QuestionService {
         appSettings.setNumber(constantsModule.QUESTION_VERSION, questionVersion);
     }
 
-    savePremiumQuestionVersion(premiumQuestionVersion: number): void {
-        appSettings.setNumber(constantsModule.PREMIUM_VERSION, premiumQuestionVersion);
-    }
-
     readQuestionVersion(): number {
         return appSettings.hasKey(constantsModule.QUESTION_VERSION)
             ? appSettings.getNumber(constantsModule.QUESTION_VERSION) : 0;
@@ -151,11 +153,6 @@ export class QuestionService {
     readQuestionSize(): number {
         return appSettings.hasKey(constantsModule.QUESTIONS_SIZE)
             ? appSettings.getNumber(constantsModule.QUESTIONS_SIZE) : 200;
-    }
-
-    readPremiumQuestionVersion(): number {
-        return appSettings.hasKey(constantsModule.PREMIUM_VERSION)
-            ? appSettings.getNumber(constantsModule.PREMIUM_VERSION) : 0;
     }
 
     readQuestions(): Array<IQuestion> {
@@ -201,10 +198,12 @@ export class QuestionService {
     }
 
     private checkQuestionUpdate(): void {
+        this._checked = false;
         if (!this._checked) {
             HttpService.getInstance().findLatestQuestionVersion().then((latestQuestionVersion: string) => {
                 if (this.readQuestionVersion() < Number(latestQuestionVersion)) {
-                    this.readAllQuestions();
+                // if (-1 < Number(latestQuestionVersion)) {
+                    this.readAllQuestions(Number(latestQuestionVersion));
                     this.saveQuestionVersion(Number(latestQuestionVersion));
                 }
             });

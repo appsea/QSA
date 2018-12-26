@@ -11,7 +11,6 @@ import { screen } from "platform";
 import { Observable } from "tns-core-modules/data/observable";
 import { isIOS } from "tns-core-modules/platform";
 import * as dialogs from "tns-core-modules/ui/dialogs";
-import * as ads from "../services/ads.js";
 import * as constantsModule from "../shared/constants";
 import { HttpService } from "./http.service";
 
@@ -61,7 +60,10 @@ export class AdService {
 
     hideAd() {
         if (this._showAd) {
-            ads.hideBanner();
+            hideBanner().then(
+                () => console.log("Banner hidden"),
+                (error) => console.error("Error hiding banner: " + error)
+            );
         }
     }
 
@@ -75,13 +77,6 @@ export class AdService {
         }
 
         return height;
-    }
-
-    doHideBanner(): void {
-        hideBanner().then(
-            () => console.log("Banner hidden"),
-            (error) => console.log("Error hiding banner: " + error)
-        );
     }
 
     doCreateSmartBanner(): void {
@@ -122,7 +117,6 @@ export class AdService {
             iosInterstitialId: "ca-app-pub-9517346003011652/6938836122",
             androidInterstitialId: "ca-app-pub-9517346003011652/6938836122",
             onAdClosed: () => {
-                dialogs.alert("Interstitial preload closed.");
                 console.log("Interstitial preload closed new");
                 this.doPreloadInterstitial();
             }

@@ -44,11 +44,12 @@
                     </label.formattedText>
                 </Label>
                 <StackLayout class="hr-light"  visibility="{{ isPremium ? 'collapsed' : 'visible' }}"/>
+                <Label class="m-5 t-16" color="blue" horizontalAlignment="center" text="Free Questions Loading..." visibility="{{ !isPremium && !allQuestionsLoaded && adLoaded ? 'collapsed' : 'visible' }}" />
                 <StackLayout orientation="horizontal" horizontalAlignment="center" class="m-5" visibility="{{ isPremium ? 'collapsed' : 'visible' }}">
                     <Button class="btn btn-primary btn-rounded-sm fa" text="&#xf43f;  Premium"
                             tap="{{ goPremium }}" width="48%"/>
                     <Button class="btn btn-primary btn-rounded-sm fa" text="{{ '&#xf03d;  Free +' + rewards }}"
-                            tap="{{ topUpRewards }}" visibility="{{ allQuestionsLoaded ? 'collapsed' : 'visible' }}" width="48%"/>
+                            tap="{{ topUpRewards }}" visibility="{{ !allQuestionsLoaded && adLoaded ? 'visible' : 'collapsed' }}" width="48%"/>
                 </StackLayout>
             </StackLayout>
             <StackLayout backgroundColor="white" margin="10" borderRadius="10">

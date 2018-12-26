@@ -49,7 +49,7 @@ export function onNavigatingTo(args: NavigatedData) {
             || transaction.transactionState === TransactionState.Purchased) {
             appSettings.setBoolean(constantsModule.PREMIUM, true);
             AdService.getInstance().showAd = false;
-            QuestionService.getInstance().readAllQuestions();
+            QuestionService.getInstance().readAllQuestions(-1);
             if (showDialog) {
                 dialogs.alert("Congratulations! You are a premium user now!");
                 showDialog = false;

@@ -57,7 +57,6 @@ export function onNavigatingTo(args) {
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     banner = page.getViewById("banner");
     suggestionButton = page.getViewById("suggestionButton");
-    setTimeout(() => AdService.getInstance().doPreloadInterstitial(), 10);
     if (!SettingsService.route()) {
         _page = page;
         optionList = page.getViewById("optionList");
@@ -136,7 +135,6 @@ export function next(): void {
             scrollView.scrollToVerticalOffset(0, false);
         }
     }
-    vm.showInterstetial();
 }
 
 export function submit(): void {

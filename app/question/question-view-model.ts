@@ -60,7 +60,7 @@ export class QuestionViewModel extends Observable {
         AdService.getInstance().hideAd();
     }
 
-    private static count: number = 0;
+    private count: number = 0;
 
     private _questionService: QuestionService;
     private _settingsService: SettingsService;
@@ -77,13 +77,23 @@ export class QuestionViewModel extends Observable {
         this._settingsService = SettingsService.getInstance();
         this._state = this._settingsService.readCache(mode);
         this._mode = mode;
+        this.count = this._state.questionNumber - 1;
         this.showFromState();
     }
 
     showInterstetial(): any {
-        if (QuestionViewModel.count % constantsModule.AD_COUNT === 0) {
+        if (AdService.getInstance().showAd && this.count > 0
+            && (this.questionNumber - 1) % constantsModule.AD_COUNT === 0
+            && ((this.count % constantsModule.AD_COUNT) === 0)) {
             AdService.getInstance().showInterstitial();
         }
+    }
+
+    get showAdOnNext(): boolean {
+        console.log(this.questionNumber , this.count);
+
+        return this.questionNumber % constantsModule.AD_COUNT === 0 && AdService.getInstance().showAd &&
+            (((this.count + 1) % constantsModule.AD_COUNT) === 0);
     }
 
     previous(): void {
@@ -168,6 +178,12 @@ export class QuestionViewModel extends Observable {
             propertyName: "questionNumber",
             value: this._state.questionNumber
         });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: "showAdOnNext",
+            value: this.showAdOnNext
+        });
     }
 
     showResult() {
@@ -221,7 +237,7 @@ export class QuestionViewModel extends Observable {
     }
 
     private increment() {
-        QuestionViewModel.count = QuestionViewModel.count + 1;
+        this.count = this.count + 1;
     }
 
     private showFromState(): void {
@@ -240,8 +256,9 @@ export class QuestionViewModel extends Observable {
                 this._state.questionNumber = this._state.questionNumber + 1;
                 this._question = que;
                 this._state.questions.push(this._question);
-                this.saveAndPublish(this._mode, this._state);
                 this.increment();
+                this.saveAndPublish(this._mode, this._state);
+                this.showInterstetial();
             } else {
                 if (QuestionService.getInstance().allQuestionsAsked(this.state.questions.length)) {
                     this.fetchUniqueQuestion();

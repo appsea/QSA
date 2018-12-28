@@ -171,7 +171,7 @@ export class QuestionService {
     allQuestionsAsked(alreadyAsked: number): boolean {
         return this.hasSize()
             ? alreadyAsked < appSettings.getNumber(constantsModule.QUESTIONS_SIZE)
-            : alreadyAsked < 449;
+            : alreadyAsked > 433;
     }
 
     private containsQuestion(search: IQuestion, questions: Array<IQuestion>): boolean {

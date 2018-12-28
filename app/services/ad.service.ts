@@ -10,7 +10,6 @@ import {
 import { screen } from "platform";
 import { Observable } from "tns-core-modules/data/observable";
 import { isIOS } from "tns-core-modules/platform";
-import * as dialogs from "tns-core-modules/ui/dialogs";
 import * as constantsModule from "../shared/constants";
 import { HttpService } from "./http.service";
 
@@ -29,8 +28,6 @@ export class AdService {
     }
 
     private static _instance: AdService = new AdService();
-    private _first: boolean = true;
-
     private _showAd: boolean;
 
     constructor() {

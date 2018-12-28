@@ -15,7 +15,6 @@ import * as constantsModule from "../shared/constants";
 import { HttpService } from "./http.service";
 import { PersistenceService } from "./persistence.service";
 import { QuestionUtil } from "./question.util";
-import { SettingsService } from "./settings.service";
 
 export class QuestionService {
 
@@ -26,13 +25,7 @@ export class QuestionService {
     private static _instance: QuestionService = new QuestionService();
 
     private questions: Array<IQuestion> = [];
-    private _settingsService: SettingsService;
-    private _checked: boolean;
-
-    constructor() {
-        this._settingsService = SettingsService.getInstance();
-        this._checked = false;
-    }
+    private _checked: boolean = false;
 
     getNextQuestion(): Promise<IQuestion> {
         return this.getFirebaseQuestion();
@@ -104,20 +97,21 @@ export class QuestionService {
         return this.containsQuestion(question, PersistenceService.getInstance().readFlaggedQuestions());
     }
 
-    readAllQuestions(latestQuestionVersion): void {
-        HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
-            const oldQuestionSize: number = QuestionService.getInstance().readQuestionSize();
+    readAllQuestions(latestQuestionVersion): Promise<void> {
+
+        return HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
+            const oldQuestionSize: number = this.readQuestionSize();
             this.questions = questions;
             this.saveQuestions(questions);
             if (PersistenceService.getInstance().isPremium()) {
-                HttpService.getInstance().getPremiumQuestions<Array<IQuestion>>()
+                return HttpService.getInstance().getPremiumQuestions<Array<IQuestion>>()
                     .then((premiumQuestions: Array<IQuestion>) => {
                         const updatedQuestions: Array<IQuestion> = questions.concat(premiumQuestions);
                         this.saveQuestions(updatedQuestions);
                     });
             } else if (latestQuestionVersion > 3) {
                 if (oldQuestionSize > questions.length) {
-                    this.findPremiumRange(questions.length + 1, oldQuestionSize).
+                    return this.findPremiumRange(questions.length + 1, oldQuestionSize).
                     then(() => console.log("Loaded Premium Range", questions.length + 1, oldQuestionSize),
                         (error) => console.error("Error loading premium range", error));
                 }
@@ -152,7 +146,7 @@ export class QuestionService {
 
     readQuestionSize(): number {
         return appSettings.hasKey(constantsModule.QUESTIONS_SIZE)
-            ? appSettings.getNumber(constantsModule.QUESTIONS_SIZE) : 200;
+            ? appSettings.getNumber(constantsModule.QUESTIONS_SIZE) : 0;
     }
 
     readQuestions(): Array<IQuestion> {

@@ -1,7 +1,6 @@
 import { Observable } from "tns-core-modules/data/observable";
 import { IQuestion } from "~/shared/questions.model";
 import * as constantsModule from "../shared/constants";
-import { SettingsService } from "./settings.service";
 
 const httpModule = require("http");
 
@@ -14,12 +13,9 @@ export class HttpService {
     private static _instance: HttpService = new HttpService();
 
     private questions: Array<IQuestion> = [];
-    private _settingsService: SettingsService;
-    private _checked: boolean;
 
-    constructor() {
-        this._settingsService = SettingsService.getInstance();
-        this._checked = false;
+    private constructor() {
+
     }
 
     showAds(): Promise<string> {

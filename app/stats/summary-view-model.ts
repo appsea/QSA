@@ -1,3 +1,4 @@
+import { setTimeout } from "timer";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { HttpService } from "~/services/http.service";
@@ -93,6 +94,10 @@ export class SummaryViewModel extends Observable {
         super();
         this.load();
         this.preloadVideoAd();
+        setTimeout(() => {
+            this.setAdLoadedTrue();
+            this.publish();
+        }, 3000);
     }
 
     load(): any {
@@ -118,7 +123,6 @@ export class SummaryViewModel extends Observable {
     }
 
     preloadVideoAd() {
-        console.log("preloadVideoAd");
         this.setAdLoadedFalse();
         this.publish();
         rewardModule.preloadVideoAd({

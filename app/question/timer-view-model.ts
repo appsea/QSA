@@ -20,8 +20,7 @@ export class TimerViewModel extends QuestionViewModel {
         super.goPrevious();
     }
 
-    publish() {
-        super.publish();
+    publishTime() {
         this.notify({object: this, eventName: Observable.propertyChangeEvent, propertyName: "time", value: this._time});
     }
 
@@ -46,7 +45,7 @@ export class TimerViewModel extends QuestionViewModel {
             }
             this._time = (("0" + this._minutes).slice(this._minutes > 99 ? -3 : -2)) + ":" + (("0" + this._seconds)
                 .slice(-2)) + " MIN";
-            this.publish();
+            this.publishTime();
         }, 1000);
     }
 

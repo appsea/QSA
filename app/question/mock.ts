@@ -83,7 +83,6 @@ export function showMap(): void {
 * use the showDrawer() function to open the app drawer section.
 *************************************************************/
 export function onDrawerButtonTap(args: EventData) {
-    resetBanner();
     QuestionViewModel.showDrawer();
 }
 

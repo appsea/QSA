@@ -1,6 +1,7 @@
 import { setTimeout } from "timer";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
+import { AdService } from "~/services/ad.service";
 import { HttpService } from "~/services/http.service";
 import { PersistenceService } from "~/services/persistence.service";
 import { QuestionService } from "~/services/question.service";
@@ -8,6 +9,7 @@ import { ConnectionService } from "~/shared/connection.service";
 import { IPracticeStats, IResult } from "~/shared/questions.model";
 import { QuizUtil } from "~/shared/quiz.util";
 import * as rewardModule from "../services/ads.js";
+import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
 
 export class SummaryViewModel extends Observable {
@@ -126,9 +128,9 @@ export class SummaryViewModel extends Observable {
         this.setAdLoadedFalse();
         this.publish();
         rewardModule.preloadVideoAd({
-            testing: true,
-            iosInterstitialId: "ca-app-pub-9082814869788754/8730675606", // add your own
-            androidInterstitialId: "ca-app-pub-9082814869788754/8730675606", // add your own
+            testing: AdService._testing,
+            iosInterstitialId: constantsModule.REWARD_AD_ID, // add your own
+            androidInterstitialId: constantsModule.REWARD_AD_ID, // add your own
             // Android automatically adds the connected device as test device with testing:true, iOS does not
             iosTestDeviceIds: ["ce97330130c9047ce0d4430d37d713b2"],
             keywords: ["keyword1", "keyword2"] // add keywords for ad targeting
@@ -137,7 +139,7 @@ export class SummaryViewModel extends Observable {
                 (this._questionSize + this._rewards)).then(this.load());
             }, () => this.preloadVideoAd(), () => {
             this.setAdLoadedTrue();
-            this.publish();
+            this.calculate();
         }).then(
             (reward) => {
                 console.log("interstitial ", reward);
@@ -146,23 +148,6 @@ export class SummaryViewModel extends Observable {
                 console.log("admob preloadInterstitial error: " + error);
             }
         );
-    }
-
-    private publish() {
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-                      propertyName: "serverQuestionSize", value: this._serverQuestionSize});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-                      propertyName: "mock", value: this._mock});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-                      propertyName: "questionSize", value: this._questionSize});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-                      propertyName: "ps", value: this._ps});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-                      propertyName: "premium", value: this._isPremium});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-                      propertyName: "allQuestionsLoaded", value: this._allQuestionsLoaded});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-                      propertyName: "adLoaded", value: this._adLoaded});
     }
 
     private calculate() {
@@ -177,6 +162,23 @@ export class SummaryViewModel extends Observable {
         this._rewards = this._serverQuestionSize - this._questionSize > 10 ? 10
             : this._serverQuestionSize - this._questionSize;
         this.publish();
+    }
+
+    private publish() {
+        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "serverQuestionSize", value: this._serverQuestionSize});
+        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "mock", value: this._mock});
+        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "questionSize", value: this._questionSize});
+        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "ps", value: this._ps});
+        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "premium", value: this._isPremium});
+        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "allQuestionsLoaded", value: this._allQuestionsLoaded});
+        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "adLoaded", value: this._adLoaded});
     }
 
     private setAdLoadedTrue() {

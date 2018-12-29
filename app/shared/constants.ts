@@ -1,4 +1,7 @@
 export const FIREBASE_URL = "https://sas-quiz.firebaseio.com/";
+export const INTERSTITIAL_AD_ID = "ca-app-pub-9082814869788754/5195869671";
+export const BANNER_AD_ID = "ca-app-pub-9082814869788754/7345143371";
+export const REWARD_AD_ID = "ca-app-pub-9082814869788754/8730675606";
 export const PREMIUM = "PREMIUM";
 export const WRONG_QUESTION = "WRONG_QUESTION";
 export const FLAG_QUESTION = "FLAG_QUESTION";

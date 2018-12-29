@@ -23,6 +23,8 @@ export class AdService {
         this._showAd = showAd;
     }
 
+    static _testing = false;
+
     static getInstance(): AdService {
         return AdService._instance;
     }
@@ -40,7 +42,6 @@ export class AdService {
 
             this._showAd = false;
         }
-
     }
 
     showInterstitial() {
@@ -109,9 +110,9 @@ export class AdService {
 
     doPreloadInterstitial(): void {
         preloadInterstitial({
-            testing: true,
-            iosInterstitialId: "ca-app-pub-9517346003011652/6938836122",
-            androidInterstitialId: "ca-app-pub-9517346003011652/6938836122",
+            testing: AdService._testing,
+            iosInterstitialId: constantsModule.INTERSTITIAL_AD_ID,
+            androidInterstitialId: constantsModule.INTERSTITIAL_AD_ID,
             onAdClosed: () => {
                 this.doPreloadInterstitial();
             }
@@ -126,9 +127,9 @@ export class AdService {
 
     doCreateInterstitial(): void {
         createInterstitial({
-            testing: true,
-            iosInterstitialId: "ca-app-pub-9082814869788754/5195869671",
-            androidInterstitialId: "ca-app-pub-9082814869788754/5195869671",
+            testing: AdService._testing,
+            iosInterstitialId: constantsModule.INTERSTITIAL_AD_ID,
+            androidInterstitialId: constantsModule.INTERSTITIAL_AD_ID,
             onAdClosed: () => {
                 console.log("doCreate Closed...");
             }
@@ -139,16 +140,13 @@ export class AdService {
     }
 
     private createBanner(size: AD_SIZE): void {
-        const testing = true;
         createBanner({
-            testing,
+            testing: AdService._testing,
             // if this 'view' property is not set, the banner is overlayed on the current top most view
             // view: ..,
             size,
-            iosBannerId: "ca-app-pub-9082814869788754/7345143371",
-            androidBannerId: testing
-                ? "ca-app-pub-9082814869788754/7345143371"  // global test banner id
-                : "ca-app-pub-9082814869788754/7345143371", // our registered banner id
+            iosBannerId: constantsModule.BANNER_AD_ID,
+            androidBannerId: constantsModule.BANNER_AD_ID, // our registered banner id
             // Android automatically adds the connected device as test device with testing:true, iOS does not
             // iosTestDeviceIds: ["yourTestDeviceUDIDs", "canBeAddedHere"],
             margins: {

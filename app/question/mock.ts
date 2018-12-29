@@ -66,9 +66,7 @@ export function onNavigatingTo(args: NavigatedData) {
 }
 
 export function handleSwipe(args) {
-    if (args.direction === 1) {
-        previous();
-    } else if (args.direction === 2) {
+    if (args.direction === 2) {
         next();
     }
 }
@@ -109,7 +107,7 @@ export function next(): void {
         if (scrollView) {
             scrollView.scrollToVerticalOffset(0, false);
         }
-        vm.showInterstetial();
+        vm.showInterstitial();
     }
 }
 

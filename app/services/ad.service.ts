@@ -108,13 +108,11 @@ export class AdService {
     }
 
     doPreloadInterstitial(): void {
-        console.log("Interstitial doPreloadInterstitial...");
         preloadInterstitial({
             testing: true,
             iosInterstitialId: "ca-app-pub-9517346003011652/6938836122",
             androidInterstitialId: "ca-app-pub-9517346003011652/6938836122",
             onAdClosed: () => {
-                console.log("Interstitial preload closed new");
                 this.doPreloadInterstitial();
             }
         }).then(

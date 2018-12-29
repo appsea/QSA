@@ -33,7 +33,13 @@ export class BookmarkQuestionModel extends Observable {
     get length() {
         return this._questions.length;
     }
-    private static count: number = 0;
+
+    get showAdOnNext(): boolean {
+        return this.questionNumber % constantsModule.AD_COUNT === 0 && AdService.getInstance().showAd &&
+            (((this.count + 1) % constantsModule.AD_COUNT) === 0);
+    }
+
+    private count: number;
     private _questions: Array<IQuestion> = [];
     private _question: IQuestion;
     private _questionNumber: number = 0;
@@ -43,6 +49,15 @@ export class BookmarkQuestionModel extends Observable {
         super();
         this._questions = questions;
         this._mode = mode;
+        this.count = -1;
+    }
+
+    showInterstetial(): any {
+        if (AdService.getInstance().showAd && this.count > 0
+            && (this.questionNumber - 1) % constantsModule.AD_COUNT === 0
+            && ((this.count % constantsModule.AD_COUNT) === 0)) {
+            AdService.getInstance().showInterstitial();
+        }
     }
 
     showDrawer() {
@@ -61,18 +76,12 @@ export class BookmarkQuestionModel extends Observable {
         }
     }
 
-    showInterstetial(): any {
-        if (BookmarkQuestionModel.count % constantsModule.AD_COUNT === 0) {
-            AdService.getInstance().showInterstitial();
-        }
-    }
-
     next(message: string): void {
         if (this._questions.length > this._questionNumber) {
             this._question = this._questions[this._questionNumber];
             this._questionNumber = this._questionNumber + 1;
-            this.publish();
             this.increment();
+            this.publish();
             this.showInterstetial();
         } else {
             dialogs.confirm(message).then((proceed) => {
@@ -107,6 +116,12 @@ export class BookmarkQuestionModel extends Observable {
             propertyName: "questionNumber",
             value: this._questionNumber
         });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: "showAdOnNext",
+            value: this.showAdOnNext
+        });
     }
 
     showAnswer(): void {
@@ -136,6 +151,6 @@ export class BookmarkQuestionModel extends Observable {
     }
 
     private increment() {
-        BookmarkQuestionModel.count = BookmarkQuestionModel.count + 1;
+        this.count = this.count + 1;
     }
 }

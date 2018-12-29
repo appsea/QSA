@@ -97,7 +97,7 @@ export class SummaryViewModel extends Observable {
         setTimeout(() => {
             this.setAdLoadedTrue();
             this.publish();
-        }, 3000);
+        }, 10000);
     }
 
     load(): any {
@@ -168,7 +168,6 @@ export class SummaryViewModel extends Observable {
     private calculate() {
         this._isPremium = PersistenceService.getInstance().isPremium();
         this._questionSize = QuestionService.getInstance().readQuestionSize();
-        console.log("this._questionSize", this._questionSize);
         this._ps = PersistenceService.getInstance().readPracticeStats();
         this._practiceAccuracy = this._ps.attempted.length === 0 ? 0
             : Math.floor(this._ps.correct.length * 100 / this._ps.attempted.length);
@@ -189,7 +188,6 @@ export class SummaryViewModel extends Observable {
     }
 
     private showVideoAd() {
-        console.log("Loading Rewards Video..");
         rewardModule.showVideoAd().then(
             () =>  {
                 console.log("interstitial showing");

@@ -44,7 +44,7 @@
                     </label.formattedText>
                 </Label>
                 <StackLayout class="hr-light"  visibility="{{ isPremium ? 'collapsed' : 'visible' }}"/>
-                <Label class="m-5 t-16" color="blue" horizontalAlignment="center" text="Free Questions Loading..." visibility="{{ !isPremium && !allQuestionsLoaded && adLoaded ? 'collapsed' : 'visible' }}" />
+                <Label class="m-5 t-16" color="blue" horizontalAlignment="center" text="Free Questions Loading..." visibility="{{ isPremium || allQuestionsLoaded || adLoaded ? 'collapsed' : 'visible' }}" />
                 <StackLayout orientation="horizontal" horizontalAlignment="center" class="m-5" visibility="{{ isPremium ? 'collapsed' : 'visible' }}">
                     <Button class="btn btn-primary btn-rounded-sm fa" text="&#xf43f;  Premium"
                             tap="{{ goPremium }}" width="48%"/>

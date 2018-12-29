@@ -44,7 +44,8 @@
             <StackLayout class="margin" orientation="horizontal" horizontalAlignment="center">
                 <Button class="btn btn-primary btn-rounded-lg" text="<<" tap="previous" margin="10dpi"
                         width="30%"/>
-                <Button class="btn btn-primary btn-rounded-lg" text=">>" tap="next" margin="10dpi" width="30%"/>
+                <Button class="btn btn-primary btn-rounded-lg" text="Ad" visibility="{{ showAdOnNext ? 'visible' : 'collapsed' }}" tap="next" margin="10dpi" width="30%"/>
+                <Button class="btn btn-primary btn-rounded-lg" text=">>" visibility="{{ showAdOnNext ? 'collapsed' : 'visible' }}" tap="next" margin="10dpi" width="30%"/>
                 <Button class="btn btn-primary btn-rounded-lg"
                         visibility="{{ question.show ? 'collapsed' : 'visible' }}" text="Answer"
                         tap="showAnswer"

@@ -76,11 +76,11 @@ export class QuestionViewModel extends Observable {
         this._settingsService = SettingsService.getInstance();
         this._state = this._settingsService.readCache(mode);
         this._mode = mode;
-        this.count = this._state.questionNumber - 1;
+        this.count = this._state.questions.length - 1;
         this.showFromState();
     }
 
-    showInterstetial(): any {
+    showInterstitial(): any {
         if (AdService.getInstance().showAd && this.count > 0
             && (this.questionNumber - 1) % constantsModule.AD_COUNT === 0
             && ((this.count % constantsModule.AD_COUNT) === 0)) {
@@ -89,8 +89,6 @@ export class QuestionViewModel extends Observable {
     }
 
     get showAdOnNext(): boolean {
-        console.log(this.questionNumber , this.count);
-
         return this.questionNumber % constantsModule.AD_COUNT === 0 && AdService.getInstance().showAd &&
             (((this.count + 1) % constantsModule.AD_COUNT) === 0);
     }
@@ -257,7 +255,7 @@ export class QuestionViewModel extends Observable {
                 this._state.questions.push(this._question);
                 this.increment();
                 this.saveAndPublish(this._mode, this._state);
-                this.showInterstetial();
+                this.showInterstitial();
             } else {
                 if (QuestionService.getInstance().allQuestionsAsked(this.state.questions.length)) {
                     this.fetchUniqueQuestion();

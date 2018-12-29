@@ -80,9 +80,7 @@ export function onDrawerButtonTap(args: EventData) {
 }
 
 export function handleSwipe(args) {
-    if (args.direction === 1) {
-        previous();
-    } else if (args.direction === 2) {
+    if (args.direction === 2) {
         next();
     }
 }

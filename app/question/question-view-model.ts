@@ -13,6 +13,8 @@ import * as navigationModule from "../shared/navigation";
 
 export class QuestionViewModel extends Observable {
 
+    static _errorLoading = false;
+
     get question() {
         if (!this._question) {
             this._question = {description: "", options: [], explanation: "", show: false};
@@ -89,8 +91,8 @@ export class QuestionViewModel extends Observable {
     }
 
     get showAdOnNext(): boolean {
-        return this.questionNumber % constantsModule.AD_COUNT === 0 && AdService.getInstance().showAd &&
-            (((this.count + 1) % constantsModule.AD_COUNT) === 0);
+        return !QuestionViewModel._errorLoading && this.questionNumber % constantsModule.AD_COUNT === 0
+            && AdService.getInstance().showAd && (((this.count + 1) % constantsModule.AD_COUNT) === 0);
     }
 
     previous(): void {

@@ -108,19 +108,23 @@ export class AdService {
         );
     }
 
-    doPreloadInterstitial(): void {
+    doPreloadInterstitial(resolve, reject): void {
         preloadInterstitial({
             testing: AdService._testing,
             iosInterstitialId: constantsModule.INTERSTITIAL_AD_ID,
             androidInterstitialId: constantsModule.INTERSTITIAL_AD_ID,
             onAdClosed: () => {
-                this.doPreloadInterstitial();
+                this.doPreloadInterstitial(resolve, reject);
             }
         }).then(
             () => {
                 console.log("Interstitial preloaded");
+                resolve();
             },
-            (error) => console.log("Error preloading interstitial: " + error)
+            (error) => {
+                console.log("Error preloading interstitial: " + error)
+                reject(error);
+            }
         );
 
     }

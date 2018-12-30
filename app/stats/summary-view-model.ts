@@ -99,7 +99,7 @@ export class SummaryViewModel extends Observable {
         setTimeout(() => {
             this.setAdLoadedTrue();
             this.publish();
-        }, 10000);
+        }, 5000);
     }
 
     load(): any {
@@ -126,14 +126,14 @@ export class SummaryViewModel extends Observable {
 
     preloadVideoAd() {
         this.setAdLoadedFalse();
-        this.publish();
+        this.calculate();
         rewardModule.preloadVideoAd({
             testing: AdService._testing,
             iosInterstitialId: constantsModule.REWARD_AD_ID, // add your own
             androidInterstitialId: constantsModule.REWARD_AD_ID, // add your own
             // Android automatically adds the connected device as test device with testing:true, iOS does not
             iosTestDeviceIds: ["ce97330130c9047ce0d4430d37d713b2"],
-            keywords: ["keyword1", "keyword2"] // add keywords for ad targeting
+            keywords: ["games", "education"] // add keywords for ad targeting
         }, (reward) => { console.log("reward", reward);
                          QuestionService.getInstance().findPremiumRange((this._questionSize + 1),
                 (this._questionSize + this._rewards)).then(this.load());
@@ -146,6 +146,8 @@ export class SummaryViewModel extends Observable {
             },
             (error) => {
                 console.log("admob preloadInterstitial error: " + error);
+                this.setAdLoadedFalse();
+                this.calculate();
             }
         );
     }
@@ -165,20 +167,34 @@ export class SummaryViewModel extends Observable {
     }
 
     private publish() {
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-            propertyName: "serverQuestionSize", value: this._serverQuestionSize});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-            propertyName: "mock", value: this._mock});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-            propertyName: "questionSize", value: this._questionSize});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-            propertyName: "ps", value: this._ps});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-            propertyName: "premium", value: this._isPremium});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-            propertyName: "allQuestionsLoaded", value: this._allQuestionsLoaded});
-        this.notify({ object: this, eventName: Observable.propertyChangeEvent,
-            propertyName: "adLoaded", value: this._adLoaded});
+        this.notify({
+            object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "serverQuestionSize", value: this._serverQuestionSize
+        });
+        this.notify({
+            object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "mock", value: this._mock
+        });
+        this.notify({
+            object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "questionSize", value: this._questionSize
+        });
+        this.notify({
+            object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "ps", value: this._ps
+        });
+        this.notify({
+            object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "premium", value: this._isPremium
+        });
+        this.notify({
+            object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "allQuestionsLoaded", value: this._allQuestionsLoaded
+        });
+        this.notify({
+            object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "adLoaded", value: this._adLoaded
+        });
     }
 
     private setAdLoadedTrue() {
@@ -191,7 +207,7 @@ export class SummaryViewModel extends Observable {
 
     private showVideoAd() {
         rewardModule.showVideoAd().then(
-            () =>  {
+            () => {
                 console.log("interstitial showing");
             },
             (error) => {

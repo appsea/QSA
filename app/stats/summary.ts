@@ -62,7 +62,6 @@ export function onProgressLoaded(args: EventData) {
         const transform = CGAffineTransformMakeScale(1.0, 5.0);
         progress.ios.transform = transform; // progress.ios === UIProgressView
     }
-
 }
 
 export function showProgress() {

@@ -109,7 +109,7 @@ export class QuestionService {
                         const updatedQuestions: Array<IQuestion> = questions.concat(premiumQuestions);
                         this.saveQuestions(updatedQuestions);
                     });
-            } else if (latestQuestionVersion > 3) {
+            } else if (latestQuestionVersion > 6) {
                 if (oldQuestionSize > questions.length) {
                     return this.findPremiumRange(questions.length + 1, oldQuestionSize).
                     then(() => console.log("Loaded Premium Range", questions.length + 1, oldQuestionSize),

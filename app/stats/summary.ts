@@ -67,3 +67,11 @@ export function onProgressLoaded(args: EventData) {
 export function showProgress() {
     navigationModule.toPage("stats/progress");
 }
+
+export function calculate() {
+    vm.calculate();
+}
+
+export function resetAllStats() {
+    vm.resetAllStats();
+}

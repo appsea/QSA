@@ -25,7 +25,7 @@
     <ScrollView class="input-field page page-login" horizontalAlignment="center" width="100%" backgroundImage="res://mesh">
         <StackLayout orientation="vertical" horizontalAlignment="center"
                      style="text-align:center">
-            <StackLayout backgroundColor="white" margin="10" borderRadius="10">
+            <StackLayout backgroundColor="white" margin="10" borderRadius="10" tap="calculate">
                 <Label class="h3 text-center p-10 progress-heading" text="Question Bank"
                        textWrap="true" />
                 <Progress value="{{questionSize}}" maxValue="{{serverQuestionSize}}"
@@ -48,7 +48,7 @@
                 <StackLayout orientation="horizontal" horizontalAlignment="center" class="m-5" visibility="{{ isPremium ? 'collapsed' : 'visible' }}">
                     <Button class="btn btn-primary btn-rounded-sm fa" text="&#xf43f;  Premium"
                             tap="{{ goPremium }}" width="48%"/>
-                    <Button class="btn btn-primary btn-rounded-sm fa" text="{{ '&#xf03d;  Free +' + rewards }}"
+                    <Button class="btn btn-primary btn-rounded-sm fa" text="{{ '&#xf03d;  Free +' + rewards + ' Que'}}"
                             tap="{{ topUpRewards }}" visibility="{{ !allQuestionsLoaded && adLoaded ? 'visible' : 'collapsed' }}" width="48%"/>
                 </StackLayout>
             </StackLayout>
@@ -123,6 +123,7 @@
                     </FlexboxLayout>
                 </GridLayout>
             </StackLayout>
+            <Button text="Reset All Stats!!" class="progress-heading btn m-t-10" tap="resetAllStats"/>
         </StackLayout>
     </ScrollView>
 </Page>

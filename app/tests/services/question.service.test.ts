@@ -22,7 +22,7 @@ describe("Question Service", () => {
         });
     });
 
-    it("Premium Users have access to all the questions", () => {
+    it("Premium Users have access to all the questions", async () => {
         const value = 434;
         TKUnit.clearQuestionSize();
         TKUnit.saveBoolean(constantsModule.PREMIUM, true);
@@ -36,7 +36,7 @@ describe("Question Service", () => {
         });
     });
 
-    it("Rewarded Questions Loaded again with question update", () => {
+    it("Rewarded Questions Loaded again with question update", async () => {
         const totalQuestions: number = 210;
         TKUnit.clearQuestionSize();
         TKUnit.clearKey(constantsModule.PREMIUM);

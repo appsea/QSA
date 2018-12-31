@@ -101,7 +101,7 @@
                             </GridLayout>
                         </Repeater.itemTemplate>
                     </Repeater>
-                    <Button text="Reset Exam Stats!" class="progress-heading btn m-t-10" tap="resetExamStats"/>
+                    <Button text="Reset Exam Stats!" class="progress-heading btn m-t-10" tap="resetMockExamStats"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

@@ -1,3 +1,4 @@
+import * as Toast from "nativescript-toast";
 import { setTimeout } from "timer";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
@@ -152,7 +153,7 @@ export class SummaryViewModel extends Observable {
         );
     }
 
-    private calculate() {
+    calculate() {
         this._isPremium = PersistenceService.getInstance().isPremium();
         this._questionSize = QuestionService.getInstance().readQuestionSize();
         this._ps = PersistenceService.getInstance().readPracticeStats();
@@ -164,6 +165,16 @@ export class SummaryViewModel extends Observable {
         this._rewards = this._serverQuestionSize - this._questionSize > 10 ? 10
             : this._serverQuestionSize - this._questionSize;
         this.publish();
+    }
+
+    resetAllStats() {
+        dialogs.confirm("Are you sure you want to clear practice and Mock exam stats?").then((proceed) => {
+            if (proceed) {
+                PersistenceService.getInstance().resetAllStats();
+                this.calculate();
+                Toast.makeText("Cleared Practice and Mock Stats!!!", "long").show();
+            }
+        });
     }
 
     private publish() {

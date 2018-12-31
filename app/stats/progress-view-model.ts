@@ -41,6 +41,6 @@ export class ProgressViewModel extends Observable {
     }
 
     resetExamStats() {
-        PersistenceService.getInstance().resetExamStats();
+        PersistenceService.getInstance().resetMockExamStats();
     }
 }

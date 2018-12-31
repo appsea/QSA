@@ -14,6 +14,11 @@ export class PersistenceService {
 
     private static _instance: PersistenceService = new PersistenceService();
 
+    resetAllStats(): any {
+        this.resetPracticeStats();
+        this.resetMockExamStats();
+    }
+
     readPracticeStats(): IPracticeStats {
         return appSettings.hasKey(PRACTICE_STATS) ? JSON.parse(appSettings.getString(PRACTICE_STATS))
             : {attempted: new Array<number>(), correct: new Array<number>()};
@@ -60,12 +65,16 @@ export class PersistenceService {
         appSettings.setString(PRACTICE_STATS, JSON.stringify(practiceStats));
     }
 
-    resetExamStats(): void {
+    resetMockExamStats(): void {
         appSettings.remove(RESULT);
     }
 
     isPremium(): boolean {
         return appSettings.hasKey(PREMIUM);
+    }
+
+    private resetPracticeStats() {
+        appSettings.remove(PRACTICE_STATS);
     }
 
     private readQuestions(key: string): Array<IQuestion> {
